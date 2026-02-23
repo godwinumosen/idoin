@@ -33,3 +33,14 @@ class ArticleDetailView(DetailView):
     #model = NewsAndEventsPsnRivers
     template_name = 'psnrivers/news_article_detail.html'
     context_object_name = 'article'''
+
+
+def services (request):
+    return render (request, 'idoingreece/services.html')
+
+
+def about (request):
+    return render (request, 'idoingreece/about.html')
+
+def departments (request):
+    return render (request, 'idoingreece/departments.html')

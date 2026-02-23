@@ -11,6 +11,8 @@ urlpatterns = [
     #path('news_events/', NewsAndEventsView.as_view(), name='news_events'),
     #path('article/<int:pk>/', ArticleDetailView.as_view(), name="detail"),
     #path('upcoming_news_events/', UpcomingNewsAndEventsView.as_view(), name='upcoming_news_events'),
-    #path('contact/', views.contact, name='contact'),
+    path('about/', views.about, name='about'),
+    path('departments/', views.departments, name='departments'),
+    path('services/', views.services, name='services'),
 
 ]
