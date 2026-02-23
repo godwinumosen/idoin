@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Clinic Bootstrap Template</title>
+  <title>Idoingreece</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -59,8 +59,8 @@
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.webp" alt=""> -->
-          <h1 class="sitename">Clinic</h1>
+           <img src="{% static 'assets/img/logo1.png'%}" alt=""> 
+          <h1 class="sitename">Idoingreece</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
@@ -109,33 +109,15 @@
 
     </div>
 
-  </header>
+  </header><br><br>
 
   <main class="main">
-
     <!-- Hero Section -->
     <section id="hero" class="hero section">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row align-items-center">
           <div class="col-lg-6">
             <div class="hero-content">
-              <div class="trust-badges mb-4" data-aos="fade-right" data-aos-delay="200">
-                <div class="badge-item">
-                  <i class="bi bi-shield-check"></i>
-                  <span>Accredited</span>
-                </div>
-                <div class="badge-item">
-                  <i class="bi bi-clock"></i>
-                  <span>24/7 Emergency</span>
-                </div>
-                <div class="badge-item">
-                  <i class="bi bi-star-fill"></i>
-                  <span>4.9/5 Rating</span>
-                </div>
-              </div>
-
               <h1 data-aos="fade-right" data-aos-delay="300">
                 Excellence in <span class="highlight">Healthcare</span> With Compassionate Care
               </h1>
@@ -159,7 +141,7 @@
                 <div class="stat-item">
                   <h3><span data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="2"
                       class="purecounter"></span>+</h3>
-                  <p>Medical Experts</p>
+                  <p>Wedding Experts</p>
                 </div>
               </div>
 
@@ -186,7 +168,7 @@
           <div class="col-lg-6">
             <div class="hero-visual" data-aos="fade-left" data-aos-delay="400">
               <div class="main-image">
-                <img src="assets/img/health/staff-10.webp" alt="Modern Healthcare Facility" class="img-fluid">
+                <img src="{%static 'assets/img/health/staff-10.webp'%}" alt="Modern Healthcare Facility" class="img-fluid">
                 <div class="floating-card appointment-card">
                   <div class="card-icon">
                     <i class="bi bi-calendar-check"></i>
@@ -268,7 +250,7 @@
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
             <div class="about-visual">
               <div class="main-image">
-                <img src="assets/img/health/facilities-9.webp" alt="Modern medical facility" class="img-fluid">
+                <img src="{%static 'assets/img/health/facilities-9.webp'%}" alt="Modern medical facility" class="img-fluid">
               </div>
               <div class="floating-card">
                 <div class="card-content">
@@ -326,7 +308,7 @@
                 </a>
               </div>
               <div class="specialty-visual">
-                <img src="assets/img/health/cardiology-1.webp" alt="Cardiovascular Medicine" class="img-fluid">
+                <img src="{%static 'assets/img/health/cardiology-1.webp'%}" alt="Cardiovascular Medicine" class="img-fluid">
                 <div class="visual-overlay">
                   <i class="bi bi-heart-pulse"></i>
                 </div>
@@ -352,7 +334,7 @@
                 </a>
               </div>
               <div class="specialty-visual">
-                <img src="assets/img/health/neurology-4.webp" alt="Neurological Sciences" class="img-fluid">
+                <img src="{%static 'assets/img/health/neurology-4.webp'%}" alt="Neurological Sciences" class="img-fluid">
                 <div class="visual-overlay">
                   <i class="bi bi-cpu"></i>
                 </div>
@@ -451,7 +433,7 @@
           <div class="col-lg-8" data-aos="fade-right" data-aos-delay="200">
             <div class="featured-service-main">
               <div class="service-image-wrapper">
-                <img src="assets/img/health/consultation-4.webp" alt="Premier Healthcare Services" class="img-fluid"
+                <img src="{%static 'assets/img/health/consultation-4.webp'%}" alt="Premier Healthcare Services" class="img-fluid"
                   loading="lazy">
                 <div class="service-overlay">
                   <div class="service-badge">
@@ -518,7 +500,7 @@
             <div class="col-lg-3 col-md-6">
               <div class="specialty-card">
                 <div class="specialty-image">
-                  <img src="assets/img/health/maternal-2.webp" alt="Maternal Care" class="img-fluid" loading="lazy">
+                  <img src="{%static 'assets/img/health/maternal-2.webp'%}" alt="Maternal Care" class="img-fluid" loading="lazy">
                 </div>
                 <div class="specialty-content">
                   <h5>Maternal Care</h5>
@@ -530,7 +512,7 @@
             <div class="col-lg-3 col-md-6">
               <div class="specialty-card">
                 <div class="specialty-image">
-                  <img src="assets/img/health/vaccination-3.webp" alt="Vaccination" class="img-fluid" loading="lazy">
+                  <img src="{%static 'assets/img/health/vaccination-3.webp'%}" alt="Vaccination" class="img-fluid" loading="lazy">
                 </div>
                 <div class="specialty-content">
                   <h5>Vaccination</h5>
@@ -542,7 +524,7 @@
             <div class="col-lg-3 col-md-6">
               <div class="specialty-card">
                 <div class="specialty-image">
-                  <img src="assets/img/health/emergency-1.webp" alt="Emergency Care" class="img-fluid" loading="lazy">
+                  <img src="{%static 'assets/img/health/emergency-1.webp'%}" alt="Emergency Care" class="img-fluid" loading="lazy">
                 </div>
                 <div class="specialty-content">
                   <h5>Emergency Care</h5>
@@ -554,7 +536,7 @@
             <div class="col-lg-3 col-md-6">
               <div class="specialty-card">
                 <div class="specialty-image">
-                  <img src="assets/img/health/facilities-6.webp" alt="Advanced Tech" class="img-fluid" loading="lazy">
+                  <img src="{%static 'assets/img/health/facilities-6.webp'%}" alt="Advanced Tech" class="img-fluid" loading="lazy">
                 </div>
                 <div class="specialty-content">
                   <h5>Advanced Technology</h5>
@@ -619,7 +601,7 @@
           <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="100">
             <div class="profile-header">
               <div class="doctor-avatar">
-                <img src="assets/img/health/staff-2.webp" alt="Dr. Amanda Foster" class="img-fluid">
+                <img src="{%static 'assets/img/health/staff-2.webp'%}" alt="Dr. Amanda Foster" class="img-fluid">
                 <div class="status-indicator available"></div>
               </div>
               <div class="doctor-details">
@@ -651,7 +633,7 @@
           <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="200">
             <div class="profile-header">
               <div class="doctor-avatar">
-                <img src="assets/img/health/staff-6.webp" alt="Dr. Marcus Johnson" class="img-fluid">
+                <img src="{%static 'assets/img/health/staff-6.webp'%}" alt="Dr. Marcus Johnson" class="img-fluid">
                 <div class="status-indicator busy"></div>
               </div>
               <div class="doctor-details">
@@ -683,7 +665,7 @@
           <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="300">
             <div class="profile-header">
               <div class="doctor-avatar">
-                <img src="assets/img/health/staff-4.webp" alt="Dr. Rachel Williams" class="img-fluid">
+                <img src="{%static 'assets/img/health/staff-4.webp'%}" alt="Dr. Rachel Williams" class="img-fluid">
                 <div class="status-indicator available"></div>
               </div>
               <div class="doctor-details">
@@ -715,7 +697,7 @@
           <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="400">
             <div class="profile-header">
               <div class="doctor-avatar">
-                <img src="assets/img/health/staff-8.webp" alt="Dr. David Chen" class="img-fluid">
+                <img src="{%static 'assets/img/health/staff-8.webp'%}" alt="Dr. David Chen" class="img-fluid">
                 <div class="status-indicator offline"></div>
               </div>
               <div class="doctor-details">
@@ -747,7 +729,7 @@
           <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="500">
             <div class="profile-header">
               <div class="doctor-avatar">
-                <img src="assets/img/health/staff-11.webp" alt="Dr. Victoria Torres" class="img-fluid">
+                <img src="{%static 'assets/img/health/staff-11.webp'%}" alt="Dr. Victoria Torres" class="img-fluid">
                 <div class="status-indicator available"></div>
               </div>
               <div class="doctor-details">
@@ -779,7 +761,7 @@
           <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="600">
             <div class="profile-header">
               <div class="doctor-avatar">
-                <img src="assets/img/health/staff-14.webp" alt="Dr. Benjamin Lee" class="img-fluid">
+                <img src="{%static 'assets/img/health/staff-14.webp'%}" alt="Dr. Benjamin Lee" class="img-fluid">
                 <div class="status-indicator available"></div>
               </div>
               <div class="doctor-details">
@@ -850,7 +832,7 @@
 
             <div class="col-lg-6">
               <div class="image-container" data-aos="fade-left" data-aos-delay="300">
-                <img src="assets/img/health/facilities-9.webp" alt="Medical Excellence" class="img-fluid">
+                <img src="{%static 'assets/img/health/facilities-9.webp'%}" alt="Medical Excellence" class="img-fluid">
               </div>
             </div>
 
@@ -1042,11 +1024,7 @@
                 <a href="#!">Terms of Service</a>
                 <a href="#!">Cookie Policy</a>
                 <div class="credits">
-                  <!-- All the links in the footer should remain intact. -->
-                  <!-- You can delete the links only if you've purchased the pro version. -->
-                  <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                  <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>. Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                  Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>. Distributed by 
                 </div>
               </div>
             </div>
