@@ -46,8 +46,8 @@
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a
-              href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+              href="mailto:contact@example.com">hello@Idoingreece.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+44 79* 468* 5370</span></i>
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
           <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
@@ -61,7 +61,7 @@
     <div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="{% url 'index' %}" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
            <img src="{% static 'assets/img/logo1.png'%}" alt=""> 
           <h1 class="sitename">I Do In Greece</h1>
@@ -69,7 +69,7 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="{% url 'index' %}" class="active">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'departments' %}">Departments</a></li>
             <li><a href="{% url 'services' %}">Services</a></li>
@@ -93,14 +93,9 @@
                 <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                   <ul>
                     <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
                     <li><a href="#">Deep Dropdown 5</a></li>
                   </ul>
                 </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
                 <li><a href="#">Dropdown 4</a></li>
               </ul>
             </li>
@@ -134,7 +129,7 @@
           <div class="col-lg-5">
             <div class="brand-section">
               <a href="index.html" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">Clinic</span>
+                <span class="sitename">I Do In Greece</span>
               </a>
               <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
                 innovative solutions that elevate your brand presence.</p>
@@ -142,15 +137,15 @@
               <div class="contact-info mt-5">
                 <div class="contact-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>123 Creative Boulevard, Design District, NY 10012</span>
+                  <span>13 Coming soon bro.</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-telephone"></i>
-                  <span>+1 (555) 987-6543</span>
+                  <span>+44 79* 468* 5370</span>
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
-                  <span>hello@designstudio.com</span>
+                  <span>hello@Idoingreece.com</span>
                 </div>
               </div>
             </div>
@@ -166,8 +161,6 @@
                     <nav class="footer-nav">
                       <a href="#!">Our Story</a>
                       <a href="#!">Design Process</a>
-                      <a href="#!">Portfolio</a>
-                      <a href="#!">Case Studies</a>
                       <a href="#!">Awards</a>
                     </nav>
                   </div>
@@ -178,23 +171,8 @@
                     <h6>Services</h6>
                     <nav class="footer-nav">
                       <a href="#!">Brand Identity</a>
-                      <a href="#!">Web Design</a>
-                      <a href="#!">Mobile Apps</a>
                       <a href="#!">Digital Strategy</a>
                       <a href="#!">Consultation</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Resources</h6>
-                    <nav class="footer-nav">
-                      <a href="#!">Design Blog</a>
-                      <a href="#!">Style Guide</a>
-                      <a href="#!">Free Assets</a>
-                      <a href="#!">Tutorials</a>
-                      <a href="#!">Inspiration</a>
                     </nav>
                   </div>
                 </div>
@@ -205,8 +183,6 @@
                     <nav class="footer-nav">
                       <a href="#!">Start Project</a>
                       <a href="#!">Schedule Call</a>
-                      <a href="#!">Join Newsletter</a>
-                      <a href="#!">Follow Updates</a>
                       <a href="#!">Partnership</a>
                     </nav>
                   </div>
@@ -228,7 +204,7 @@
 
             <div class="col-lg-6">
               <div class="copyright">
-                <p>© 2026 <span class="sitename">Idoingreece</span>. All rights reserved.</p>
+                <p>© <span class="sitename">2026 I Do In Greece. All rights reserved.</span></p>
               </div>
             </div>
 
