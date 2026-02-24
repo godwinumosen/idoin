@@ -71,23 +71,17 @@
     </section><!-- /Hero Section -->
     {% endfor %}
 
-    
+
+
     <!-- Home About Section -->
+     {% for about in home_about %}
     <section id="home-about" class="home-about section">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row align-items-center">
           <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
             <div class="about-content">
-              <h2 class="section-heading">Compassionate Care, Advanced Medicine</h2>
-              <p class="lead-text">For over two decades, we've been dedicated to providing exceptional healthcare that
-                combines cutting-edge medical technology with the personal touch our patients deserve.</p>
-
-              <p>Our multidisciplinary team of specialists works collaboratively to ensure every patient receives
-                comprehensive care tailored to their unique needs. From preventive services to complex procedures, we
-                maintain the highest standards of medical excellence while fostering an environment of trust and
-                healing.</p>
+              <h2 class="section-heading">{{ about.About_Idoingreece_title }}</h2>
+              <p class="lead-text">{{ about.About_Idoingreece_description|linebreaks }}</p>
 
               <div class="cta-section">
                 <a href="about.html" class="btn-primary">Learn About Us</a>
@@ -111,24 +105,23 @@
                   </div>
                 </div>
               </div>
-              <div class="experience-badge">
-                <div class="badge-content">
-                  <span class="years">25+</span>
-                  <span class="text">Years of Trusted Care</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
-
       </div>
-
     </section><!-- /Home About Section -->
-
+     {% endfor %}
 
     
+
+
     <!-- Services Section -->
     <section id="services" class="services section">
+            <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Real Weddings</h2>
+        <p>Discover love stories brought to life against the breathtaking backdrops of Greece.</p>
+      </div><!-- End Section Title -->
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row gy-4">
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
