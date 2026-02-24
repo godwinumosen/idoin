@@ -70,7 +70,7 @@ class FeatureIdoingreecePost(models.Model):
         return reverse('home')
     
 
-class Feature2_IdoingreecePost(models.Model):
+class Feature2_IdoingreecePost(models.Model): 
     Feature2_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     Feature2_Idoingreece_status = models.CharField(max_length=255, blank=True, null=True)
     Feature2_Idoingreece_description = models.TextField()
@@ -116,7 +116,7 @@ class FirstIdoingreecePost(models.Model):
 
 
 
-class ExcellenceIdoingreecePost(models.Model):
+class ExcellenceIdoingreecePost(models.Model): 
     Excellence_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     Excellence_Idoingreece_description = models.TextField()
     Excellence_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
@@ -159,7 +159,7 @@ class SecondIdoingreecePost(models.Model):
     def get_absolute_url(self):
         return reverse('home')
     
-class NotifyNewsIdoingreecePost(models.Model):
+class NotifyNewsIdoingreecePost(models.Model):   
     NotifyNews_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     NotifyNews_Idoingreece_description = models.TextField()
     NotifyNews_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
