@@ -4,18 +4,19 @@
 
   <main class="main">
     <!-- Hero Section -->
+
+{% for post in object_list  %}
     <section id="hero" class="hero section">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row align-items-center">
           <div class="col-lg-6">
             <div class="hero-content">
               <h1 data-aos="fade-right" data-aos-delay="300">
-                Excellence in <span class="highlight">Healthcare</span> With Compassionate Care
+               {{ post.Idoingreece_title }}
               </h1>
 
               <p class="hero-description" data-aos="fade-right" data-aos-delay="400">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                {{ post.Idoingreece_description }}
               </p>
 
               <div class="hero-stats mb-4" data-aos="fade-right" data-aos-delay="500">
@@ -46,7 +47,7 @@
           <div class="col-lg-6">
             <div class="hero-visual" data-aos="fade-left" data-aos-delay="400">
               <div class="main-image">
-                <img src="{%static 'assets/img/health/wedding1.jpg'%}" alt="Modern Healthcare Facility" class="img-fluid">
+                <img src="{{ post.Idoingreece_img.url }}" alt="Modern Healthcare Facility" class="img-fluid">
                 <div class="floating-card appointment-card">
                   <div class="card-icon">
                     <i class="bi bi-calendar-check"></i>
@@ -66,10 +67,9 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </section><!-- /Hero Section -->
+    {% endfor %}
 
     <!-- Home About Section -->
     <section id="home-about" class="home-about section">
@@ -270,7 +270,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Exceptional</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>Handpicked wedding specialists who bring your vision to life with excellence and care.</p>
       </div><!-- End Section Title -->
 
 

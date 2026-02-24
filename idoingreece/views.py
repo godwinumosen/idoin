@@ -12,27 +12,39 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.db.models import Q 
 from django.contrib.auth import get_user_model 
+from .models import IdoingreecePost
 import os 
 
 
 def index (request):
     return render (request, 'idoingreece/index.html')
 
-'''class HomeView(TemplateView):
-    template_name = 'psnrivers/home.html'
+'''lass HomeView(ListView):
+    model = IdoingreecePost
+    template_name = 'idoingreece/home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         #context['newsandevents'] = NewsAndEventsPsnRivers.objects.all()
         #context['about_psnrivers'] = AboutPsnRivers.objects.all()
+        return context'''
+
+class HomeView(ListView):
+    model = IdoingreecePost
+    template_name = 'idoingreece/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         return context
 
 
 #The first ArticleDetailView page for news and events
-class ArticleDetailView(DetailView):
+'''class ArticleDetailView(DetailView):
     #model = NewsAndEventsPsnRivers
     template_name = 'psnrivers/news_article_detail.html'
     context_object_name = 'article'''
+
+
 
 
 def services (request):
