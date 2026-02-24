@@ -48,23 +48,23 @@ class AboutIdoingreecePost(models.Model):
     
 
 
-class FeatureIdoingreecePost(models.Model):
-    Feature_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
-    Feature_Idoingreece_status = models.CharField(max_length=255, blank=True, null=True)
-    Feature_Idoingreece_description = models.TextField()
-    Feature_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    Feature_Idoingreece_img = models.ImageField(upload_to='Feature_images/')
-    Feature_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
-    Feature_Idoingreece_author = models.ForeignKey(
+class ExceptionalIdoingreecePost(models.Model):
+    Exceptional_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
+    Exceptional_Idoingreece_status = models.CharField(max_length=255, blank=True, null=True)
+    Exceptional_Idoingreece_description = models.TextField()
+    Exceptional_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
+    Exceptional_Idoingreece_img = models.ImageField(upload_to='Exceptional_images/')
+    Exceptional_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
+    Exceptional_Idoingreece_author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
 
     class Meta:
-        ordering = ['-Feature_Idoingreece_publish_date']
+        ordering = ['-Exceptional_Idoingreece_publish_date']
 
     def __str__(self):
-        return f"{self.Feature_Idoingreece_title} | {self.Feature_Idoingreece_author}"
+        return f"{self.Exceptional_Idoingreece_title} | {self.Exceptional_Idoingreece_author}"
 
     def get_absolute_url(self):
         return reverse('home')
