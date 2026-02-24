@@ -11,7 +11,7 @@ urlpatterns = [
     #path('article/<int:pk>/', ArticleDetailView.as_view(), name="detail"),
     #path('upcoming_news_events/', UpcomingNewsAndEventsView.as_view(), name='upcoming_news_events'),
     path('about/', views.about, name='about'),
-    path('departments/', views.departments, name='departments'),
+    path('directory/', views.directory, name='directory'),
     path('services/', views.services, name='services'),
 
 ]

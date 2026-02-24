@@ -54,5 +54,5 @@ def services (request):
 def about (request):
     return render (request, 'idoingreece/about.html')
 
-def departments (request):
-    return render (request, 'idoingreece/departments.html')
+def directory (request):
+    return render (request, 'idoingreece/directory.html')
