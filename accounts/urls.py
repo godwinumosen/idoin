@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import (
+    logout_view,
     signup_view,
     dashboard,
     custom_login_view,
@@ -12,7 +13,7 @@ from .views import (
 urlpatterns = [
     path("signup/", signup_view, name="signup"),
     path("login/", custom_login_view, name="login"), 
-    path("logout/", auth_views.LogoutView.as_view(next_page='login'), name="logout"),
+    path("logout/", logout_view, name="logout"),
     path("dashboard/", dashboard, name="dashboard"),
     path("edit-profile/", edit_profile, name="edit_profile"),
     path("upload-image/", upload_gallery_image, name="upload_image"),

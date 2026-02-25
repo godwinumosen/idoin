@@ -18,7 +18,7 @@
     <div class="card shadow-sm p-4">
         <h2 class="mb-4">Welcome, {{ user.username }}!</h2>
 
-        {% if user.is_vendor and user.vendorprofile %}
+        {% if user.is_vendor and profile %}
 
             <!-- ACCOUNT STATUS -->
             <div class="mb-3">
@@ -33,9 +33,9 @@
             </div>
 
             <!-- PROFILE IMAGE -->
-            {% if user.vendorprofile.profile_image %}
+            {% if profile.profile_image %}
                 <div class="mb-3">
-                    <img src="{{ user.vendorprofile.profile_image.url }}" 
+                    <img src="{{ profile.profile_image.url }}" 
                          class="img-fluid rounded shadow-sm" 
                          style="max-width:200px;">
                 </div>
@@ -43,15 +43,15 @@
 
             <!-- PROFILE DETAILS -->
             <div class="mb-3">
-                <strong>Business Name:</strong> {{ user.vendorprofile.business_name }}
+                <strong>Business Name:</strong> {{ profile.business_name }}
             </div>
 
             <div class="mb-3">
-                <strong>Bio:</strong> {{ user.vendorprofile.bio }}
+                <strong>Bio:</strong> {{ profile.bio }}
             </div>
 
             <div class="mb-3">
-                <strong>Location:</strong> {{ user.vendorprofile.location }}
+                <strong>Location:</strong> {{ profile.location }}
             </div>
 
             <a href="{% url 'edit_profile' %}" class="btn btn-warning mb-4">
@@ -66,7 +66,7 @@
             <!-- Image Counter -->
             <p>
                 <strong>Images:</strong> 
-                {{ user.vendorprofile.gallery.count }} / 10
+                {{ gallery|length }} / 10
             </p>
 
             <!-- Upload Restrictions -->
@@ -74,7 +74,7 @@
                 <div class="alert alert-warning">
                     Your account must be approved before uploading images.
                 </div>
-            {% elif user.vendorprofile.gallery.count >= 10 %}
+            {% elif gallery|length >= 10 %}
                 <div class="alert alert-danger">
                     You have reached the maximum of 10 images.
                 </div>
@@ -95,7 +95,7 @@
 
             <!-- Gallery Grid -->
             <div class="row">
-                {% for img in user.vendorprofile.gallery.all %}
+                {% for img in gallery %}
                     <div class="col-md-3 mb-4 text-center">
 
                         <img src="{{ img.image.url }}" 
@@ -125,7 +125,7 @@
             </div>
 
         {% else %}
-            <p>You are registered as a regular user.</p>
+            <p>You are registered as a regular user, or you do not have a vendor profile yet.</p>
         {% endif %}
     </div>
 </div>
