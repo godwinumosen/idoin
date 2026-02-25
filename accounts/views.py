@@ -14,12 +14,26 @@ def signup_view(request):
             user.status = 'pending'  # default
             user.save()
             form.save_m2m()  # if needed
+
             # Send email to user confirming registration
             send_mail(
-                'Registration Received',
-                'Thank you for registering. Your account is pending approval.',
-                'no-reply@yourdomain.com',
-                [user.email],
+                subject='Registration Received',
+                message=(
+                    f"Dear {user.username},\n\n"
+                    "Thank you for registering with I Do In Greece. "
+                    "We are delighted to receive your application to join our trusted vendor directory.\n\n"
+                    "Your account has been successfully created and is currently pending review by our administrative team. "
+                    "This approval process allows us to maintain the highest standards of quality, reliability, and professionalism "
+                    "across our platform.\n\n"
+                    "Once your account has been reviewed and approved, you will receive a confirmation email with further instructions. "
+                    "If any additional information is required during the review process, our team will contact you directly.\n\n"
+                    "We truly appreciate your interest in partnering with I Do In Greece and look forward to potentially showcasing "
+                    "your services to couples planning their special day.\n\n"
+                    "Warm regards,\n"
+                    "The I Do In Greece Team"
+                ),
+                from_email='no-reply@yourdomain.com',
+                recipient_list=[user.email],
                 fail_silently=False,
             )
             return redirect('login')

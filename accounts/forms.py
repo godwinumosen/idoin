@@ -4,13 +4,32 @@ from .models import User, VendorProfile
 
 
 class VendorSignupForm(UserCreationForm):
-    business_name = forms.CharField(max_length=255)
-    bio = forms.CharField(widget=forms.Textarea)
-    location = forms.CharField(max_length=255)
+    business_name = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter your business name"
+        })
+    )
+
+    bio = forms.CharField(
+        widget=forms.Textarea(attrs={
+            "class": "form-control",
+            "placeholder": "Tell customers about your business...",
+            "rows": 4
+        })
+    )
+
+    location = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter your business location"
+        })
+    )
 
     class Meta:
         model = User
-        # Explicit order: username, email, password1, password2, then vendor fields
         fields = [
             "username",
             "email",
@@ -20,6 +39,36 @@ class VendorSignupForm(UserCreationForm):
             "bio",
             "location",
         ]
+
+        widgets = {
+            "username": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Choose a username"
+            }),
+            "email": forms.EmailInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter your email"
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Add Bootstrap classes to password fields
+        self.fields["password1"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Create password"
+        })
+
+        self.fields["password2"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Confirm password"
+        })
+
+        # Optional: Improve labels
+        self.fields["business_name"].label = "Business Name"
+        self.fields["bio"].label = "Business Description"
+        self.fields["location"].label = "Business Location"
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -33,9 +82,28 @@ class VendorSignupForm(UserCreationForm):
                 location=self.cleaned_data["location"],
             )
         return user
-    
+
 
 class VendorProfileForm(forms.ModelForm):
     class Meta:
         model = VendorProfile
         fields = ["business_name", "bio", "location", "profile_image"]
+
+        widgets = {
+            "business_name": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Update business name"
+            }),
+            "bio": forms.Textarea(attrs={
+                "class": "form-control",
+                "rows": 4,
+                "placeholder": "Update business description"
+            }),
+            "location": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Update location"
+            }),
+            "profile_image": forms.FileInput(attrs={
+                "class": "form-control"
+            }),
+        }

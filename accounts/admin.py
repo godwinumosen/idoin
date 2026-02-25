@@ -62,21 +62,34 @@ class UserAdmin(BaseUserAdmin):
         ]
         return custom_urls + urls
 
+
     # Approve single user view
-    def approve_single_user(self, request, user_id):
-        user = get_object_or_404(User, pk=user_id)
-        if user.status != 'approved':
-            user.status = 'approved'
-            user.save()
-            send_mail(
-                'Account Approved',
-                'Your account has been approved. You can now log in.',
-                'no-reply@yourdomain.com',
-                [user.email],
-                fail_silently=False,
-            )
-            self.message_user(request, f"User {user.username} has been approved.", level=messages.SUCCESS)
-        return redirect(request.META.get('HTTP_REFERER'))
+ def approve_single_user(self, request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    if user.status != 'approved':
+        user.status = 'approved'
+        user.save()
+
+        # Send professional personalized approval email
+        send_mail(
+            'Account Approved – I Do In Greece',
+            f"Dear {user.username},\n\n"
+            "We are pleased to inform you that your vendor account with I Do In Greece has been officially approved. "
+            "You can now log in to your account and start showcasing your services to couples planning their special day.\n\n"
+            "To log in, please visit: https://yourdomain.com/login\n\n"
+            "We are excited to have you as part of our trusted vendor network and look forward to helping you connect with potential clients.\n\n"
+            "If you have any questions or need assistance, please do not hesitate to contact our support team.\n\n"
+            "Warm regards,\n"
+            "The I Do In Greece Team",
+            'no-reply@yourdomain.com',
+            [user.email],
+            fail_silently=False,
+        )
+
+        self.message_user(request, f"User {user.username} has been approved.", level=messages.SUCCESS)
+    return redirect(request.META.get('HTTP_REFERER'))
+    
+    
 
     # Reject single user view
     def reject_single_user(self, request, user_id):
