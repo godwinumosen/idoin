@@ -64,31 +64,31 @@ class UserAdmin(BaseUserAdmin):
 
 
     # Approve single user view
- def approve_single_user(self, request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    if user.status != 'approved':
-        user.status = 'approved'
-        user.save()
+    def approve_single_user(self, request, user_id):
+        user = get_object_or_404(User, pk=user_id)
+        if user.status != 'approved':
+            user.status = 'approved'
+            user.save()
 
-        # Send professional personalized approval email
-        send_mail(
-            'Account Approved – I Do In Greece',
-            f"Dear {user.username},\n\n"
-            "We are pleased to inform you that your vendor account with I Do In Greece has been officially approved. "
-            "You can now log in to your account and start showcasing your services to couples planning their special day.\n\n"
-            "To log in, please visit: https://yourdomain.com/login\n\n"
-            "We are excited to have you as part of our trusted vendor network and look forward to helping you connect with potential clients.\n\n"
-            "If you have any questions or need assistance, please do not hesitate to contact our support team.\n\n"
-            "Warm regards,\n"
-            "The I Do In Greece Team",
-            'no-reply@yourdomain.com',
-            [user.email],
-            fail_silently=False,
-        )
+            # Send professional personalized approval email
+            send_mail(
+                'Account Approved – I Do In Greece',
+                f"Dear {user.username},\n\n"
+                "We are pleased to inform you that your vendor account with I Do In Greece has been officially approved. "
+                "You can now log in to your account and start showcasing your services to couples planning their special day.\n\n"
+                "To log in, please visit: https://yourdomain.com/login\n\n"
+                "We are excited to have you as part of our trusted vendor network and look forward to helping you connect with potential clients.\n\n"
+                "If you have any questions or need assistance, please do not hesitate to contact our support team.\n\n"
+                "Warm regards,\n"
+                "The I Do In Greece Team",
+                'no-reply@yourdomain.com',
+                [user.email],
+                fail_silently=False,
+            )
 
-        self.message_user(request, f"User {user.username} has been approved.", level=messages.SUCCESS)
-    return redirect(request.META.get('HTTP_REFERER'))
-    
+            self.message_user(request, f"User {user.username} has been approved.", level=messages.SUCCESS)
+        return redirect(request.META.get('HTTP_REFERER'))
+        
     
 
     # Reject single user view
@@ -97,15 +97,30 @@ class UserAdmin(BaseUserAdmin):
         if user.status != 'rejected':
             user.status = 'rejected'
             user.save()
+
+            # Send professional personalized rejection email
             send_mail(
-                'Account Rejected',
-                'Your account has been rejected by admin.',
+                'Account Rejected – I Do In Greece',
+                f"Dear {user.username},\n\n"
+                "We regret to inform you that your vendor account with I Do In Greece has been reviewed and cannot be approved at this time. "
+                "This decision was made after careful consideration to ensure our platform maintains the highest standards of quality and reliability.\n\n"
+                "If you believe there has been an error or would like further clarification, please contact our support team for assistance.\n\n"
+                "We appreciate your interest in partnering with I Do In Greece and thank you for your understanding.\n\n"
+                "Warm regards,\n"
+                "The I Do In Greece Team",
                 'no-reply@yourdomain.com',
                 [user.email],
                 fail_silently=False,
             )
-            self.message_user(request, f"User {user.username} has been rejected.", level=messages.WARNING)
+
+            self.message_user(
+                request,
+                f"User {user.username} has been rejected.",
+                level=messages.WARNING
+            )
         return redirect(request.META.get('HTTP_REFERER'))
+
+
 
 # VendorProfile remains unchanged
 @admin.register(VendorProfile)
