@@ -47,10 +47,6 @@ class HomeView(ListView):
 
 
 
-def services (request):
-    return render (request, 'idoingreece/services.html')
-
-
 def about (request):
     return render (request, 'idoingreece/about.html')
 

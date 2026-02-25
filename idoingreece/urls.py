@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from . import views 
 from .views import HomeView
 
@@ -12,6 +12,7 @@ urlpatterns = [
     #path('upcoming_news_events/', UpcomingNewsAndEventsView.as_view(), name='upcoming_news_events'),
     path('about/', views.about, name='about'),
     path('directory/', views.directory, name='directory'),
-    path('services/', views.services, name='services'),
+
+    path('', include('accounts.urls')),
 
 ]

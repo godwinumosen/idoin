@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vendor Sign Up</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+
+        .left {
+            flex: 1;
+            background: url('/static/images/wedding.jpg') center/cover no-repeat;
+        }
+
+        .right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f5f2;
+        }
+
+        .form-box {
+            width: 400px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #c5a880;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="left"></div>
+
+<div class="right">
+    <div class="form-box">
+        <h2>Join the Directory</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Create Vendor Account</button>
+        </form>
+
+        <p>Already registered? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+</div>
+
+</body>
+</html>

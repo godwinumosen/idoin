@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+
 from django.conf import settings
 from django.utils import timezone
 
@@ -178,3 +179,91 @@ class NotifyNewsIdoingreecePost(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
+    
+
+#------------------------------------------------------------------------------------------
+#FOR THE VENDOR
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Location(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+    description = models.TextField()
+
+
+class Vendor(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,  # FIXED: replaced User
+        on_delete=models.CASCADE
+    )
+    business_name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    locations = models.ManyToManyField(Location)
+
+    bio = models.TextField()
+    services = models.TextField()
+    languages = models.CharField(max_length=255)
+
+    website = models.URLField(blank=True)
+    instagram = models.URLField(blank=True)
+
+    listing_type = models.CharField(
+        choices=[
+            ('free', 'Free'),
+            ('standard', 'Standard'),
+            ('premium', 'Premium'),
+        ],
+        max_length=20
+    )
+
+    is_featured = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class VendorImage(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to="vendors/")
+
+
+class VendorEnquiry(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+# ----------------------------
+# BLOG MODEL
+# ----------------------------
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True)  
+    blog_image = models.ImageField(upload_to="blog/")
+
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  # FIXED: replaced User
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_published = models.BooleanField(default=False)
+
+
+class AdZone(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="ads/")
+    link = models.URLField()
+    is_active = models.BooleanField(default=True)
