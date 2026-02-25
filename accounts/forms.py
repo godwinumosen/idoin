@@ -10,6 +10,7 @@ class VendorSignupForm(UserCreationForm):
 
     class Meta:
         model = User
+        # Explicit order: username, email, password1, password2, then vendor fields
         fields = [
             "username",
             "email",

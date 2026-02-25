@@ -153,6 +153,7 @@ MESSAGE_TAGS = {
 
 AUTH_USER_MODEL = "accounts.User"
 
-LOGIN_REDIRECT_URL = "/dashboard/"
-LOGOUT_REDIRECT_URL = "/"
-LOGIN_URL = "/login/"
+AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'login'
