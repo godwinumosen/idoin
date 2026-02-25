@@ -2,75 +2,93 @@
 {% load static %}
 {% block content %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">Directory Dashboard</a>
-        <div class="ms-auto">
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-warning">Logout</button>
-            </form>
+<div class="container my-5">
+
+    <!-- Welcome Header -->
+    <div class="mb-4 text-center">
+        <h2>Welcome, {{ user_info.username }}!</h2>
+        <p class="text-muted">Here’s everything about your account</p>
+    </div>
+
+    <!-- User Info Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Account Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-3 fw-bold">Username:</div>
+                <div class="col-md-9">{{ user_info.username }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-3 fw-bold">Email:</div>
+                <div class="col-md-9">{{ user_info.email }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-3 fw-bold">Full Name:</div>
+                <div class="col-md-9">{{ user_info.first_name }} {{ user_info.last_name }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-3 fw-bold">Date Joined:</div>
+                <div class="col-md-9">{{ user_info.date_joined|date:"F j, Y" }}</div>
+            </div>
+            {% if user_info.is_vendor %}
+            <div class="row mb-2">
+                <div class="col-md-3 fw-bold">Account Status:</div>
+                <div class="col-md-9">
+                    <span class="badge
+                        {% if user_info.status == 'Pending' %}bg-secondary
+                        {% elif user_info.status == 'Approved' %}bg-success
+                        {% elif user_info.status == 'Rejected' %}bg-danger
+                        {% endif %}">
+                        {{ user_info.status }}
+                    </span>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
-</nav>
 
-<div class="container">
-    <div class="card shadow-sm p-4">
-        <h2 class="mb-4">Welcome, {{ user.username }}!</h2>
-
-        {% if user.is_vendor and profile %}
-
-            <!-- ACCOUNT STATUS -->
-            <div class="mb-3">
-                <strong>Status:</strong> 
-                <span class="badge 
-                    {% if user.status == 'pending' %}bg-secondary
-                    {% elif user.status == 'approved' %}bg-success
-                    {% elif user.status == 'rejected' %}bg-danger
-                    {% endif %}">
-                    {{ user.get_status_display }}
-                </span>
-            </div>
-
-            <!-- PROFILE IMAGE -->
+    {% if profile %}
+    <!-- Vendor Profile Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Vendor Profile</h5>
+        </div>
+        <div class="card-body">
             {% if profile.profile_image %}
-                <div class="mb-3">
-                    <img src="{{ profile.profile_image.url }}" 
-                         class="img-fluid rounded shadow-sm" 
-                         style="max-width:200px;">
-                </div>
+            <div class="mb-3 text-center">
+                <img src="{{ profile.profile_image.url }}" class="img-fluid rounded shadow-sm" style="max-width:200px;">
+            </div>
             {% endif %}
 
-            <!-- PROFILE DETAILS -->
-            <div class="mb-3">
-                <strong>Business Name:</strong> {{ profile.business_name }}
+            <div class="row mb-2">
+                <div class="col-md-3 fw-bold">Business Name:</div>
+                <div class="col-md-9">{{ profile.business_name }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-3 fw-bold">Bio:</div>
+                <div class="col-md-9">{{ profile.bio }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-3 fw-bold">Location:</div>
+                <div class="col-md-9">{{ profile.location }}</div>
             </div>
 
-            <div class="mb-3">
-                <strong>Bio:</strong> {{ profile.bio }}
+            <div class="text-end mt-3">
+                <a href="{% url 'edit_profile' %}" class="btn btn-warning">Edit Profile</a>
             </div>
+        </div>
+    </div>
 
-            <div class="mb-3">
-                <strong>Location:</strong> {{ profile.location }}
-            </div>
+    <!-- Gallery Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Gallery ({{ gallery|length }} / 10)</h5>
+        </div>
+        <div class="card-body">
 
-            <a href="{% url 'edit_profile' %}" class="btn btn-warning mb-4">
-                Edit Profile
-            </a>
-
-            <hr>
-
-            <!-- GALLERY SECTION -->
-            <h4 class="mb-3">Gallery</h4>
-
-            <!-- Image Counter -->
-            <p>
-                <strong>Images:</strong> 
-                {{ gallery|length }} / 10
-            </p>
-
-            <!-- Upload Restrictions -->
-            {% if user.status != "approved" %}
+            {% if profile.user.status != "approved" %}
                 <div class="alert alert-warning">
                     Your account must be approved before uploading images.
                 </div>
@@ -79,27 +97,19 @@
                     You have reached the maximum of 10 images.
                 </div>
             {% else %}
-                <form method="POST" 
-                      action="{% url 'upload_image' %}" 
-                      enctype="multipart/form-data"
-                      class="mb-4">
+                <form id="upload-form" method="POST" enctype="multipart/form-data" class="mb-4">
                     {% csrf_token %}
                     <div class="input-group">
-                        <input type="file" name="image" class="form-control" required>
-                        <button type="submit" class="btn btn-dark">
-                            Upload
-                        </button>
+                        <input type="file" name="image" id="id_image" class="form-control" required>
+                        <button type="submit" class="btn btn-dark">Upload</button>
                     </div>
                 </form>
             {% endif %}
 
-            <!-- Gallery Grid -->
-            <div class="row">
+            <div class="row" id="gallery-container">
                 {% for img in gallery %}
-                    <div class="col-md-3 mb-4 text-center">
-
-                        <img src="{{ img.image.url }}" 
-                             class="img-fluid rounded shadow-sm mb-2">
+                    <div class="col-md-3 mb-4 text-center" id="image-{{ img.id }}">
+                        <img src="{{ img.image.url }}" class="img-fluid rounded shadow-sm mb-2">
 
                         <!-- Image Status Badge -->
                         <div class="mb-2">
@@ -112,22 +122,48 @@
                             </span>
                         </div>
 
-                        <!-- Delete Button -->
-                        <a href="{% url 'delete_image' img.id %}" 
-                           class="btn btn-sm btn-danger">
-                            Delete
-                        </a>
-
+                        <a href="{% url 'delete_image' img.id %}" class="btn btn-sm btn-danger">Delete</a>
                     </div>
                 {% empty %}
-                    <p>No images uploaded yet.</p>
+                    <p class="text-muted">No images uploaded yet.</p>
                 {% endfor %}
             </div>
-
-        {% else %}
-            <p>You are registered as a regular user, or you do not have a vendor profile yet.</p>
-        {% endif %}
+        </div>
     </div>
+    {% endif %}
+
 </div>
+
+<!-- AJAX Upload Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('upload-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const input = document.getElementById('id_image');
+        const file = input.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        fetch("{% url 'upload_image' %}", {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if(response.ok){
+                location.reload();  // reload to show the new image
+            } else {
+                alert('Upload failed. Try again.');
+            }
+        })
+        .catch(err => alert('Upload failed: ' + err));
+    });
+});
+</script>
 
 {% endblock %}

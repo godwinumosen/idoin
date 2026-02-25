@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
@@ -72,16 +73,13 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+
 @login_required
 def edit_profile(request):
     profile = request.user.vendorprofile
 
     if request.method == "POST":
-        form = VendorProfileForm(
-            request.POST,
-            request.FILES,
-            instance=profile
-        )
+        form = VendorProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect("dashboard")
@@ -92,27 +90,37 @@ def edit_profile(request):
 
 
 
+
+
+
+@login_required
+def delete_image(request, image_id):
+    image = VendorImage.objects.get(id=image_id)
+    if image.vendor.user == request.user:
+        image.delete()
+    return redirect("dashboard")
+
+
+
+# Upload image (AJAX)
 @login_required
 def upload_gallery_image(request):
     profile = request.user.vendorprofile
 
-    # Prevent upload if not approved
     if request.user.status != "approved":
-        return redirect("dashboard")
+        return JsonResponse({"error": "Account not approved"}, status=403)
 
-    # Limit to 10 images
     if profile.gallery.count() >= 10:
-        return redirect("dashboard")
+        return JsonResponse({"error": "Gallery full"}, status=400)
 
     if request.method == "POST":
         image = request.FILES.get("image")
         if image:
-            VendorImage.objects.create(
-                vendor=profile,
-                image=image
-            )
+            VendorImage.objects.create(vendor=profile, image=image)
+            return JsonResponse({"success": True})
 
-    return redirect("dashboard")
+    return JsonResponse({"error": "No image uploaded"}, status=400)
+
 
 
 
@@ -121,6 +129,7 @@ def dashboard(request):
     profile = None
     gallery = None
 
+    # Check if user is vendor
     if request.user.is_vendor:
         try:
             profile = request.user.vendorprofile
@@ -129,24 +138,26 @@ def dashboard(request):
             profile = None
             gallery = None
 
+    # Collect general user info
+    user_info = {
+        "username": request.user.username,
+        "email": request.user.email,
+        "first_name": request.user.first_name,
+        "last_name": request.user.last_name,
+        "date_joined": request.user.date_joined,
+        "is_vendor": request.user.is_vendor,
+        "status": request.user.get_status_display() if request.user.is_vendor else None,
+    }
+
     return render(
         request,
         "accounts/dashboard.html",
         {
             "profile": profile,
             "gallery": gallery,
+            "user_info": user_info
         }
     )
 
 
 
-
-@login_required
-def delete_image(request, image_id):
-    image = VendorImage.objects.get(id=image_id)
-
-    # Security check (vendor can delete only their own images)
-    if image.vendor.user == request.user:
-        image.delete()
-
-    return redirect("dashboard")
