@@ -19,15 +19,6 @@ import os
 def index (request):
     return render (request, 'idoingreece/index.html')
 
-'''lass HomeView(ListView):
-    model = IdoingreecePost
-    template_name = 'idoingreece/home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        #context['about_psnrivers'] = AboutPsnRivers.objects.all()
-        return context'''
-
 class HomeView(ListView):
     model = IdoingreecePost
     template_name = 'idoingreece/home.html'

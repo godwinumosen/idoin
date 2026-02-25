@@ -11,9 +11,9 @@
         <div class="row align-items-center">
           <div class="col-lg-6">
             <div class="hero-content">
-              <h1 data-aos="fade-right" data-aos-delay="300">
+              <h2 data-aos="fade-right" data-aos-delay="300">
                {{ post.Idoingreece_title }}
-              </h1>
+              </h2>
 
               <p class="hero-description" data-aos="fade-right" data-aos-delay="400">
                 {{ post.Idoingreece_description }}
@@ -38,8 +38,8 @@
               </div>
 
               <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
-                <a href="appointment.html" class="btn btn-primary">Become a Member</a>
-                <a href="appointment.html" class="btn btn-primary">Book Appointment</a>
+                <a href="appointment.html" class="btn btn-primary">Find Your Perfect Vendors</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary">Join the Directory</a>
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@
           <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
             <div class="about-content">
               <h2 class="section-heading">{{ about.About_Idoingreece_title }}</h2>
-              <p class="lead-text">{{ about.About_Idoingreece_description|linebreaks }}</p>
+              <p class="lead-text">{{ about.About_Idoingreece_description }}</p>
 
               <div class="cta-section">
                 <a href="about.html" class="btn-primary">Learn About Us</a>
