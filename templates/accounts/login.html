@@ -1,75 +1,48 @@
+
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-        }
+{% block content %}
 
-        .left {
-            flex: 1;
-            background-image: url("{% static 'assets/img/logo1.png' %}");
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%;">
+        <h2 class="text-center mb-4">Login</h2>
 
-        .right {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f8f5f2;
-        }
+        <!-- Display messages -->
+        {% if messages %}
+            <div class="mb-3">
+                {% for message in messages %}
+                    <div class="alert alert-danger py-2 mb-2" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-        .form-box {
-            width: 400px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #c5a880;
-            border: none;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #b29165;
-        }
-    </style>
-</head>
-<body>
-
-<div class="left"></div>
-
-<div class="right">
-    <div class="form-box">
-        <h2>Login</h2>
-
-        <form method="POST">
+        <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Login</button>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100 fw-bold">Login</button>
         </form>
 
-        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+        <p class="text-center mt-3">
+            Don't have an account? <a href="{% url 'signup' %}" class="fw-bold text-warning">Sign up</a>
+        </p>
     </div>
 </div>
 
+<!-- Bootstrap JS (optional for components like modals) -->
+
 </body>
 </html>
+
+
+{%endblock%}

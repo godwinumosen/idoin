@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'idoingreece',
     'accounts',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -138,8 +139,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'godwinsenwin@gmail.com'     
-EMAIL_HOST_PASSWORD = 'whwfnaramonumsdo'  
+EMAIL_HOST_USER = 'godwinsenwin@gmail.com'   #godwinsenwin@gmail.com   
+EMAIL_HOST_PASSWORD = 'whwfnaramonumsdo'     #whwfnaramonumsdo
 DEFAULT_FROM_EMAIL = 'idoingreece <godwinsenwin@gmail.com>' 
 
 
@@ -155,5 +156,5 @@ AUTH_USER_MODEL = "accounts.User"
 
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'

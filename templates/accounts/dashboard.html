@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Directory Dashboard</a>
+        <div class="ms-auto">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-warning">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card shadow-sm p-4">
+        <h2 class="mb-4">Welcome, {{ user.username }}!</h2>
+
+        {% if user.is_vendor and user.vendorprofile %}
+            <div class="mb-3">
+                <strong>Status:</strong> 
+                <span class="badge 
+                    {% if user.status == 'pending' %}bg-secondary
+                    {% elif user.status == 'approved' %}bg-success
+                    {% elif user.status == 'rejected' %}bg-danger
+                    {% endif %}">
+                    {{ user.get_status_display }}
+                </span>
+            </div>
+
+            <div class="mb-3"><strong>Business Name:</strong> {{ user.vendorprofile.business_name }}</div>
+            <div class="mb-3"><strong>Bio:</strong> {{ user.vendorprofile.bio }}</div>
+            <div class="mb-3"><strong>Location:</strong> {{ user.vendorprofile.location }}</div>
+        {% else %}
+            <p>You are registered as a regular user.</p>
+        {% endif %}
+    </div>
+</div>
+
+{%endblock%}
