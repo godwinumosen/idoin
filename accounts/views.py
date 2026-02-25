@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
 from .forms import VendorSignupForm
-from .models import VendorProfile
+from django.contrib.auth.decorators import login_required
 
-
-def vendor_signup(request):
+# Signup view
+def signup_view(request):
     if request.method == "POST":
         form = VendorSignupForm(request.POST)
         if form.is_valid():
@@ -14,11 +13,9 @@ def vendor_signup(request):
             return redirect("dashboard")
     else:
         form = VendorSignupForm()
-
     return render(request, "accounts/signup.html", {"form": form})
 
-
+# Dashboard view
 @login_required
 def dashboard(request):
-    vendor = VendorProfile.objects.get(user=request.user)
-    return render(request, "accounts/dashboard.html", {"vendor": vendor})
+    return render(request, "accounts/dashboard.html", {})
