@@ -40,3 +40,12 @@ class UserAdmin(BaseUserAdmin):
 @admin.register(VendorProfile)
 class VendorProfileAdmin(admin.ModelAdmin):
     list_display = ("user", "business_name", "location")
+
+from .models import VendorImage
+
+
+@admin.register(VendorImage)
+class VendorImageAdmin(admin.ModelAdmin):
+    list_display = ("vendor", "status", "uploaded_at")
+    list_filter = ("status",)
+    list_editable = ("status",)

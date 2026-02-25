@@ -1,74 +1,92 @@
-{% extends "base.html" %}
 {% load static %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vendor Signup</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f5f2;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-<div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow-sm p-4" style="max-width: 600px; width: 100%;">
-        <h2 class="text-center mb-4">Join the Directory</h2>
+        .form-box {
+            width: 600px;      /* make form big */
+            max-width: 100%;   /* responsive */
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
 
-        <!-- Display form errors/messages -->
-        {% if form.errors %}
-            <div class="mb-3">
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="alert alert-danger py-2 mb-2" role="alert">
-                            {{ error }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger py-2 mb-2" role="alert">
-                        {{ error }}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+        h2 {
+            margin-top: 0;
+            text-align: center;
+        }
 
+        /* Make labels align left */
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #c5a880;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #b29165;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .form-box {
+                width: 100%;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h2>Join the Directory</h2>
         <form method="POST">
             {% csrf_token %}
-
-            <div class="mb-3">
-                <label for="id_username" class="form-label">Username</label>
-                {{ form.username|add_class:"form-control" }}
-            </div>
-
-            <div class="mb-3">
-                <label for="id_email" class="form-label">Email</label>
-                {{ form.email|add_class:"form-control" }}
-            </div>
-
-            <div class="mb-3">
-                <label for="id_password1" class="form-label">Password</label>
-                {{ form.password1|add_class:"form-control" }}
-            </div>
-
-            <div class="mb-3">
-                <label for="id_password2" class="form-label">Confirm Password</label>
-                {{ form.password2|add_class:"form-control" }}
-            </div>
-
-            <div class="mb-3">
-                <label for="id_business_name" class="form-label">Business Name</label>
-                {{ form.business_name|add_class:"form-control" }}
-            </div>
-
-            <div class="mb-3">
-                <label for="id_bio" class="form-label">Bio</label>
-                {{ form.bio|add_class:"form-control" }}
-            </div>
-
-            <div class="mb-3">
-                <label for="id_location" class="form-label">Location</label>
-                {{ form.location|add_class:"form-control" }}
-            </div>
-
-            <button type="submit" class="btn btn-warning w-100 fw-bold">Create Vendor Account</button>
+            {{ form.as_p }}
+            <button type="submit">Create Vendor Account</button>
         </form>
-
-        <p class="text-center mt-3">
-            Already registered? <a href="{% url 'login' %}" class="fw-bold text-warning">Login</a>
-        </p>
+        <p>Already registered? <a href="{% url 'login' %}">Login</a></p>
     </div>
-</div>
-
-{%endblock%}
+</body>
+</html>

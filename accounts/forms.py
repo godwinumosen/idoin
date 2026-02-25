@@ -33,3 +33,9 @@ class VendorSignupForm(UserCreationForm):
                 location=self.cleaned_data["location"],
             )
         return user
+    
+
+class VendorProfileForm(forms.ModelForm):
+    class Meta:
+        model = VendorProfile
+        fields = ["business_name", "bio", "location", "profile_image"]
