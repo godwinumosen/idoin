@@ -8,14 +8,14 @@ class VendorSignupForm(UserCreationForm):
         max_length=255,
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Enter your business name"
+            "placeholder": "Enter your wedding name"
         })
     )
 
     bio = forms.CharField(
         widget=forms.Textarea(attrs={
             "class": "form-control",
-            "placeholder": "Tell customers about your business...",
+            "placeholder": "Tell customers about your wedding...",
             "rows": 4
         })
     )
@@ -24,7 +24,7 @@ class VendorSignupForm(UserCreationForm):
         max_length=255,
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Enter your business location"
+            "placeholder": "Enter your wedding location"
         })
     )
 
@@ -77,7 +77,7 @@ class VendorSignupForm(UserCreationForm):
             }),
             "email": forms.EmailInput(attrs={
                 "class": "form-control",
-                "placeholder": "Enter your email"
+                "placeholder": "Enter your valid email"
             }),
         }
 
@@ -94,9 +94,9 @@ class VendorSignupForm(UserCreationForm):
             "placeholder": "Confirm password"
         })
 
-        self.fields["business_name"].label = "Business Name"
-        self.fields["bio"].label = "Business Description"
-        self.fields["location"].label = "Business Location"
+        self.fields["business_name"].label = "Wedding Name"
+        self.fields["bio"].label = "Wedding Description"
+        self.fields["location"].label = "Wedding Location"
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -135,12 +135,12 @@ class VendorProfileForm(forms.ModelForm):
         widgets = {
             "business_name": forms.TextInput(attrs={
                 "class": "form-control",
-                "placeholder": "Update business name"
+                "placeholder": "Update wedding name"
             }),
             "bio": forms.Textarea(attrs={
                 "class": "form-control",
                 "rows": 4,
-                "placeholder": "Update business description"
+                "placeholder": "Update wedding description"
             }),
             "location": forms.TextInput(attrs={
                 "class": "form-control",
