@@ -24,9 +24,17 @@ class VendorProfile(models.Model):
         on_delete=models.CASCADE,
         related_name="vendorprofile"
     )
+
     business_name = models.CharField(max_length=255)
     bio = models.TextField()
     location = models.CharField(max_length=255)
+
+    # ✅ NEW FIELDS
+    age = models.PositiveIntegerField(null=True, blank=True)
+    gender = models.CharField(max_length=20, null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    county_of_residence = models.CharField(max_length=100, null=True, blank=True)
+
     profile_image = models.ImageField(
         upload_to="vendor_profiles/",
         null=True,

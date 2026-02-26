@@ -28,6 +28,39 @@ class VendorSignupForm(UserCreationForm):
         })
     )
 
+    # ✅ NEW FIELDS
+    age = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter your age"
+        })
+    )
+
+    gender = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter your gender"
+        })
+    )
+
+    phone_number = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter your phone number"
+        })
+    )
+
+    county_of_residence = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter your county of residence"
+        })
+    )
+
     class Meta:
         model = User
         fields = [
@@ -35,9 +68,6 @@ class VendorSignupForm(UserCreationForm):
             "email",
             "password1",
             "password2",
-            "business_name",
-            "bio",
-            "location",
         ]
 
         widgets = {
@@ -54,7 +84,6 @@ class VendorSignupForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Add Bootstrap classes to password fields
         self.fields["password1"].widget.attrs.update({
             "class": "form-control",
             "placeholder": "Create password"
@@ -65,7 +94,6 @@ class VendorSignupForm(UserCreationForm):
             "placeholder": "Confirm password"
         })
 
-        # Optional: Improve labels
         self.fields["business_name"].label = "Business Name"
         self.fields["bio"].label = "Business Description"
         self.fields["location"].label = "Business Location"
@@ -73,6 +101,7 @@ class VendorSignupForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.is_vendor = True
+
         if commit:
             user.save()
             VendorProfile.objects.create(
@@ -80,14 +109,28 @@ class VendorSignupForm(UserCreationForm):
                 business_name=self.cleaned_data["business_name"],
                 bio=self.cleaned_data["bio"],
                 location=self.cleaned_data["location"],
+                age=self.cleaned_data["age"],
+                gender=self.cleaned_data["gender"],
+                phone_number=self.cleaned_data["phone_number"],
+                county_of_residence=self.cleaned_data["county_of_residence"],
             )
+
         return user
 
 
 class VendorProfileForm(forms.ModelForm):
     class Meta:
         model = VendorProfile
-        fields = ["business_name", "bio", "location", "profile_image"]
+        fields = [
+            "business_name",
+            "bio",
+            "location",
+            "age",
+            "gender",
+            "phone_number",
+            "county_of_residence",
+            "profile_image"
+        ]
 
         widgets = {
             "business_name": forms.TextInput(attrs={
@@ -102,6 +145,22 @@ class VendorProfileForm(forms.ModelForm):
             "location": forms.TextInput(attrs={
                 "class": "form-control",
                 "placeholder": "Update location"
+            }),
+            "age": forms.NumberInput(attrs={
+                "class": "form-control",
+                "placeholder": "Update age"
+            }),
+            "gender": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Update gender"
+            }),
+            "phone_number": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Update phone number"
+            }),
+            "county_of_residence": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Update county of residence"
             }),
             "profile_image": forms.FileInput(attrs={
                 "class": "form-control"
