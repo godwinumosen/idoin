@@ -4,6 +4,25 @@ from .models import User, VendorProfile
 
 
 class VendorSignupForm(UserCreationForm):
+    # ✅ Add first_name and last_name
+    first_name = forms.CharField(
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter your first name"
+        })
+    )
+
+    last_name = forms.CharField(
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter your last name"
+        })
+    )
+
     business_name = forms.CharField(
         max_length=255,
         widget=forms.TextInput(attrs={
@@ -64,6 +83,8 @@ class VendorSignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = [
+            "first_name",   # added
+            "last_name",    # added
             "username",
             "email",
             "password1",
@@ -94,6 +115,8 @@ class VendorSignupForm(UserCreationForm):
             "placeholder": "Confirm password"
         })
 
+        self.fields["first_name"].label = "First Name"
+        self.fields["last_name"].label = "Last Name"
         self.fields["business_name"].label = "Wedding Name"
         self.fields["bio"].label = "Wedding Description"
         self.fields["location"].label = "Wedding Location"
@@ -101,6 +124,10 @@ class VendorSignupForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.is_vendor = True
+
+        # ✅ Save first_name and last_name
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
 
         if commit:
             user.save()

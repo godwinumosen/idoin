@@ -15,24 +15,61 @@
                     <form method="POST" enctype="multipart/form-data" novalidate>
                         {% csrf_token %}
 
+                        <!-- ================= USER INFO (FROM SIGNUP) ================= -->
+
+                        <h6 class="mb-3 fw-bold">Account Information</h6>
+
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="{{ request.user.username }}"
+                                   readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email"
+                                   class="form-control"
+                                   value="{{ request.user.email }}"
+                                   readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">First Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="{{ request.user.first_name }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="{{ request.user.last_name }}">
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- ================= VENDOR PROFILE FORM ================= -->
+
+                        <h6 class="mb-3 fw-bold">Business Information</h6>
+
                         {% for field in form %}
                             <div class="mb-3 position-relative">
                                 <label class="form-label">{{ field.label }}</label>
 
                                 {% if field.name == 'profile_image' %}
                                     {{ field }}
-                                    {% if profile.profile_image %}
-                                        <div class="mt-2 text-center">
-                                            <img src="{{ profile.profile_image.url }}" class="img-fluid rounded shadow-sm" style="max-width:150px;">
+
+                                    {% if form.instance.profile_image %}
+                                        <div class="mt-2">
+                                            <img src="{{ form.instance.profile_image.url }}"
+                                                 class="img-fluid rounded shadow-sm"
+                                                 style="max-width:150px;">
                                         </div>
                                     {% endif %}
-                                {% elif field.name == 'password1' or field.name == 'password2' %}
-                                    <div class="input-group">
-                                        {{ field }}
-                                        <span class="input-group-text toggle-password" style="cursor:pointer;">
-                                            <i class="bi bi-eye"></i>
-                                        </span>
-                                    </div>
+
                                 {% else %}
                                     {{ field }}
                                 {% endif %}
@@ -45,6 +82,8 @@
                             </div>
                         {% endfor %}
 
+                        <!-- ================= SAVE BUTTON ================= -->
+
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-success w-100 py-2">
                                 Save Changes
@@ -53,7 +92,9 @@
                     </form>
 
                     <div class="mt-3 text-center">
-                        <a href="{% url 'dashboard' %}" class="text-decoration-none">&larr; Back to Dashboard</a>
+                        <a href="{% url 'dashboard' %}" class="text-decoration-none">
+                            &larr; Back to Dashboard
+                        </a>
                     </div>
 
                 </div>
@@ -62,24 +103,5 @@
         </div>
     </div>
 </div>
-
-<!-- Password toggle script -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const toggles = document.querySelectorAll('.toggle-password');
-    toggles.forEach(toggle => {
-        toggle.addEventListener('click', function () {
-            const input = this.previousElementSibling;
-            if (input.type === "password") {
-                input.type = "text";
-                this.innerHTML = '<i class="bi bi-eye-slash"></i>';
-            } else {
-                input.type = "password";
-                this.innerHTML = '<i class="bi bi-eye"></i>';
-            }
-        });
-    });
-});
-</script>
 
 {% endblock %}
