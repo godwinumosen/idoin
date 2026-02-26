@@ -72,9 +72,9 @@
           <ul>
             <li><a href="{% url 'home' %}" class="active">Home</a></li>
             <li><a href="{% url 'about' %}">About Us</a></li>
-            <li><a href="{% url 'directory' %}">Directory</a></li>
+            <li><a href="{% url 'vendor_directory' %}">Vendors Directory</a></li>
             <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-            <li><a href="doctors.html">Blog</a></li>
+            <li><a href="{% url 'blog' %}">Blog</a></li>
             <li><a href="">Contact</a></li>
             <li class="dropdown"><a href="#"><span>Vendor</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
@@ -85,6 +85,7 @@
                 {% else %}
                     <li><a href="{% url 'signup' %}">Sign Up</a></li>
                     <li><a href="{% url 'login' %}">Log In</a></li>
+                    <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
                 {% endif %}
               </ul>
             </li>

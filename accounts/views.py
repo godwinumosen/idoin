@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -123,6 +123,27 @@ def upload_gallery_image(request):
             return JsonResponse({"success": True})
 
     return JsonResponse({"error": "No image uploaded"}, status=400)
+
+
+
+# Vendor Directory view
+def vendor_directory(request):
+    # Only approved vendors are listed
+    vendors = VendorProfile.objects.filter(user__status='approved')
+    return render(request, "accounts/vendor_directory.html", {"vendors": vendors})
+
+
+def vendor_profile_detail(request, user_id):
+    vendor = get_object_or_404(VendorProfile, user__id=user_id, user__status='approved')
+    gallery = vendor.gallery.filter(status='approved')  # Only show approved images
+    return render(request, "accounts/vendor_profile_detail.html", {
+        "vendor": vendor,
+        "gallery": gallery
+    })
+
+
+
+
 
 # Dashboard
 @login_required

@@ -41,5 +41,5 @@ class HomeView(ListView):
 def about (request):
     return render (request, 'idoingreece/about.html')
 
-def directory (request):
-    return render (request, 'idoingreece/directory.html')
+def blog (request):
+    return render (request, 'idoingreece/blog.html')
