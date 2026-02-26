@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import VendorProfileForm, VendorSignupForm
 from .models import VendorProfile, VendorImage
 from django.core.mail import send_mail
@@ -37,18 +38,14 @@ def signup_view(request):
                 recipient_list=[user.email],
                 fail_silently=False,
             )
+            messages.success(request, "Your account has been created and is pending approval.")
             return redirect('login')
     else:
         form = VendorSignupForm()
     return render(request, "accounts/signup.html", {"form": form})
 
 
-
-
-# views.py or a custom authentication backend
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-
+# Login view
 def custom_login_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -60,28 +57,39 @@ def custom_login_view(request):
                 return redirect('dashboard')
             elif user.status == 'pending':
                 messages.error(request, "Your account is pending approval")
-            else:  # rejected
+            else:
                 messages.error(request, "Your account has been rejected")
         else:
             messages.error(request, "Invalid credentials.")
     return render(request, 'accounts/login.html')
 
 
-
+# Logout
 @login_required
 def logout_view(request):
     logout(request)
     return redirect('login')
 
 
+
+# Edit profile
 @login_required
 def edit_profile(request):
-    profile = request.user.vendorprofile
+    # Safely get or create vendor profile
+    profile, created = VendorProfile.objects.get_or_create(
+        user=request.user,
+        defaults={
+            "business_name": "",
+            "bio": "",
+            "location": "",
+        }
+    )
 
     if request.method == "POST":
         form = VendorProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
+            messages.success(request, "Profile updated successfully!")
             return redirect("dashboard")
     else:
         form = VendorProfileForm(instance=profile)
@@ -89,23 +97,18 @@ def edit_profile(request):
     return render(request, "accounts/edit_profile.html", {"form": form})
 
 
-
-
-
-
-@login_required
-def delete_image(request, image_id):
-    image = VendorImage.objects.get(id=image_id)
-    if image.vendor.user == request.user:
-        image.delete()
-    return redirect("dashboard")
-
-
-
 # Upload image (AJAX)
 @login_required
 def upload_gallery_image(request):
-    profile = request.user.vendorprofile
+    # Safely get or create vendor profile
+    profile, created = VendorProfile.objects.get_or_create(
+        user=request.user,
+        defaults={
+            "business_name": "",
+            "bio": "",
+            "location": "",
+        }
+    )
 
     if request.user.status != "approved":
         return JsonResponse({"error": "Account not approved"}, status=403)
@@ -121,24 +124,32 @@ def upload_gallery_image(request):
 
     return JsonResponse({"error": "No image uploaded"}, status=400)
 
-
-
-
+# Dashboard
 @login_required
 def dashboard(request):
+    # Default values
     profile = None
-    gallery = None
+    gallery = VendorImage.objects.none()
 
-    # Check if user is vendor
     if request.user.is_vendor:
         try:
             profile = request.user.vendorprofile
             gallery = profile.gallery.all()
-        except VendorProfile.DoesNotExist:
-            profile = None
-            gallery = None
 
-    # Collect general user info
+            # Check if profile is incomplete (any required fields empty)
+            required_fields = ['business_name', 'bio', 'location']
+            incomplete = any(not getattr(profile, field) for field in required_fields)
+
+            if incomplete:
+                # Redirect vendor to edit their profile
+                messages.warning(request, "Please complete your profile before accessing the dashboard.")
+                return redirect('edit_profile')
+
+        except VendorProfile.DoesNotExist:
+            # If profile somehow doesn't exist, redirect to signup (unlikely)
+            messages.warning(request, "Please complete your profile first.")
+            return redirect('edit_profile')
+
     user_info = {
         "username": request.user.username,
         "email": request.user.email,
@@ -146,7 +157,7 @@ def dashboard(request):
         "last_name": request.user.last_name,
         "date_joined": request.user.date_joined,
         "is_vendor": request.user.is_vendor,
-        "status": request.user.get_status_display() if request.user.is_vendor else None,
+        "status": request.user.status if request.user.is_vendor else None,
     }
 
     return render(
@@ -160,4 +171,16 @@ def dashboard(request):
     )
 
 
+
+# Delete image
+@login_required
+def delete_image(request, image_id):
+    try:
+        image = VendorImage.objects.get(id=image_id)
+        if image.vendor.user == request.user:
+            image.delete()
+            messages.success(request, "Image deleted successfully!")
+    except VendorImage.DoesNotExist:
+        messages.error(request, "Image not found.")
+    return redirect("dashboard")
 

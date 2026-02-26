@@ -53,7 +53,6 @@
 
 <div class="container py-4 px-3">
     <div class="row justify-content-center">
-        <!-- FULL WIDTH on mobile -->
         <div class="col-12 col-sm-11 col-md-8 col-lg-6">
 
             <div class="card shadow-lg signup-card">
@@ -70,7 +69,16 @@
                                     {{ field.label }}
                                 </label>
 
-                                {{ field }}
+                                {% if field.name == 'password1' or field.name == 'password2' %}
+                                    <div class="input-group">
+                                        {{ field }}
+                                        <button type="button" class="btn btn-outline-secondary togglePassword">
+                                            👁
+                                        </button>
+                                    </div>
+                                {% else %}
+                                    {{ field }}
+                                {% endif %}
 
                                 {% if field.errors %}
                                     <div class="text-danger small">
@@ -100,6 +108,20 @@
         </div>
     </div>
 </div>
+
+<!-- Password toggle script -->
+<script>
+    const toggleButtons = document.querySelectorAll(".togglePassword");
+
+    toggleButtons.forEach(button => {
+        const input = button.parentElement.querySelector("input");
+        button.addEventListener("click", function() {
+            const type = input.getAttribute("type") === "password" ? "text" : "password";
+            input.setAttribute("type", type);
+            this.textContent = type === "password" ? "👁" : "🙈";
+        });
+    });
+</script>
 
 </body>
 </html>

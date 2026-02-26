@@ -131,7 +131,16 @@ class VendorProfileForm(forms.ModelForm):
             "county_of_residence",
             "profile_image"
         ]
-
+        labels = {
+            "business_name": "Wedding Name",
+            "bio": "Wedding Description",
+            "location": "Wedding Location",
+            "age": "Age",
+            "gender": "Gender",
+            "phone_number": "Phone Number",
+            "county_of_residence": "County of Residence",
+            "profile_image": "Profile Image"
+        }
         widgets = {
             "business_name": forms.TextInput(attrs={
                 "class": "form-control",

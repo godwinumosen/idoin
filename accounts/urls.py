@@ -1,18 +1,13 @@
 from django.urls import path
-from django.contrib.auth import views as auth_views
 from .views import (
-    logout_view,
-    signup_view,
-    dashboard,
-    custom_login_view,
-    edit_profile,
-    upload_gallery_image,
-    delete_image,
+    signup_view, custom_login_view, logout_view,
+    dashboard, edit_profile,
+    upload_gallery_image, delete_image
 )
 
 urlpatterns = [
     path("signup/", signup_view, name="signup"),
-    path("login/", custom_login_view, name="login"), 
+    path("login/", custom_login_view, name="login"),
     path("logout/", logout_view, name="logout"),
     path("dashboard/", dashboard, name="dashboard"),
     path("edit-profile/", edit_profile, name="edit_profile"),
