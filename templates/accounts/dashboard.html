@@ -3,91 +3,97 @@
 {% block content %}
 
 <div class="container my-5">
-    <h2 class="text-center mb-4">Welcome, {{ user_info.username }}!</h2>
+    <h2 class="text-center mb-5 fw-bold">Welcome, {{ user_info.username }}!</h2>
 
-    <!-- Account Info -->
-    <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white">Account Information</div>
+    <!-- ================= ACCOUNT INFO ================= -->
+    <div class="card mb-5 shadow border-0">
+        <div class="card-header bg-primary text-white fw-bold">Account Information</div>
         <div class="card-body">
-            <p><strong>Email:</strong> {{ user_info.email }}</p>
-            <p><strong>Full Name:</strong> {{ user_info.first_name }} {{ user_info.last_name }}</p>
-            <p><strong>Date Joined:</strong> {{ user_info.date_joined|date:"F j, Y" }}</p>
-            {% if user_info.is_vendor %}
-                <p>
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+                <div class="col"><strong>Email:</strong> {{ user_info.email }}</div>
+                <div class="col"><strong>Full Name:</strong> {{ user_info.first_name }} {{ user_info.last_name }}</div>
+                <div class="col"><strong>Date Joined:</strong> {{ user_info.date_joined|date:"F j, Y" }}</div>
+                {% if user_info.is_vendor %}
+                <div class="col">
                     <strong>Status:</strong>
                     <span class="badge 
                         {% if user_info.status|lower == 'pending' %}bg-secondary
                         {% elif user_info.status|lower == 'approved' %}bg-success
                         {% elif user_info.status|lower == 'rejected' %}bg-danger
-                        {% endif %}">
+                        {% endif %} px-3 py-2">
                         {{ user_info.status|capfirst }}
                     </span>
-                </p>
-            {% endif %}
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 
     {% if profile %}
-        <!-- Vendor Info -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-success text-white">Vendor Profile</div>
-            <div class="card-body">
-                {% if profile.profile_image %}
-                    <img src="{{ profile.profile_image.url }}" class="img-fluid rounded mb-3" style="max-width:200px;">
-                {% endif %}
-                <p><strong>Wedding Name:</strong> {{ profile.business_name }}</p>
-                <p><strong>Wedding Description:</strong> {{ profile.bio }}</p>
-                <p><strong>Location:</strong> {{ profile.location }}</p>
-                {% if profile.age %}<p><strong>Age:</strong> {{ profile.age }}</p>{% endif %}
-                {% if profile.gender %}<p><strong>Gender:</strong> {{ profile.gender }}</p>{% endif %}
-                {% if profile.phone_number %}<p><strong>Phone:</strong> {{ profile.phone_number }}</p>{% endif %}
-                {% if profile.county_of_residence %}<p><strong>County:</strong> {{ profile.county_of_residence }}</p>{% endif %}
-                <a href="{% url 'edit_profile' %}" class="btn btn-warning mt-3">Edit Profile</a>
+    <!-- ================= VENDOR INFO ================= -->
+    <div class="card mb-5 shadow border-0">
+        <div class="card-header bg-success text-white fw-bold">Vendor Profile</div>
+        <div class="card-body text-center">
+            {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" class="img-fluid rounded-circle mb-3" style="max-width:150px; height:150px; object-fit:cover;">
+            {% endif %}
+            <h4 class="fw-bold mt-2">{{ profile.business_name }}</h4>
+            <p class="text-muted mb-1">{{ profile.bio }}</p>
+            <p><i class="bi bi-geo-alt-fill me-1"></i>{{ profile.location }}</p>
+            <div class="row row-cols-1 row-cols-md-2 g-2 justify-content-center mt-2">
+                {% if profile.age %}<div class="col"><strong>Age:</strong> {{ profile.age }}</div>{% endif %}
+                {% if profile.gender %}<div class="col"><strong>Gender:</strong> {{ profile.gender }}</div>{% endif %}
+                {% if profile.phone_number %}<div class="col"><strong>Phone:</strong> {{ profile.phone_number }}</div>{% endif %}
+                {% if profile.county_of_residence %}<div class="col"><strong>County:</strong> {{ profile.county_of_residence }}</div>{% endif %}
             </div>
+            <a href="{% url 'edit_profile' %}" class="btn btn-warning mt-4 px-4">Edit Profile</a>
         </div>
+    </div>
 
-        <!-- Gallery -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-info text-white">Gallery ({{ gallery|length }}/10)</div>
-            <div class="card-body">
-                {% if user_info.status|lower == "approved" %}
-                    {% if gallery|length < 10 %}
-                        <form id="upload-form" enctype="multipart/form-data" class="mb-3">
-                            {% csrf_token %}
-                            <div class="input-group">
-                                <input type="file" name="image" id="id_image" class="form-control" required>
-                                <button type="submit" class="btn btn-dark">Upload</button>
-                            </div>
-                        </form>
-                    {% else %}
-                        <div class="alert alert-danger">Maximum 10 images reached.</div>
-                    {% endif %}
+    <!-- ================= GALLERY ================= -->
+    <div class="card mb-5 shadow border-0">
+        <div class="card-header bg-info text-white fw-bold">Gallery ({{ gallery|length }}/10)</div>
+        <div class="card-body">
+            {% if user_info.status|lower == "approved" %}
+                {% if gallery|length < 10 %}
+                    <form id="upload-form" enctype="multipart/form-data" class="mb-4">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="file" name="image" id="id_image" class="form-control" required>
+                            <button type="submit" class="btn btn-dark">Upload</button>
+                        </div>
+                    </form>
                 {% else %}
-                    <div class="alert alert-warning">You must be approved to upload images.</div>
+                    <div class="alert alert-danger">Maximum 10 images reached.</div>
                 {% endif %}
+            {% else %}
+                <div class="alert alert-warning">You must be approved to upload images.</div>
+            {% endif %}
 
-                <div class="row" id="gallery-container">
-                    {% for img in gallery %}
-                        <div class="col-md-3 mb-3 text-center">
-                             <img src="{{ img.image.url }}"
-                                        style="width: 90%; height: 50%; object-fit: cover;"
-                                        class="rounded">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3" id="gallery-container">
+                {% for img in gallery %}
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm text-center">
+                        <img src="{{ img.image.url }}" class="card-img-top rounded" style="height:200px; object-fit:cover;">
+                        <div class="card-body p-2">
                             <span class="badge 
                                 {% if img.status == 'pending' %}bg-secondary
                                 {% elif img.status == 'approved' %}bg-success
                                 {% elif img.status == 'rejected' %}bg-danger
-                                {% endif %}">
+                                {% endif %} mb-2 px-3 py-1">
                                 {{ img.get_status_display }}
                             </span>
                             <br>
                             <a href="{% url 'delete_image' img.id %}" class="btn btn-sm btn-danger mt-1">Delete</a>
                         </div>
-                    {% empty %}
-                        <p class="text-muted">No images uploaded yet.</p>
-                    {% endfor %}
+                    </div>
                 </div>
+                {% empty %}
+                    <p class="text-muted text-center">No images uploaded yet.</p>
+                {% endfor %}
             </div>
         </div>
+    </div>
     {% endif %}
 </div>
 

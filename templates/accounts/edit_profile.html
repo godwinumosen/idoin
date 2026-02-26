@@ -22,7 +22,7 @@
                                 {% if field.name == 'profile_image' %}
                                     {{ field }}
                                     {% if profile.profile_image %}
-                                        <div class="mt-2">
+                                        <div class="mt-2 text-center">
                                             <img src="{{ profile.profile_image.url }}" class="img-fluid rounded shadow-sm" style="max-width:150px;">
                                         </div>
                                     {% endif %}
