@@ -73,7 +73,7 @@ h4,
 h5,
 h6 {
   color: #04245c;
-  font-family: var(--heading-font);
+  font-family: Georgia;
 }
 
 /* PHP Email Form Messages
@@ -488,7 +488,7 @@ h6 {
 # Global Footer
 --------------------------------------------------------------*/
 .footer-16 {
-  background: var(--background-color);
+  background: #004aad;
   color: var(--default-color);
   font-size: 15px;
   padding: 100px 0 0;
@@ -504,21 +504,21 @@ h6 {
 }
 
 .footer-16 .brand-section .logo .sitename {
-  font-family: var(--heading-font);
+  font-family: Georgia;
   font-size: 32px;
   font-weight: 300;
-  color: var(--heading-color);
+  color: #ffffff;
   letter-spacing: -0.5px;
 }
 
 .footer-16 .brand-section .brand-description {
   font-size: 18px;
   line-height: 1.7;
-  color: color-mix(in srgb, var(--default-color), transparent 25%);
+  color: #f8f9fa;
   font-weight: 300;
   max-width: 380px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  margin: 0;
+  font-family:'Times New Roman', Times, serif;
+  margin: 0;  
 }
 
 .footer-16 .brand-section .contact-info .contact-item {
@@ -526,15 +526,15 @@ h6 {
   align-items: flex-start;
   margin-bottom: 16px;
   font-size: 15px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  font-family:'Times New Roman', Times, serif;
+  color: #f8f9fa;
 }
 
 .footer-16 .brand-section .contact-info .contact-item i {
   font-size: 16px;
   color: var(--accent-color);
   margin-right: 12px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family:'Times New Roman', Times, serif;
   margin-top: 3px;
   flex-shrink: 0;
 }
@@ -560,9 +560,10 @@ h6 {
 
 .footer-16 .nav-column h6 {
   
-  font-size: 16px;
+  font-size: 21px;
   font-weight: 400;
-  color: var(--heading-color);
+  color: #ffffff;
+  font-family: Georgia;
   margin-bottom: 24px;
   letter-spacing: 0.3px;
 }
@@ -574,11 +575,11 @@ h6 {
 }
 
 .footer-16 .nav-column .footer-nav a {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  color: #f8f9fa;
   text-decoration: none;
   font-size: 15px;
   font-weight: 300;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family:'Times New Roman', Times, serif;
   transition: all 0.3s ease;
   line-height: 1.4;
 }
@@ -595,7 +596,7 @@ h6 {
 }
 
 .footer-16 .footer-social .newsletter-section h5 {
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family:'Times New Roman', Times, serif;
   font-size: 20px;
   font-weight: 300;
   color: var(--heading-color);
@@ -727,7 +728,7 @@ h6 {
 }
 
 .footer-16 .footer-bottom .legal-links .credits a {
-  color: var(--accent-color);
+  color: #ffffff;
   font-size: 12px;
 }
 
@@ -1095,7 +1096,7 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 20%);
   margin-bottom: 2rem;
   max-width: 500px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family:'Times New Roman', Times, serif;
 }
 
 .hero .hero-content .hero-stats {
@@ -1430,7 +1431,7 @@ section,
   font-size: 2.5rem;
   font-weight: 300;
   line-height: 1.3;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family:'Times New Roman', Times, serif;
   margin-bottom: 1.5rem;
 }
 
@@ -1446,7 +1447,7 @@ section,
   line-height: 1.7;
   color: color-mix(in srgb, var(--default-color), transparent 15%);
   margin-bottom: 1.5rem;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family:'Times New Roman', Times, serif;
 }
 
 .home-about .about-content p {
@@ -2713,6 +2714,7 @@ section,
 .call-to-action .hero-content p {
   font-size: 18px;
   line-height: 1.8;
+  font-family: 'Times New Roman', Times, serif;
   color: color-mix(in srgb, var(--default-color), transparent 25%);
   margin-bottom: 50px;
 }
@@ -2946,7 +2948,7 @@ section,
 .about .about-content p.lead {
   font-size: 1.25rem;
   font-weight: 250;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family:'Times New Roman', Times, serif;
   color: color-mix(in srgb, var(--default-color), transparent 20%);
   margin-bottom: 2rem;
   line-height: 1.7;
