@@ -108,108 +108,143 @@
 
 
 
-  <footer id="footer" class="footer-16 footer position-relative">
+<footer id="footer" class="footer-16 footer position-relative">
 
+  <div class="container">
+
+    <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
+      <div class="row align-items-start">
+
+        <div class="col-lg-5">
+          <div class="brand-section">
+
+            <a href="{% url 'home' %}" class="logo d-flex align-items-center mb-4 text-decoration-none">
+              <span class="sitename text-white">I Do In Greece</span>
+            </a>
+
+            <p class="brand-description">
+              Connecting couples with trusted wedding professionals in Greece.
+              Making your dream celebration effortless and unforgettable.
+            </p>
+
+            <div class="contact-info mt-5">
+
+              <div class="contact-item mb-3">
+                <i class="bi bi-telephone me-2"></i>
+                <a href="tel:+447984685370" class="text-decoration-none text-light">
+                  +44 7984 685370
+                </a>
+              </div>
+
+              <div class="contact-item">
+                <i class="bi bi-envelope me-2"></i>
+                <a href="mailto:hello@idoingreece.com" class="text-decoration-none text-light">
+                  hello@idoingreece.com
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="footer-nav-wrapper">
+            <div class="row">
+
+              <div class="col-6 col-lg-3">
+                <div class="nav-column">
+                  <h6>Links</h6>
+                  <nav class="footer-nav">
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="{% url 'about' %}">About Us</a>
+                    <a href="{% url 'vendor_directory' %}">Vendors Directory</a>
+                  </nav>
+                </div>
+              </div>
+
+              <div class="col-6 col-lg-3">
+                <div class="nav-column">
+                  <h6>Services</h6>
+                  <nav class="footer-nav">
+                    <a href="{% url 'signup' %}">Sign Up</a>
+                    <a href="{% url 'login' %}">Log in</a>
+                    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+                  </nav>
+                </div>
+              </div>
+
+              <div class="col-6 col-lg-3">
+                <div class="nav-column">
+                  <h6>Connect</h6>
+                  <nav class="footer-nav">
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                    <a href="{% url 'contact' %}">Contact</a>
+                    <a href="{% url 'blog' %}">Blog</a>
+                  </nav>
+                </div>
+              </div>
+
+              <!-- Social Links -->
+              <div class="col-6 col-lg-3">
+                <div class="nav-column">
+                  <h6>Follow Us</h6>
+                  <div class="social-links d-flex gap-3 mt-3">
+                    <a href="https://twitter.com/" target="_blank" class="text-light">
+                      <i class="bi bi-twitter-x fs-5"></i>
+                    </a>
+                    <a href="https://facebook.com/" target="_blank" class="text-light">
+                      <i class="bi bi-facebook fs-5"></i>
+                    </a>
+                    <a href="https://instagram.com/" target="_blank" class="text-light">
+                      <i class="bi bi-instagram fs-5"></i>
+                    </a>
+                    <a href="https://linkedin.com/" target="_blank" class="text-light">
+                      <i class="bi bi-linkedin fs-5"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
     <div class="container">
+      <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
+        <div class="row align-items-center">
 
-      <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
-        <div class="row align-items-start">
-          <div class="col-lg-5">
-            <div class="brand-section">
-              <a href="{% url 'home' %}" class="logo d-flex align-items-center mb-4">
-                <span class="sitename">I Do In Greece</span>
-              </a>
-              <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
-                innovative solutions that elevate your brand presence.</p>
-
-              <div class="contact-info mt-5">
-                <div class="contact-item">
-                  <i class="bi bi-geo-alt"></i>
-                  <span>13 Coming soon bro.</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-telephone"></i>
-                  <span>+44 79* 468* 5370</span>
-                </div>
-                <div class="contact-item">
-                  <i class="bi bi-envelope"></i>
-                  <span>hello@Idoingreece.com</span>
-                </div>
-              </div>
+          <div class="col-lg-6">
+            <div class="copyright">
+              <p class="mb-0">
+                © <span class="sitename text-white">2026 I Do In Greece. All rights reserved.</span>
+              </p>
             </div>
           </div>
 
-          <div class="col-lg-7">
-            <div class="footer-nav-wrapper">
-              <div class="row">
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Links</h6>
-                    <nav class="footer-nav">
-                      <a href="{% url 'home' %}">Home</a>
-                      <a href="{% url 'about' %}">About Us</a>
-                      <a href="{% url 'vendor_directory' %}">Vendors Directory</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Services</h6>
-                    <nav class="footer-nav">
-                      <a href="{% url 'signup' %}">Sign Up</a>
-                      <a href="{% url 'login' %}">Log in</a>
-                      <a href="{% url 'edit_profile' %}">Edit Profile</a>
-                    </nav>
-                  </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                  <div class="nav-column">
-                    <h6>Connect</h6>
-                    <nav class="footer-nav">
-                      <a href="{% url 'dashboard' %}">Dashboard</a>
-                      <a href="{% url 'contact' %}">Contact</a>
-                      <a href="{% url 'blog' %}">Blog</a>
-                    </nav>
-                  </div>
-                </div>
-
+          <div class="col-lg-6 text-lg-end">
+            <div class="legal-links">
+              <div class="credits text-white">
+                Developed by 
+                <a href="https://senwin.pythonanywhere.com/" target="_blank" class=" text-white text-success text-decoration-none">
+                  Senwin
+                </a>
               </div>
             </div>
           </div>
 
         </div>
       </div>
-
     </div>
+  </div>
 
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
-          <div class="row align-items-center">
+</footer>
 
-            <div class="col-lg-6">
-              <div class="copyright">
-                <p>© <span class="sitename text-white">2026 I Do In Greece. All rights reserved.</span></p>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="legal-links">
-                <div class="credits text-white">
-                  Develope by <a href="https://senwin.pythonanywhere.com/">Senwin</a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </footer>
 
   <!-- Scroll Top -->
   <a href="#!" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
