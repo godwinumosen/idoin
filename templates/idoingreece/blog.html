@@ -40,7 +40,7 @@
                   <h3 class="card-title fw-bold">{{ post.title }}</h3>
                   <p class="text-muted mb-1">By {{ post.author }} | {{ post.publish_date|date:"M d, Y" }}</p>
                   <p class="card-text">{{ post.summary }}</p>
-                  <a href="{% url 'blog_detail' post.id %}" class="btn btn-primary btn-sm">Read More</a>
+                  <a href="{% url 'blog_detail' post.id %}" class="btn btn-primary text-white"style="background-color: #004aad;">Read More</a>
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@
 
       <!-- Search -->
       <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white">Search</div>
+        <div class="card-header text-white"style="background-color: #004aad;">Search</div>
         <div class="card-body">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search posts...">
@@ -99,7 +99,7 @@
 
       <!-- Categories -->
       <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white">Categories</div>
+        <div class="card-header text-white" style="background-color: #004aad;">Categories</div>
         <ul class="list-group list-group-flush">
           {% for category in categories %}
           <li class="list-group-item {% if selected_category == category %}active{% endif %}">
@@ -111,7 +111,7 @@
 
       <!-- Recent Posts -->
       <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white">Recent Posts</div>
+        <div class="card-header text-white" style="background-color: #004aad;">Recent Posts</div>
         <ul class="list-group list-group-flush">
           {% for post in recent_posts %}
           <li class="list-group-item">
