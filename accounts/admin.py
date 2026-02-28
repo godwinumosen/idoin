@@ -76,7 +76,7 @@ class UserAdmin(BaseUserAdmin):
                 f"Dear {user.username},\n\n"
                 "We are pleased to inform you that your vendor account with I Do In Greece has been officially approved. "
                 "You can now log in to your account and start showcasing your services to couples planning their special day.\n\n"
-                "To log in, please visit: https://yourdomain.com/login\n\n"
+                "To log in, please visit: https://idoingreece.com/login\n\n"
                 "We are excited to have you as part of our trusted vendor network and look forward to helping you connect with potential clients.\n\n"
                 "If you have any questions or need assistance, please do not hesitate to contact our support team.\n\n"
                 "Warm regards,\n"

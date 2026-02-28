@@ -61,7 +61,7 @@ def custom_login_view(request):
             else:
                 messages.error(request, "Your account has been rejected")
         else:
-            messages.error(request, "Invalid credentials.")
+            messages.error(request, "Invalid credentials, do you have an account.")
     return render(request, 'accounts/login.html')
 
 

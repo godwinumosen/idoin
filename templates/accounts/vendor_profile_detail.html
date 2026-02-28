@@ -102,31 +102,33 @@
     <!-- ================= TABS SECTION ================= -->
     <div class="mt-5">
 
-        <ul class="nav nav-tabs" id="vendorTabs">
-            <li class="nav-item">
-                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about">
-                    About
-                </button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reviews">
-                    Reviews
-                </button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#fullgallery">
-                    Gallery
-                </button>
-            </li>
-        </ul>
+       <ul class="nav nav-tabs" id="vendorTabs">
+    <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about">
+            About
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reviews">
+            Reviews
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#fullgallery">
+            Gallery
+        </button>
+    </li>
+</ul>
 
         <div class="tab-content p-4 border border-top-0">
 
             <!-- ABOUT TAB -->
             <div class="tab-pane fade show active" id="about">
-                <p>{{ vendor.bio }}</p>
+                <p style="word-break: break-word; overflow-wrap: break-word; white-space: normal;">
+                    {{ vendor.bio }}
+                </p>
+                </div>
             </div>
-
             <!-- REVIEWS TAB -->
             <div class="tab-pane fade" id="reviews">
                 <p class="text-muted">No reviews yet.</p>
