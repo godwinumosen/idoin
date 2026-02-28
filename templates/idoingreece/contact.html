@@ -32,11 +32,12 @@
                 <div class="info-icon">
                   <i class="bi bi-envelope"></i>
                 </div>
+                <a href="mailto:hello@idoingreece.com">
                 <div class="info-content">
                   <h3>Email Address</h3>
                   <p>hello@idoingreece.com</p>
                   <p>idoingreece@gmail.com</p>
-                </div>
+                </div></a>
               </div>
 
               
@@ -71,7 +72,15 @@
               <p class="mb-4">Have questions or want to learn more? Reach out to us and our team will get back to you
                 shortly.</p>
 
-              <form action="forms/contact.php" method="post" class="php-email-form">
+
+                {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+
+              <form method="post">
+                 {% csrf_token %}
                 <div class="row g-4">
                   <div class="col-md-6">
                     <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required="">
