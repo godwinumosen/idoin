@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.db.models import Q 
 from django.contrib.auth import get_user_model 
-from .models import ContactMessage, IdoingreecePost,AboutIdoingreecePost
+from .models import ContactMessage, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost
 import os 
 
 
@@ -26,6 +26,7 @@ class HomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['home_about'] = AboutIdoingreecePost.objects.all()
+        context['home_first_category'] = FirstIdoingreecePost.objects.all()
         return context
 
 

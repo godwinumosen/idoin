@@ -47,30 +47,6 @@ class AboutIdoingreecePost(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
-    
-    
-
-class Feature2_IdoingreecePost(models.Model): 
-    Feature2_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
-    Feature2_Idoingreece_status = models.CharField(max_length=255, blank=True, null=True)
-    Feature2_Idoingreece_description = models.TextField()
-    Feature2_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    Feature2_Idoingreece_img = models.ImageField(upload_to='Feature2_images/')
-    Feature2_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
-    Feature2_Idoingreece_author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-
-    class Meta:
-        ordering = ['-Feature2_Idoingreece_publish_date']
-
-    def __str__(self):
-        return f"{self.Feature2_Idoingreece_title} | {self.Feature2_Idoingreece_author}"
-
-    def get_absolute_url(self):
-        return reverse('home')
-    
 
 
 class FirstIdoingreecePost(models.Model):
@@ -94,7 +70,28 @@ class FirstIdoingreecePost(models.Model):
         return reverse('home')
     
 
+class Feature2_IdoingreecePost(models.Model): 
+    Feature2_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
+    Feature2_Idoingreece_status = models.CharField(max_length=255, blank=True, null=True)
+    Feature2_Idoingreece_description = models.TextField()
+    Feature2_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
+    Feature2_Idoingreece_img = models.ImageField(upload_to='Feature2_images/')
+    Feature2_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
+    Feature2_Idoingreece_author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
 
+    class Meta:
+        ordering = ['-Feature2_Idoingreece_publish_date']
+
+    def __str__(self):
+        return f"{self.Feature2_Idoingreece_title} | {self.Feature2_Idoingreece_author}"
+
+    def get_absolute_url(self):
+        return reverse('home')
+    
+    
 
 class ExcellenceIdoingreecePost(models.Model): 
     Excellence_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
