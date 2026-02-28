@@ -72,18 +72,19 @@ class FirstIdoingreecePost(models.Model):
 
 class BlogPost(models.Model):
     CATEGORY_CHOICES = [
-        ('weddings', 'Weddings'),
-        ('events', 'Events'),
-        ('tips', 'Tips & Advice'),
-        ('planning', 'Planning'),
+        ('Real Weddings', 'Real Weddings'),
+        ('Planning Guides', 'Planning Guides'),
+        ('Inspiration', 'Inspiration'),
+        ('Trends', 'Trends'),
+        ('Vendor Spotlights', 'Vendor Spotlights'),
     ]
 
     title = models.CharField(max_length=200)
-    author = models.CharField(max_length=100)
     content = models.TextField()
     image = models.ImageField(upload_to='blog_images/')
     publish_date = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, blank=True)
+    author = models.CharField(max_length=100)
 
     class Meta:
         ordering = ['-publish_date']
@@ -102,10 +103,7 @@ class Feature2_IdoingreecePost(models.Model):
     Feature2_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
     Feature2_Idoingreece_img = models.ImageField(upload_to='Feature2_images/')
     Feature2_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
-    Feature2_Idoingreece_author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
+    Feature2_Idoingreece_author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-Feature2_Idoingreece_publish_date']
