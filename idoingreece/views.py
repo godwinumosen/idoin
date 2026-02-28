@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.db.models import Q 
 from django.contrib.auth import get_user_model 
-from .models import IdoingreecePost,AboutIdoingreecePost
+from .models import ContactMessage, IdoingreecePost,AboutIdoingreecePost
 import os 
 
 
@@ -44,6 +44,20 @@ def about (request):
 
 def contact (request):
     return render (request, 'idoingreece/contact.html')
+
+
+def contact(request):
+    if request.method == "POST":
+        ContactMessage.objects.create(
+            name=request.POST.get("last_name"),
+            email=request.POST.get("email"),
+            subject=request.POST.get("subject"),
+            message=request.POST.get("message"),
+        )
+        messages.success(request, "Your message has been sent successfully!")
+        return redirect("home")
+    return render(request, "idoingreece/contact.html")
+
 
 
 def blog (request):

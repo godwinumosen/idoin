@@ -7,6 +7,7 @@ from .models import (
     FirstIdoingreecePost,
     ExcellenceIdoingreecePost,
     NotifyNewsIdoingreecePost,
+    ContactMessage,
 )
 
 # Main post
@@ -57,3 +58,8 @@ class NotifyNewsIdoingreecePostModelAdmin(admin.ModelAdmin):
     list_display = ['NotifyNews_Idoingreece_title', 'NotifyNews_Idoingreece_description', 'NotifyNews_Idoingreece_author']
 
 admin.site.register(NotifyNewsIdoingreecePost, NotifyNewsIdoingreecePostModelAdmin)
+
+
+class ContactMessageModelAdmin (admin.ModelAdmin):
+    list_display = ['name','subject','email','created_at']
+admin.site.register(ContactMessage, ContactMessageModelAdmin)
