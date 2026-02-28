@@ -5,40 +5,49 @@
 <br><br><br>
 <main class="main">
 
-<div class="page-title py-5 bg-success mb-5">
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
   <div class="container text-white">
-    <p><a href="/" class="text-white-50 text-decoration-none">Home</a> <span class="mx-2">></span> About</p>
-    <h1 class="display-4 fw-bold" style="font-size: 35px;">About Us</h1>
-    <p class="lead mb-0" style="font-size: 16px;">Get in touch with PSN Rivers State Branch. We're here to help.</p>
+    <p>
+      <a href="/" class="text-white-50 text-decoration-none">Home</a> Dashboard
+      <span class="mx-2 text-white">></span> 
+    </p>
+    <h1 class="display-4 fw-bold" style="font-size: 35px;">Welcome, {{ user_info.username }}!</h1>
+    <p class="lead mb-0" style="font-size: 16px;">
+      This is your central hub for all activities with the I Do In Greece. 
+      Access updates, <br>manage your profile, and stay connected with the latest resources and support.
+    </p>
   </div>
 </div>
 
 <div class="container my-5">
-    <h2 class="text-center mb-5 fw-bold">Welcome, {{ user_info.username }}!</h2>
+ 
 
     <!-- ================= ACCOUNT INFO ================= -->
-    <div class="card mb-5 shadow border-0">
-        <div class="card-header bg-primary text-white fw-bold">Account Information</div>
-        <div class="card-body">
-            <div class="row row-cols-1 row-cols-md-2 g-3">
-                <div class="col"><strong>Email:</strong> {{ user_info.email }}</div>
-                <div class="col"><strong>Full Name:</strong> {{ user_info.first_name }} {{ user_info.last_name }}</div>
-                <div class="col"><strong>Date Joined:</strong> {{ user_info.date_joined|date:"F j, Y" }}</div>
-                {% if user_info.is_vendor %}
-                <div class="col">
-                    <strong>Status:</strong>
-                    <span class="badge 
-                        {% if user_info.status|lower == 'pending' %}bg-secondary
-                        {% elif user_info.status|lower == 'approved' %}bg-success
-                        {% elif user_info.status|lower == 'rejected' %}bg-danger
-                        {% endif %} px-3 py-2">
-                        {{ user_info.status|capfirst }}
-                    </span>
-                </div>
-                {% endif %}
+<div class="card mb-5 shadow border-0">
+    <div class="card-header text-white fw-bold" style="background-color: #04245c;">
+        Account Information
+    </div>
+    <div class="card-body">
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            <div class="col"><strong>Email:</strong> {{ user_info.email }}</div>
+            <div class="col"><strong>Full Name:</strong> {{ user_info.first_name }} {{ user_info.last_name }}</div>
+            <div class="col"><strong>Date Joined:</strong> {{ user_info.date_joined|date:"F j, Y" }}</div>
+            {% if user_info.is_vendor %}
+            <div class="col">
+                <strong>Status:</strong>
+                <span class="badge 
+                    {% if user_info.status|lower == 'pending' %}bg-secondary
+                    {% elif user_info.status|lower == 'approved' %}bg-success
+                    {% elif user_info.status|lower == 'rejected' %}bg-danger
+                    {% endif %} px-3 py-2">
+                    {{ user_info.status|capfirst }}
+                </span>
             </div>
+            {% endif %}
         </div>
     </div>
+</div>
+
 
     {% if profile %}
     <!-- ================= VENDOR INFO ================= -->
@@ -67,7 +76,7 @@
 
     <!-- ================= GALLERY ================= -->
     <div class="card mb-5 shadow border-0">
-        <div class="card-header bg-info text-white fw-bold">Gallery ({{ gallery|length }}/10)</div>
+        <div class="card-header text-white fw-bold"style="background-color: #04245c;">Gallery ({{ gallery|length }}/10)</div>
         <div class="card-body">
             {% if user_info.status|lower == "approved" %}
                 {% if gallery|length < 10 %}
