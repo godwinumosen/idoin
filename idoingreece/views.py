@@ -42,10 +42,6 @@ def about (request):
     return render (request, 'idoingreece/about.html')
 
 
-def contact (request):
-    return render (request, 'idoingreece/contact.html')
-
-
 def contact(request):
     if request.method == "POST":
         ContactMessage.objects.create(
