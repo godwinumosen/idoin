@@ -23,7 +23,7 @@ def signup_view(request):
                 message=(
                     f"Dear {user.username},\n\n"
                     "Thank you for registering with I Do In Greece. "
-                    "We are delighted to receive your application to join our trusted vendor directory.\n\n"
+                    "Note: We are delighted to receive your application to join our trusted vendor directory.\n\n"
                     "Your account has been successfully created and is currently pending review by our administrative team. "
                     "This approval process allows us to maintain the highest standards of quality, reliability, and professionalism "
                     "across our platform.\n\n"
@@ -31,6 +31,7 @@ def signup_view(request):
                     "If any additional information is required during the review process, our team will contact you directly.\n\n"
                     "We truly appreciate your interest in partnering with I Do In Greece and look forward to potentially showcasing "
                     "your services to couples planning their special day.\n\n"
+                    "Once your account is been approved, kindly update your profile picture and your gallery section in the dashboard link."
                     "Warm regards,\n"
                     "The I Do In Greece Team"
                 ),
