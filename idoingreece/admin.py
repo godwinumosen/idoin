@@ -25,11 +25,20 @@ class AboutIdoingreecePostModelAdmin(admin.ModelAdmin):
 admin.site.register(AboutIdoingreecePost, AboutIdoingreecePostModelAdmin)
 
 
-class Feature2_IdoingreecePostModelAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'Feature2_Idoingreece_slug': ('Feature2_Idoingreece_title',)}
-    list_display = ['Feature2_Idoingreece_title', 'Feature2_Idoingreece_description', 'Feature2_Idoingreece_author']
 
-admin.site.register(Feature2_IdoingreecePost, Feature2_IdoingreecePostModelAdmin)
+class ContactMessageModelAdmin (admin.ModelAdmin):
+    list_display = ['name','subject','email','created_at']
+admin.site.register(ContactMessage, ContactMessageModelAdmin)
+
+from .models import BlogPost
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'publish_date', 'category')
+    list_filter = ('publish_date', 'category')
+    search_fields = ('title', 'author', 'summary', 'content')
+    date_hierarchy = 'publish_date'
+
 
 
 class FirstIdoingreecePostModelAdmin(admin.ModelAdmin):
@@ -39,11 +48,13 @@ class FirstIdoingreecePostModelAdmin(admin.ModelAdmin):
 admin.site.register(FirstIdoingreecePost, FirstIdoingreecePostModelAdmin)
 
 
-class ExcellenceIdoingreecePostModelAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'Excellence_Idoingreece_slug': ('Excellence_Idoingreece_title',)}
-    list_display = ['Excellence_Idoingreece_title', 'Excellence_Idoingreece_description', 'Excellence_Idoingreece_author']
+class Feature2_IdoingreecePostModelAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'Feature2_Idoingreece_slug': ('Feature2_Idoingreece_title',)}
+    list_display = ['Feature2_Idoingreece_title', 'Feature2_Idoingreece_description', 'Feature2_Idoingreece_author']
 
-admin.site.register(ExcellenceIdoingreecePost, ExcellenceIdoingreecePostModelAdmin)
+admin.site.register(Feature2_IdoingreecePost, Feature2_IdoingreecePostModelAdmin)
+
+
 
 
 class SecondIdoingreecePostModelAdmin(admin.ModelAdmin):
@@ -60,6 +71,3 @@ class NotifyNewsIdoingreecePostModelAdmin(admin.ModelAdmin):
 admin.site.register(NotifyNewsIdoingreecePost, NotifyNewsIdoingreecePostModelAdmin)
 
 
-class ContactMessageModelAdmin (admin.ModelAdmin):
-    list_display = ['name','subject','email','created_at']
-admin.site.register(ContactMessage, ContactMessageModelAdmin)

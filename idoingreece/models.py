@@ -70,6 +70,32 @@ class FirstIdoingreecePost(models.Model):
         return reverse('home')
     
 
+class BlogPost(models.Model):
+    CATEGORY_CHOICES = [
+        ('weddings', 'Weddings'),
+        ('events', 'Events'),
+        ('tips', 'Tips & Advice'),
+        ('planning', 'Planning'),
+    ]
+
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    summary = models.TextField()
+    content = models.TextField()
+    image = models.ImageField(upload_to='blog_images/')
+    publish_date = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, blank=True)
+
+    class Meta:
+        ordering = ['-publish_date']
+
+    def get_absolute_url(self):
+        return reverse('blog_detail', args=[str(self.id)])
+
+    def __str__(self):
+        return self.title
+    
+
 class Feature2_IdoingreecePost(models.Model): 
     Feature2_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     Feature2_Idoingreece_status = models.CharField(max_length=255, blank=True, null=True)
@@ -91,7 +117,7 @@ class Feature2_IdoingreecePost(models.Model):
     def get_absolute_url(self):
         return reverse('home')
     
-    
+
 
 class ExcellenceIdoingreecePost(models.Model): 
     Excellence_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
@@ -219,23 +245,7 @@ class VendorEnquiry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-# ----------------------------
-# BLOG MODEL
-# ----------------------------
 
-class BlogPost(models.Model):
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
-    description = models.TextField(blank=True)  
-    blog_image = models.ImageField(upload_to="blog/")
-
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,  # FIXED: replaced User
-        on_delete=models.SET_NULL,
-        null=True
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_published = models.BooleanField(default=False)
 
 
 class AdZone(models.Model):

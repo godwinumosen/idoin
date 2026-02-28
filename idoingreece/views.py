@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404 
+from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views.generic import ( TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView,)
@@ -12,7 +13,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.db.models import Q 
 from django.contrib.auth import get_user_model 
-from .models import ContactMessage, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost
+from .models import ContactMessage, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost,BlogPost
 import os 
 
 
@@ -56,6 +57,39 @@ def contact(request):
     return render(request, "idoingreece/contact.html")
 
 
+# Blog list (all posts)
+def blog(request):
+    all_posts = BlogPost.objects.order_by('-publish_date')
+    paginator = Paginator(all_posts, 5)  # Show 5 posts per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-def blog (request):
-    return render (request, 'idoingreece/blog.html')
+    categories = BlogPost.objects.values_list('category', flat=True).distinct()
+    recent_posts = BlogPost.objects.order_by('-publish_date')[:5]
+
+    return render(request, 'idoingreece/blog.html', {
+        'posts': page_obj,
+        'categories': categories,
+        'recent_posts': recent_posts,
+        'page_obj': page_obj,
+        'selected_category': None
+    })
+
+
+# Blog detail
+def blog_detail(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    return render(request, 'idoingreece/blog_detail.html', {'post': post})
+
+# Filter by category
+def blog_by_category(request, category):
+    posts = BlogPost.objects.filter(category=category).order_by('-publish_date')
+    categories = BlogPost.objects.values_list('category', flat=True).distinct()
+    recent_posts = BlogPost.objects.order_by('-publish_date')[:5]
+
+    return render(request, 'idoingreece/blog.html', {
+        'posts': posts,
+        'categories': categories,
+        'recent_posts': recent_posts,
+        'selected_category': category,
+    })
