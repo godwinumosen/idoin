@@ -36,7 +36,7 @@ from .models import BlogPost
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'publish_date', 'category')
     list_filter = ('publish_date', 'category')
-    search_fields = ('title', 'author', 'summary', 'content')
+    search_fields = ('title', 'author', 'content')
     date_hierarchy = 'publish_date'
 
 

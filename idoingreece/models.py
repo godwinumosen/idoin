@@ -80,7 +80,6 @@ class BlogPost(models.Model):
 
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
-    summary = models.TextField()
     content = models.TextField()
     image = models.ImageField(upload_to='blog_images/')
     publish_date = models.DateTimeField(auto_now_add=True)
