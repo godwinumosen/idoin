@@ -41,5 +41,10 @@ class HomeView(ListView):
 def about (request):
     return render (request, 'idoingreece/about.html')
 
+
+def contact (request):
+    return render (request, 'idoingreece/contact.html')
+
+
 def blog (request):
     return render (request, 'idoingreece/blog.html')

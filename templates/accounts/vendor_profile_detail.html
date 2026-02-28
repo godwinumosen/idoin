@@ -2,14 +2,12 @@
 {% load static %}
 {% block content %}
 
-
-
 <br><br><br>
 <div class="page-title py-5 bg-success mb-5">
   <div class="container text-white">
     <p><a href="/" class="text-white-50 text-decoration-none">Home</a> <span class="mx-2">></span> About</p>
-    <h1 class="display-4 fw-bold"style="font-size: 35px;">About Us</h1>
-    <p class="lead mb-0"style="font-size: 16px;">Get in touch with PSN Rivers State Branch. We're here to help.</p>
+    <h1 class="display-4 fw-bold" style="font-size: 35px;">About Us</h1>
+    <p class="lead mb-0" style="font-size: 16px;">Get in touch with PSN Rivers State Branch. We're here to help.</p>
   </div>
 </div>
 
@@ -24,12 +22,16 @@
                 <div class="col-md-8">
                     {% if vendor.profile_image %}
                     <img src="{{ vendor.profile_image.url }}"
-                         class="img-fluid rounded w-100"
-                         style="height: 400px; object-fit: cover;">
+                         class="img-fluid rounded w-100 gallery-img"
+                         style="height: 400px; object-fit: cover; cursor:pointer;"
+                         data-bs-toggle="modal"
+                         data-bs-target="#imageModal">
                     {% else %}
                     <img src="{% static 'images/vendor_placeholder.png' %}"
-                         class="img-fluid rounded w-100"
-                         style="height: 400px; object-fit: cover;">
+                         class="img-fluid rounded w-100 gallery-img"
+                         style="height: 400px; object-fit: cover; cursor:pointer;"
+                         data-bs-toggle="modal"
+                         data-bs-target="#imageModal">
                     {% endif %}
                 </div>
 
@@ -39,8 +41,10 @@
                         {% for img in gallery|slice:":3" %}
                         <div class="col-12">
                             <img src="{{ img.image.url }}"
-                                 class="img-fluid rounded w-100"
-                                 style="height: 195px; object-fit: cover;">
+                                 class="img-fluid rounded w-100 gallery-img"
+                                 style="height: 195px; object-fit: cover; cursor:pointer;"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#imageModal">
                         </div>
                         {% endfor %}
                     </div>
@@ -122,8 +126,10 @@
                     {% for img in gallery %}
                     <div class="col-md-3 col-6">
                         <img src="{{ img.image.url }}"
-                             class="img-fluid rounded w-100"
-                             style="height: 250px; object-fit: cover;">
+                             class="img-fluid rounded w-100 gallery-img"
+                             style="height: 250px; object-fit: cover; cursor:pointer;"
+                             data-bs-toggle="modal"
+                             data-bs-target="#imageModal">
                     </div>
                     {% endfor %}
                 </div>
@@ -137,5 +143,29 @@
     </div>
 
 </div>
+
+<!-- IMAGE MODAL -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark border-0">
+      <div class="modal-body text-center p-0">
+        <img id="modalImage" src="" class="img-fluid w-100">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".gallery-img");
+    const modalImage = document.getElementById("modalImage");
+
+    images.forEach(img => {
+        img.addEventListener("click", function () {
+            modalImage.src = this.src;
+        });
+    });
+});
+</script>
 
 {% endblock %}

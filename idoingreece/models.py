@@ -5,6 +5,7 @@ from django.conf import settings
 from django.utils import timezone
 
 
+#Done
 class IdoingreecePost(models.Model):
     Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     Idoingreece_description = models.TextField()
@@ -26,7 +27,7 @@ class IdoingreecePost(models.Model):
         return reverse('home')
     
 
-
+#Done
 class AboutIdoingreecePost(models.Model):
     About_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     About_Idoingreece_description = models.TextField()
@@ -47,28 +48,6 @@ class AboutIdoingreecePost(models.Model):
     def get_absolute_url(self):
         return reverse('home')
     
-
-
-class ExceptionalIdoingreecePost(models.Model):
-    Exceptional_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
-    Exceptional_Idoingreece_status = models.CharField(max_length=255, blank=True, null=True)
-    Exceptional_Idoingreece_description = models.TextField()
-    Exceptional_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    Exceptional_Idoingreece_img = models.ImageField(upload_to='Exceptional_images/')
-    Exceptional_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
-    Exceptional_Idoingreece_author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-
-    class Meta:
-        ordering = ['-Exceptional_Idoingreece_publish_date']
-
-    def __str__(self):
-        return f"{self.Exceptional_Idoingreece_title} | {self.Exceptional_Idoingreece_author}"
-
-    def get_absolute_url(self):
-        return reverse('home')
     
 
 class Feature2_IdoingreecePost(models.Model): 

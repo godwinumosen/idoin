@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import (
     IdoingreecePost,
-    ExceptionalIdoingreecePost,
     Feature2_IdoingreecePost,
     SecondIdoingreecePost,
     AboutIdoingreecePost,
@@ -23,13 +22,6 @@ class AboutIdoingreecePostModelAdmin(admin.ModelAdmin):
     list_display = ['About_Idoingreece_title', 'About_Idoingreece_description', 'About_Idoingreece_author']
 
 admin.site.register(AboutIdoingreecePost, AboutIdoingreecePostModelAdmin)
-
-
-class ExceptionalIdoingreecePostModelAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'Exceptional_Idoingreece_slug': ('Exceptional_Idoingreece_title',)}
-    list_display = ['Exceptional_Idoingreece_title', 'Exceptional_Idoingreece_description', 'Exceptional_Idoingreece_author']
-
-admin.site.register(ExceptionalIdoingreecePost, ExceptionalIdoingreecePostModelAdmin)
 
 
 class Feature2_IdoingreecePostModelAdmin(admin.ModelAdmin):

@@ -75,7 +75,7 @@
             <li><a href="{% url 'vendor_directory' %}">Vendors Directory</a></li>
             <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
             <li><a href="{% url 'blog' %}">Blog</a></li>
-            <li><a href="">Contact</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
             <li class="dropdown"><a href="#"><span>Vendor</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 {% if user.is_authenticated %}
@@ -116,7 +116,7 @@
         <div class="row align-items-start">
           <div class="col-lg-5">
             <div class="brand-section">
-              <a href="index.html" class="logo d-flex align-items-center mb-4">
+              <a href="{% url 'home' %}" class="logo d-flex align-items-center mb-4">
                 <span class="sitename">I Do In Greece</span>
               </a>
               <p class="brand-description">Crafting exceptional digital experiences through thoughtful design and
@@ -145,11 +145,11 @@
 
                 <div class="col-6 col-lg-3">
                   <div class="nav-column">
-                    <h6>Studio</h6>
+                    <h6>Links</h6>
                     <nav class="footer-nav">
-                      <a href="#!">Our Story</a>
-                      <a href="#!">Design Process</a>
-                      <a href="#!">Awards</a>
+                      <a href="{% url 'home' %}">Home</a>
+                      <a href="{% url 'about' %}">About Us</a>
+                      <a href="{% url 'vendor_directory' %}">Vendors Directory</a>
                     </nav>
                   </div>
                 </div>
@@ -158,9 +158,9 @@
                   <div class="nav-column">
                     <h6>Services</h6>
                     <nav class="footer-nav">
-                      <a href="#!">Brand Identity</a>
-                      <a href="#!">Digital Strategy</a>
-                      <a href="#!">Consultation</a>
+                      <a href="{% url 'signup' %}">Sign Up</a>
+                      <a href="{% url 'login' %}">Log in</a>
+                      <a href="{% url 'edit_profile' %}">Edit Profile</a>
                     </nav>
                   </div>
                 </div>
@@ -169,9 +169,9 @@
                   <div class="nav-column">
                     <h6>Connect</h6>
                     <nav class="footer-nav">
-                      <a href="#!">Start Project</a>
-                      <a href="#!">Schedule Call</a>
-                      <a href="#!">Partnership</a>
+                      <a href="{% url 'dashboard' %}">Dashboard</a>
+                      <a href="{% url 'contact' %}">Contact</a>
+                      <a href="{% url 'blog' %}">Blog</a>
                     </nav>
                   </div>
                 </div>

@@ -2,6 +2,17 @@
 {% load static %}
 {% block content %}
 
+<br><br><br>
+<main class="main">
+
+<div class="page-title py-5 bg-success mb-5">
+  <div class="container text-white">
+    <p><a href="/" class="text-white-50 text-decoration-none">Home</a> <span class="mx-2">></span> About</p>
+    <h1 class="display-4 fw-bold" style="font-size: 35px;">About Us</h1>
+    <p class="lead mb-0" style="font-size: 16px;">Get in touch with PSN Rivers State Branch. We're here to help.</p>
+  </div>
+</div>
+
 <div class="container my-5">
     <h2 class="text-center mb-5 fw-bold">Welcome, {{ user_info.username }}!</h2>
 
@@ -35,7 +46,11 @@
         <div class="card-header bg-success text-white fw-bold">Vendor Profile</div>
         <div class="card-body text-center">
             {% if profile.profile_image %}
-                <img src="{{ profile.profile_image.url }}" class="img-fluid rounded-circle mb-3" style="max-width:150px; height:150px; object-fit:cover;">
+                <img src="{{ profile.profile_image.url }}"
+                     class="img-fluid rounded-circle mb-3 gallery-img"
+                     style="max-width:150px; height:150px; object-fit:cover; cursor:pointer;"
+                     data-bs-toggle="modal"
+                     data-bs-target="#imageModal">
             {% endif %}
             <h4 class="fw-bold mt-2">{{ profile.business_name }}</h4>
             <p class="text-muted mb-1">{{ profile.bio }}</p>
@@ -74,7 +89,11 @@
                 {% for img in gallery %}
                 <div class="col">
                     <div class="card h-100 border-0 shadow-sm text-center">
-                        <img src="{{ img.image.url }}" class="card-img-top rounded" style="height:200px; object-fit:cover;">
+                        <img src="{{ img.image.url }}"
+                             class="card-img-top rounded gallery-img"
+                             style="height:200px; object-fit:cover; cursor:pointer;"
+                             data-bs-toggle="modal"
+                             data-bs-target="#imageModal">
                         <div class="card-body p-2">
                             <span class="badge 
                                 {% if img.status == 'pending' %}bg-secondary
@@ -97,8 +116,31 @@
     {% endif %}
 </div>
 
+<!-- IMAGE MODAL -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark border-0">
+      <div class="modal-body text-center p-0">
+        <img id="modalImage" src="" class="img-fluid w-100">
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+
+    /* Image Preview */
+    const images = document.querySelectorAll(".gallery-img");
+    const modalImage = document.getElementById("modalImage");
+
+    images.forEach(img => {
+        img.addEventListener("click", function () {
+            modalImage.src = this.src;
+        });
+    });
+
+    /* Upload AJAX */
     const form = document.getElementById("upload-form");
     if (!form) return;
 
@@ -123,7 +165,11 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .catch(err => alert("Upload failed: " + err));
     });
+
 });
 </script>
 
 {% endblock %}
+
+
+
