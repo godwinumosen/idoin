@@ -34,7 +34,7 @@
 </div>
     <!-- Cards Ro
      w -->
-    <div class="row g-4">
+    <div class="row g-4 justify-content-center">
 
       <!-- Card 1 -->
       <div class="col-12 col-md-6 {% if user.is_authenticated %}col-lg-3{% else %}col-lg-4{% endif %}">
@@ -94,7 +94,7 @@
               Access, updates and manage Vendor profile, and stay connected.
             </p>
 
-            <a href="{% url 'dashboard' %}" 
+            <a href="{% url 'admin_dashboard' %}" 
               class="fw-semibold text-decoration-none"
               style="color: #004aad;">
               Learn more →

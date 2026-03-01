@@ -1,4 +1,5 @@
-
+from django.contrib.auth.models import User
+from .models import User
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
@@ -6,6 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import VendorProfileForm, VendorSignupForm
+from django.contrib.auth.decorators import user_passes_test
 from .models import VendorProfile, VendorImage
 from django.core.mail import send_mail
 
@@ -75,19 +77,14 @@ def logout_view(request):
 
 
 
+
+
+
+
 # Edit profile
 @login_required
 def edit_profile(request):
-    # Safely get or create vendor profile
-    profile, created = VendorProfile.objects.get_or_create(
-        user=request.user,
-        defaults={
-            "business_name": "",
-            "bio": "",
-            "location": "",
-        }
-    )
-
+    profile, created = VendorProfile.objects.get_or_create(user=request.user)
     if request.method == "POST":
         form = VendorProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
@@ -96,22 +93,13 @@ def edit_profile(request):
             return redirect("dashboard")
     else:
         form = VendorProfileForm(instance=profile)
-
     return render(request, "accounts/edit_profile.html", {"form": form})
 
 
 # Upload image (AJAX)
 @login_required
 def upload_gallery_image(request):
-    # Safely get or create vendor profile
-    profile, created = VendorProfile.objects.get_or_create(
-        user=request.user,
-        defaults={
-            "business_name": "",
-            "bio": "",
-            "location": "",
-        }
-    )
+    profile, created = VendorProfile.objects.get_or_create(user=request.user)
 
     if request.user.status != "approved":
         return JsonResponse({"error": "Account not approved"}, status=403)
@@ -128,39 +116,24 @@ def upload_gallery_image(request):
     return JsonResponse({"error": "No image uploaded"}, status=400)
 
 
-
-# Vendor Directory view
+# Vendor Directory
 def vendor_directory(request):
-    vendor_list = VendorProfile.objects.filter(
-        user__status='approved'
-    ).order_by('-id')
-
-    paginator = Paginator(vendor_list, 3)  # 6 vendors per page
+    vendor_list = VendorProfile.objects.filter(user__status='approved').order_by('-id')
+    paginator = Paginator(vendor_list, 3)
     page_number = request.GET.get('page')
     vendors = paginator.get_page(page_number)
-
-    return render(request, "accounts/vendor_directory.html", {
-        "vendors": vendors
-    })
-
+    return render(request, "accounts/vendor_directory.html", {"vendors": vendors})
 
 
 def vendor_profile_detail(request, user_id):
     vendor = get_object_or_404(VendorProfile, user__id=user_id, user__status='approved')
-    gallery = vendor.gallery.filter(status='approved')  # Only show approved images
-    return render(request, "accounts/vendor_profile_detail.html", {
-        "vendor": vendor,
-        "gallery": gallery
-    })
-
-
-
+    gallery = vendor.gallery.filter(status='approved')
+    return render(request, "accounts/vendor_profile_detail.html", {"vendor": vendor, "gallery": gallery})
 
 
 # Dashboard
 @login_required
 def dashboard(request):
-    # Default values
     profile = None
     gallery = VendorImage.objects.none()
 
@@ -169,17 +142,14 @@ def dashboard(request):
             profile = request.user.vendorprofile
             gallery = profile.gallery.all()
 
-            # Check if profile is incomplete (any required fields empty)
+            # Check incomplete profile
             required_fields = ['business_name', 'bio', 'location']
             incomplete = any(not getattr(profile, field) for field in required_fields)
-
             if incomplete:
-                # Redirect vendor to edit their profile
                 messages.warning(request, "Please complete your profile before accessing the dashboard.")
                 return redirect('edit_profile')
 
         except VendorProfile.DoesNotExist:
-            # If profile somehow doesn't exist, redirect to signup (unlikely)
             messages.warning(request, "Please complete your profile first.")
             return redirect('edit_profile')
 
@@ -193,22 +163,104 @@ def dashboard(request):
         "status": request.user.status if request.user.is_vendor else None,
     }
 
-    return render(
-        request,
-        "accounts/dashboard.html",
-        {
-            "profile": profile,
-            "gallery": gallery,
-            "user_info": user_info
-        }
+    return render(request, "accounts/dashboard.html", {"profile": profile, "gallery": gallery, "user_info": user_info})
+
+
+def dashboard_directory(request):
+    return render(request, 'accounts/dashboard_directory.html')
+
+
+# Admin required decorator
+def admin_required(view_func):
+    return user_passes_test(lambda u: u.is_superuser)(view_func)
+
+
+@admin_required
+def admin_dashboard(request):
+    pending_vendors = VendorProfile.objects.filter(user__status='pending')
+    all_vendors = VendorProfile.objects.all()
+    pending_gallery = VendorImage.objects.filter(status='pending')
+    return render(request, 'accounts/admin_dashboard.html', {
+        'pending_vendors': pending_vendors,
+        'all_vendors': all_vendors,
+        'pending_gallery': pending_gallery,
+    })
+
+
+# Vendor Actions
+@admin_required
+def approve_vendor(request, user_id):
+    vendor_user = get_object_or_404(User, id=user_id)
+    if vendor_user.status != 'approved':
+        vendor_user.status = 'approved'
+        vendor_user.save()
+        send_mail(
+            'Account Approved – I Do In Greece',
+            f"Dear {vendor_user.username},\n\nYour vendor account has been approved. You can now log in.",
+            'no-reply@yourdomain.com',
+            [vendor_user.email],
+            fail_silently=False
+        )
+        messages.success(request, f"{vendor_user.username} approved successfully.")
+    return redirect('admin_dashboard')
+
+
+@admin_required
+def reject_vendor(request, user_id):
+    vendor_user = get_object_or_404(User, id=user_id)
+    if vendor_user.status != 'rejected':
+        vendor_user.status = 'rejected'
+        vendor_user.save()
+        send_mail(
+            'Account Rejected – I Do In Greece',
+            f"Dear {vendor_user.username},\n\nYour vendor account has been rejected.",
+            'no-reply@yourdomain.com',
+            [vendor_user.email],
+            fail_silently=False
+        )
+        messages.warning(request, f"{vendor_user.username} rejected successfully.")
+    return redirect('admin_dashboard')
+
+
+@admin_required
+def delete_vendor(request, user_id):
+    vendor_user = get_object_or_404(User, id=user_id)
+    vendor_user.delete()
+    messages.success(request, "Vendor deleted successfully.")
+    return redirect('admin_dashboard')
+
+
+# Gallery Actions
+@admin_required
+def approve_gallery(request, image_id):
+    image = get_object_or_404(VendorImage, id=image_id)
+    image.status = 'approved'
+    image.save()
+    send_mail(
+        'Image Approved – I Do In Greece',
+        f"Dear {image.vendor.user.username},\n\nYour gallery image has been approved.",
+        'no-reply@yourdomain.com',
+        [image.vendor.user.email],
+        fail_silently=False
     )
+    messages.success(request, "Gallery image approved.")
+    return redirect('admin_dashboard')
 
 
-
-
-def dashboard_directory (request):
-    return render (request, 'accounts/dashboard_directory.html')
-
+@admin_required
+def reject_gallery(request, image_id):
+    image = get_object_or_404(VendorImage, id=image_id)
+    image.status = 'rejected'
+    image.save()
+    send_mail(
+        'Image Rejected – I Do In Greece',
+        f"Dear {image.vendor.user.username},\n\nYour gallery image has been rejected.",
+        'no-reply@yourdomain.com',
+        [image.vendor.user.email],
+        fail_silently=False
+    )
+    messages.warning(request, "Gallery image rejected.")
+    return redirect('admin_dashboard')
 
 
 # Delete image
@@ -222,4 +274,3 @@ def delete_image(request, image_id):
     except VendorImage.DoesNotExist:
         messages.error(request, "Image not found.")
     return redirect("dashboard")
-

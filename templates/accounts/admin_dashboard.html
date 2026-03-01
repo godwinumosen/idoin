@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
+  <div class="container text-white text-center">
+    <h1 class="display-4 fw-bold" style="font-size: 35px;">Welcome, Admin</h1>
+    <p class="lead mb-0" style="font-size: 16px;">
+      Access, update and manage Vendor profiles, and stay connected with newly registered vendors
+    </p>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">
+            <a class="nav-link active" aria-current="page" href="#dashboard">
+              <i class="bi bi-house-door-fill me-2"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="#pending-vendors">
+              <i class="bi bi-person-check-fill me-2"></i> Pending Vendors
+            </a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="#all-vendors">
+              <i class="bi bi-people-fill me-2"></i> All Vendors
+            </a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="#vendor-gallery">
+              <i class="bi bi-image-fill me-2"></i> Vendor Gallery
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="dashboard">
+
+      <!-- Pending Vendors Section -->
+      <section id="pending-vendors" class="mb-5">
+        <h3 class="mb-3">Pending Vendors</h3>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Vendor Name</th>
+                <th>Email</th>
+                <th>Profile Image</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for vendor in pending_vendors %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ vendor.business_name }}</td>
+                <td>{{ vendor.user.email }}</td>
+                <td>
+                  {% if vendor.profile_image %}
+                  <img src="{{ vendor.profile_image.url }}" alt="Profile" class="rounded-circle" width="50">
+                  {% else %}
+                  <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile" class="rounded-circle" width="50">
+                  {% endif %}
+                </td>
+                <td><span class="badge bg-warning">Pending</span></td>
+                <td>
+                  <a href="{% url 'approve_vendor' vendor.user.id %}" class="btn btn-success btn-sm me-1" onclick="return confirm('Approve {{ vendor.business_name }}?');">Approve</a>
+                  <a href="{% url 'reject_vendor' vendor.user.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Reject {{ vendor.business_name }}?');">Reject</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No pending vendors</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- All Vendors Section -->
+      <section id="all-vendors" class="mb-5">
+        <h3 class="mb-3">All Vendors</h3>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle">
+            <thead class="table-primary">
+              <tr>
+                <th>#</th>
+                <th>Vendor Name</th>
+                <th>Email</th>
+                <th>Profile Image</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for vendor in all_vendors %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ vendor.business_name }}</td>
+                <td>{{ vendor.user.email }}</td>
+                <td>
+                  {% if vendor.profile_image %}
+                  <img src="{{ vendor.profile_image.url }}" alt="Profile" class="rounded-circle" width="50">
+                  {% else %}
+                  <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile" class="rounded-circle" width="50">
+                  {% endif %}
+                </td>
+                <td>
+                  {% if vendor.user.status == 'approved' %}
+                  <span class="badge bg-success">Active</span>
+                  {% elif vendor.user.status == 'pending' %}
+                  <span class="badge bg-warning">Pending</span>
+                  {% else %}
+                  <span class="badge bg-danger">Rejected</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{% url 'delete_vendor' vendor.user.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Delete {{ vendor.business_name }} permanently?');">Delete</a>
+                  <a href="{% url 'vendor_profile_detail' vendor.user.id %}" class="btn btn-info btn-sm">View Dashboard</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No vendors found</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Vendor Gallery Section -->
+      <section id="vendor-gallery" class="mb-5">
+        <h3 class="mb-3">Vendor Gallery Approvals</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for image in pending_gallery %}
+          <div class="col">
+            <div class="card">
+              <img src="{{ image.image.url }}" class="card-img-top" alt="Gallery Image">
+              <div class="card-body">
+                <h5 class="card-title">{{ image.vendor.business_name }}</h5>
+                <p class="card-text">Pending Approval</p>
+                <a href="{% url 'approve_gallery' image.id %}" class="btn btn-success btn-sm me-1" onclick="return confirm('Approve this image from {{ image.vendor.business_name }}?');">Approve</a>
+                <a href="{% url 'reject_gallery' image.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Reject this image from {{ image.vendor.business_name }}?');">Reject</a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center">No gallery images pending approval.</p>
+          {% endfor %}
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+{% endblock %}
