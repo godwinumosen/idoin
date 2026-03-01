@@ -2783,6 +2783,10 @@ section,
 }
 
 
+.fw-bold {
+    font-weight: 300 !important;
+}
+
 
 .call-to-action .hero-content p {
   font-size: 18px;
