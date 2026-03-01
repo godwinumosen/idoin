@@ -1,4 +1,6 @@
+
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -31,7 +33,7 @@ def signup_view(request):
                     "If any additional information is required during the review process, our team will contact you directly.\n\n"
                     "We truly appreciate your interest in partnering with I Do In Greece and look forward to potentially showcasing "
                     "your services to couples planning their special day.\n\n"
-                    "Once your account is been approved, kindly update your profile picture and your gallery section in the dashboard link."
+                    "Once your account is been approved, kindly update your profile picture and your gallery section in the dashboard link.\n\n"
                     "Warm regards,\n"
                     "The I Do In Greece Team"
                 ),
@@ -129,9 +131,18 @@ def upload_gallery_image(request):
 
 # Vendor Directory view
 def vendor_directory(request):
-    # Only approved vendors are listed
-    vendors = VendorProfile.objects.filter(user__status='approved')
-    return render(request, "accounts/vendor_directory.html", {"vendors": vendors})
+    vendor_list = VendorProfile.objects.filter(
+        user__status='approved'
+    ).order_by('-id')
+
+    paginator = Paginator(vendor_list, 3)  # 6 vendors per page
+    page_number = request.GET.get('page')
+    vendors = paginator.get_page(page_number)
+
+    return render(request, "accounts/vendor_directory.html", {
+        "vendors": vendors
+    })
+
 
 
 def vendor_profile_detail(request, user_id):
