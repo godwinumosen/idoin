@@ -116,7 +116,7 @@ def upload_gallery_image(request):
     if request.user.status != "approved":
         return JsonResponse({"error": "Account not approved"}, status=403)
 
-    if profile.gallery.count() >= 10:
+    if profile.gallery.count() >= 5:
         return JsonResponse({"error": "Gallery full"}, status=400)
 
     if request.method == "POST":

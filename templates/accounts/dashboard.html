@@ -72,10 +72,10 @@
 
     <!-- ================= GALLERY ================= -->
     <div class="card mb-5 shadow border-0">
-        <div class="card-header text-white fw-bold"style="background-color: #04245c;">Gallery ({{ gallery|length }}/10)</div>
+        <div class="card-header text-white fw-bold"style="background-color: #04245c;">Gallery ({{ gallery|length }}/5)</div>
         <div class="card-body">
             {% if user_info.status|lower == "approved" %}
-                {% if gallery|length < 10 %}
+                {% if gallery|length < 5 %}
                     <form id="upload-form" enctype="multipart/form-data" class="mb-4">
                         {% csrf_token %}
                         <div class="input-group">
@@ -84,7 +84,7 @@
                         </div>
                     </form>
                 {% else %}
-                    <div class="alert alert-danger">Maximum 10 images reached.</div>
+                    <div class="alert alert-danger">Maximum 5 images reached.</div>
                 {% endif %}
             {% else %}
                 <div class="alert alert-warning">You must be approved to upload images.</div>
