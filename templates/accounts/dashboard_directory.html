@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+
+
+<br><br><br>
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
+  <div class="container text-white text-center">
+    <h1 class="display-4 text-white fw-bold text-center" style="font-size: 35px;">Welcome,</h1>
+    <p class="lead mb-0 text-white text-center" style="font-size: 16px;">
+      This is your central hub for all activities with the I Do In Greece. 
+      Access updates, <br>manage your profile, and stay connected with the latest resources and support.
+    </p>
+  </div>
+</div>
+
+
+
+<section>
+<div class="container my-5">
+    <!-- Cards Row -->
+    <div class="row g-4">
+
+      <!-- Card 1 -->
+      <div class="col-12 col-md-6 {% if user.is_authenticated %}col-lg-3{% else %}col-lg-4{% endif %}">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded p-3 d-inline-block mb-4">
+              <i class="bi bi-card-list fs-3" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Vendor Directory</h5>
+            <p class="text-muted">
+              Explore our comprehensive list of registered vendors
+            </p>
+
+            <a href="{% url 'vendor_directory' %}" class="fw-semibold text-decoration-none"style="color: #004aad;">
+              Learn more →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-12 col-md-6 {% if user.is_authenticated %}col-lg-3{% else %}col-lg-4{% endif %}">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded p-3 d-inline-block mb-4">
+              <i class="bi bi-newspaper fs-3" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Vendor Dashboard</h5>
+            <p class="text-muted">Central hub for all activities with the I Do In Greece.
+            </p>
+
+            <a href="{% url 'dashboard' %}" class="fw-semibold text-decoration-none"style="color: #004aad;">
+              Learn more →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+     {% if user.is_authenticated %}
+      <!-- Card 4 -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded p-3 d-inline-block mb-4">
+              <i class="bi bi-speedometer2 fs-3" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Admin Dashboard</h5>
+            <p class="text-muted">
+              Access, updates and manage Vendor profile, and stay connected.
+            </p>
+
+            <a href="{% url 'dashboard' %}" 
+              class="fw-semibold text-decoration-none"
+              style="color: #004aad;">
+              Learn more →
+            </a>
+
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+<style>
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12);
+}
+</style>
+
+
+{% endblock %}

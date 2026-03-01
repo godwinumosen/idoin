@@ -205,6 +205,12 @@ def dashboard(request):
 
 
 
+
+def dashboard_directory (request):
+    return render (request, 'accounts/dashboard_directory.html')
+
+
+
 # Delete image
 @login_required
 def delete_image(request, image_id):

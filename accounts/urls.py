@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import vendor_directory, vendor_profile_detail
+from .views import dashboard_directory, vendor_directory, vendor_profile_detail
 from .views import (
     signup_view, custom_login_view, logout_view,
     dashboard, edit_profile,
@@ -11,6 +11,7 @@ urlpatterns = [
     path("login/", custom_login_view, name="login"),
     path("logout/", logout_view, name="logout"),
     path("dashboard/", dashboard, name="dashboard"),
+    path('dashboard_directory/', dashboard_directory, name='dashboard_directory'),
     path("edit-profile/", edit_profile, name="edit_profile"),
     path("upload-image/", upload_gallery_image, name="upload_image"),
     path("delete-image/<int:image_id>/", delete_image, name="delete_image"),

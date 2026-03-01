@@ -60,7 +60,7 @@
             </div>
 
           <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
-            <a href="appointment.html" class="btn btn-primary">
+            <a href="{% url 'vendor_directory' %}" class="btn btn-primary">
               Find Your Perfect Vendors
             </a>
             <a href="{% url 'signup' %}" class="btn btn-primary">
@@ -149,7 +149,7 @@
           <p class="lead-text">{{ about.About_Idoingreece_description }}</p>
 
           <div class="cta-section">
-            <a href="#" class="btn-primary" data-bs-toggle="modal" data-bs-target="#aboutModal{{ forloop.counter }}">
+            <a href="{%url 'about' %}" class="btn-primary" data-bs-target="#aboutModal{{ forloop.counter }}">
               Learn About Us
             </a>
           </div>
@@ -214,8 +214,8 @@
     <div class="text-center mb-5">
       <h3 class="fw-bold display-5">Explore Our Services</h3>
       <p class="text-muted mx-auto" style="max-width: 700px;">
-        Access key resources and services designed to support pharmacists
-        and promote pharmaceutical excellence in Rivers State.
+        Access key resources and services designed to support Vendors
+        and promote events excellence in Greece.
       </p>
     </div>
 
@@ -273,7 +273,7 @@
           <div class="card-body p-4">
 
             <div class="bg-light rounded p-3 d-inline-block mb-4">
-              <i class="bi bi-people fs-3" style="color: #004aad;"></i>
+              <i class="bi bi-newspaper fs-3" style="color: #004aad;"></i>
             </div>
 
             <h5 class="fw-bold">Blog News</h5>
@@ -297,7 +297,7 @@
           <div class="card-body p-4">
 
             <div class="bg-light rounded p-3 d-inline-block mb-4">
-              <i class="bi bi-people fs-3" style="color: #004aad;"></i>
+              <i class="bi bi-speedometer2 fs-3" style="color: #004aad;"></i>
             </div>
 
             <h5 class="fw-bold">Dashboard</h5>

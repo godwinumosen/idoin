@@ -12,7 +12,6 @@ urlpatterns = [
     path('blog/<int:pk>/', views.blog_detail, name='blog_detail'),
     path('blog/category/<str:category>/', views.blog_by_category, name='blog_by_category'),
     path('contact/', views.contact, name='contact'),
-    #path('directory/', views.directory, name='directory'),
 
     path('', include('accounts.urls')),
 
