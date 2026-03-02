@@ -130,7 +130,6 @@ def upload_gallery_image(request):
 
     if profile.gallery.count() >= 5:
         return JsonResponse({"error": "Gallery full"}, status=400)
-
     if request.method == "POST":
         image = request.FILES.get("image")
         if image:
@@ -147,11 +146,8 @@ def upload_gallery_image(request):
                 recipient_list=["godwinsenwin@gmail.com"],  # your email
                 fail_silently=False,
             )
-
             return JsonResponse({"success": True})
-
     return JsonResponse({"error": "No image uploaded"}, status=400)
-
 
 
 # ----------------- VENDOR DIRECTORY -----------------
