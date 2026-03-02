@@ -147,7 +147,8 @@ def upload_gallery_image(request):
                 fail_silently=False,
             )
             return JsonResponse({"success": True})
-     JsonResponse({"error": "No image uploaded"}, status=400)
+        d
+    return JsonResponse({"error": "No image uploaded"}, status=400)
 
 
 # ----------------- VENDOR DIRECTORY -----------------
