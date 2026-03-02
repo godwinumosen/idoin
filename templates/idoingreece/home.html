@@ -1,0 +1,458 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<br><br>
+  <main class="main">
+    <!-- Hero Section -->
+
+{% for post in object_list %}
+<section id="hero" class="hero section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row align-items-center">
+
+      <!-- LEFT CONTENT -->
+      <!-- Added: order-2 order-lg-1 -->
+      <div class="col-lg-6 order-2 order-lg-1">
+        <div class="hero-content">
+
+          <h2 data-aos="fade-right" data-aos-delay="300">
+            {{ post.Idoingreece_title }}
+          </h2>
+
+          <p class="hero-description" data-aos="fade-right" data-aos-delay="400">
+            {{ post.Idoingreece_description }}
+          </p>
+
+        <div class="hero-stats mb-4 d-flex justify-content-center text-center gap-4"
+            data-aos="fade-right" data-aos-delay="500">
+
+              <div class="stat-item">
+                <h3>
+                  <span data-purecounter-start="0"
+                        data-purecounter-end="97"
+                        data-purecounter-duration="2"
+                        class="purecounter"></span>+
+                </h3>
+                <p>Events</p>
+              </div>
+
+              <div class="stat-item">
+                <h3>
+                  <span data-purecounter-start="0"
+                        data-purecounter-end="6"
+                        data-purecounter-duration="2"
+                        class="purecounter"></span>+
+                </h3>
+                <p>Experience</p>
+              </div>
+
+              <div class="stat-item">
+                <h3>
+                  <span data-purecounter-start="0"
+                        data-purecounter-end="42"
+                        data-purecounter-duration="2"
+                        class="purecounter"></span>+
+                </h3>
+                <p>Weddings</p>
+              </div>
+
+            </div>
+
+          <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
+            <a href="{% url 'vendor_directory' %}" class="btn btn-primary">
+              Find Your Perfect Vendors
+            </a>
+            <a href="{% url 'signup' %}" class="btn btn-primary">
+              Join the Directory
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT IMAGE SECTION -->
+      <!-- Added: order-1 order-lg-2 -->
+      <div class="col-lg-6 order-1 order-lg-2">
+        <div class="hero-visual" data-aos="fade-left" data-aos-delay="400">
+
+          <div class="main-image">
+
+            <!-- CLICKABLE IMAGE -->
+            <a href="#" data-bs-toggle="modal" data-bs-target="#heroModal{{ forloop.counter }}">
+              <img src="{{ post.Idoingreece_img.url }}"
+                   alt="Modern Healthcare Facility"
+                   class="img-fluid">
+            </a>
+
+            <!-- FLOATING CARD -->
+            <div class="floating-card appointment-card">
+              <div class="card-icon">
+                <i class="bi bi-calendar-check"></i>
+              </div>
+              <div class="card-content">
+                <h6>Next Available</h6>
+                <p>Today 2:30 PM</p>
+                <small>I Do In Greece</small>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- BACKGROUND DECOR -->
+          <div class="background-elements">
+            <div class="element element-1"></div>
+            <div class="element element-2"></div>
+            <div class="element element-3"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HERO MODAL -->
+<div class="modal fade" id="heroModal{{ forloop.counter }}" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ post.Idoingreece_title }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <img src="{{ post.Idoingreece_img.url }}"
+             class="img-fluid mb-3">
+        <p>{{ post.Idoingreece_description }}</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+
+
+   <!-- Home About Section -->
+{% for about in home_about %}
+<section id="home-about" class="home-about section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row align-items-center">
+
+      <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
+        <div class="about-content">
+          <h2 class="section-heading">{{ about.About_Idoingreece_title }}</h2>
+          <p class="lead-text">{{ about.About_Idoingreece_description }}</p>
+
+          <div class="cta-section">
+            <a href="{%url 'about' %}" class="btn-primary" data-bs-target="#aboutModal{{ forloop.counter }}">
+              Learn About Us
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+        <div class="about-visual">
+          <div class="main-image">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#aboutModal{{ forloop.counter }}">
+              <img src="{{ about.About_Idoingreece_img.url }}" 
+                   alt="Modern medical facility" 
+                   class="img-fluid">
+            </a>
+          </div>
+
+          <div class="floating-card">
+            <div class="card-content">
+              <div class="icon">
+                <i class="bi bi-heart-pulse"></i>
+              </div>
+              <div class="card-text">
+                <h4>24/7 Care</h4>
+                <p>Always here when you need us most</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="aboutModal{{ forloop.counter }}" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ about.About_Idoingreece_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <img src="{{ about.About_Idoingreece_img.url }}" 
+             class="img-fluid mb-3">
+        <p>{{ about.About_Idoingreece_description }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+    
+
+
+
+
+
+    <section class="py-5 bg-light">
+      <div class="container">
+    <!-- Section Header -->
+    <div class="text-center mb-5">
+      <h3 class="fw-bold display-5">Explore Our Services</h3>
+      <p class="text-muted mx-auto" style="max-width: 700px;">
+        Access key resources and services designed to support Vendors
+        and promote events excellence in Greece.
+      </p>
+    </div>
+
+    <!-- Cards Row -->
+    <div class="row g-4">
+
+      <!-- Card 1 -->
+      <div class="col-12 col-md-6 {% if user.is_authenticated %}col-lg-3{% else %}col-lg-4{% endif %}">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded p-3 d-inline-block mb-4">
+             <i class="bi bi-person-plus fs-3" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Join the Directory</h5>
+            <p class="text-muted">
+              Join I Do In Greece and access exclusive benefits,
+              resources, and networking opportunities.
+            </p>
+
+            <a href="{% url 'signup' %}" class="fw-semibold text-decoration-none"style="color: #004aad;">
+              Learn more →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-12 col-md-6 {% if user.is_authenticated %}col-lg-3{% else %}col-lg-4{% endif %}">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded p-3 d-inline-block mb-4">
+              <i class="bi bi-card-list fs-3" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Vendor Directory</h5>
+            <p class="text-muted">
+              Find registered Vendors across Greece.
+            </p>
+
+            <a href="{% url 'vendor_directory' %}" class="fw-semibold text-decoration-none"style="color: #004aad;">
+              Learn more →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-12 col-md-6 {% if user.is_authenticated %}col-lg-3{% else %}col-lg-4{% endif %}">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded p-3 d-inline-block mb-4">
+              <i class="bi bi-newspaper fs-3" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Blog News</h5>
+            <p class="text-muted">
+              Stay informed with the latest news, announcements,
+              and publications.
+            </p>
+
+            <a href="{% url 'blog' %}" class="fw-semibold text-decoration-none"style="color: #004aad;">
+              Learn more →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+     {% if user.is_authenticated %}
+      <!-- Card 4 -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded p-3 d-inline-block mb-4">
+              <i class="bi bi-speedometer2 fs-3" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Dashboard</h5>
+            <p class="text-muted">
+              Central hub for all activities with the I Do In Greece.
+            </p>
+
+            <a href="{% url 'dashboard_directory' %}" 
+              class="fw-semibold text-decoration-none"
+              style="color: #004aad;">
+              Learn more →
+            </a>
+
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+<style>
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12);
+}
+</style>
+
+
+
+
+
+
+    <!-- first Section -->
+     {% for first_category in home_first_category %}
+    <section id="services" class="services section">
+            <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Real Weddings</h2>
+        <p>Discover love stories brought to life against the breathtaking backdrops of Greece.</p>
+      </div><!-- End Section Title -->
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item">
+              <div class="service-image">
+                <img src="{{ first_category.About_Idoingreece_img.url }}" alt="Cardiology Services" class="img-fluid">
+                <div class="service-overlay">
+                  <i class="fas fa-heartbeat"></i>
+                </div>
+              </div>
+              <div class="service-content">
+                <h3>{{ first_category.First_Idoingreece_title }}</h3>
+                <p>{{ first_category.First_Idoingreece_description }}</p>
+                <div class="service-features">
+                <a href="service-details.html" class="service-btn">
+                  <span>Learn More</span>
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+        </div>
+      </div>
+    </section><!-- /Services Section -->
+    </div>
+    </section>
+    {% endfor %}
+
+
+
+    <!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Featured Vendors Strip</h2>
+        <p>Meet Some of Greece's Finest</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-0">
+
+          <div class="col-lg-8" data-aos="fade-right" data-aos-delay="200">
+            <div class="featured-service-main">
+              <div class="service-image-wrapper">
+                <img src="{%static 'assets/img/health/consultation-4.webp'%}" alt="Premier Healthcare Services" class="img-fluid"
+                  loading="lazy">
+                <div class="service-overlay">
+                  <div class="service-badge">
+                    <i class="bi bi-heart-pulse"></i>
+                    <span>Emergency Care</span>
+                  </div>
+                </div>
+              </div>
+              <div class="service-details">
+                <h2>Comprehensive Healthcare Excellence</h2>
+                <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ante ipsum primis in faucibus
+                  orci luctus et ultrices posuere cubilia curae donec velit neque.</p>
+                <a href="{% url 'vendor_directory' %}" class="main-cta">Vendors Directory</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="300">
+            <div class="services-sidebar">
+
+              <div class="service-item" data-aos="fade-up" data-aos-delay="400">
+                <div class="service-icon-wrapper">
+                  <i class="bi bi-capsule"></i>
+                </div>
+                <div class="service-info">
+                  <h4>Dermatology Clinic</h4>
+                  <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                  <a href="#!" class="service-link">Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <!-- Departments Section -->
+    <section id="departments" class="departments section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row g-5">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="department-card">
+              <div class="department-image">
+                <img src="{%static 'assets/img/health/cardiology-3.webp'%}" alt="Cardiology Department" class="img-fluid">
+              </div>
+              <div class="department-content">
+                <h3>Cardiology</h3>
+                <p>Comprehensive heart care with advanced diagnostic tools and expert cardiologists dedicated to your
+                  cardiovascular health.</p>
+                <a href="#!" class="learn-more">
+                  <span>Learn More</span>
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div><!-- End Department Card -->
+        </div>
+
+      </div>
+    </section><!-- /Departments Section -->
+
+  </main>
+
+  {% endblock %}

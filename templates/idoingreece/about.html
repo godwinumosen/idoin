@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<br><br><br>
+<main class="main">
+
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
+  <div class="container text-white">
+    <h1 class="display-4 text-white fw-bold text-center" style="font-size: 35px;">About Us</h1>
+    <p class="lead mb-0 text-white text-center" style="font-size: 16px;">
+      Born from a love of Crete, a proposal in lockdown, <br>and a wedding that changed everything.
+    </p>
+  </div>
+</div>
+
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row align-items-center">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+            <div class="about-content">
+              <h3>The Person Behind the Platform</h3>
+              <p class="lead">
+                  I am a fundraising events manager with 17 years of experience planning and delivering
+                  large-scale events for UK charities. I know how to manage logistics, work with suppliers,
+                  build timelines, and keep a complex event moving, calmly, professionally, and with attention
+                  to every detail.
+                  I also know what it means to be a bride planning a destination wedding from the UK. I know
+                  the late-night internet searches, the inbox full of vendor enquiries, the spreadsheets and
+                  the uncertainty and the moments of sheer excitement when something clicks into place.
+                  idoingreece.com brings both of those things together. The professional rigour of an
+                  experienced events manager. The personal insight of someone who has planned and lived
+                  the Greek wedding experience from the very first conversation to the very last dance
+              </p>
+
+              <h4>What We Believe</h4>
+              <p>
+                  We believe that the Greek wedding industry is filled with exceptional people who deserve to
+                  be found by the couples who need them most.
+                  </p>
+            </div><!-- End About Content -->
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+       <div class="image-wrapper">
+          <img src="{% static 'assets/img/health/wedding.jpg' %}" 
+              class="img-fluid main-image"
+              style="height: 680px; width: 100%; object-fit: cover;"
+              alt="Healthcare facility">
+
+          <div class="floating-image" data-aos="zoom-in" data-aos-delay="400">
+            <img src="{% static 'assets/img/health/wedding1.jpg' %}" 
+                class="img-fluid" 
+                alt="Medical team">
+          </div>
+        </div>
+          </div>
+        </div>
+        <section>
+
+
+
+
+  <section class="py-5 bg-light">
+  <div class="container">
+
+    <div class="row g-4 justify-content-center">
+
+      <!-- Card 1 -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 text-center">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                 style="width:80px; height:80px;">
+              <i class="bi bi-bullseye fs-2" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Our Mission</h5>
+            <p class="text-muted">
+              To promote and maintain the highest standards of Vendors 
+              in Greece and ensure optimal events.
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 text-center">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                 style="width:80px; height:80px;">
+              <i class="bi bi-eye fs-2" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Our Vision</h5>
+            <p class="text-muted">
+              To be the foremost professional body advancing 
+              Vendors excellence and innovation in Greece.
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 text-center">
+          <div class="card-body p-4">
+
+            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                 style="width:80px; height:80px;">
+              <i class="bi bi-gem fs-2" style="color: #004aad;"></i>
+            </div>
+
+            <h5 class="fw-bold">Our Core Value</h5>
+            <p class="text-muted">
+              We act with honesty and transparency, earning trust 
+              through ethical and responsible conduct.
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+    
+  </main>
+
+  {% endblock %}

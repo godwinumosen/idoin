@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<br><br><br>
+<main class="main">
+
+<!-- Page Title -->
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
+  <div class="container text-white text-center">
+    <h1 class="fw-bold mb-2 text-white" style="font-size: 35px;">
+      Vendor Directory
+    </h1>
+
+    <p class="lead mb-0 text-white" style="font-size: 16px;">
+      Discover trusted vendors, explore their services, and connect with professionals for your special events.
+    </p>
+
+  </div>
+</div>
+<div class="container my-4">
+    <div class="row g-4">
+
+        <!-- LEFT: IMAGE GALLERY -->
+        <div class="col-lg-8">
+            <div class="row g-2">
+
+                <!-- Main Large Image -->
+                <div class="col-md-8">
+                    {% if vendor.profile_image %}
+                    <img src="{{ vendor.profile_image.url }}"
+                         class="img-fluid rounded w-100 gallery-img"
+                         style="height: 400px; object-fit: cover; cursor:pointer;"
+                         data-bs-toggle="modal"
+                         data-bs-target="#imageModal">
+                    {% else %}
+                    <img src="{% static 'images/vendor_placeholder.png' %}"
+                         class="img-fluid rounded w-100 gallery-img"
+                         style="height: 400px; object-fit: cover; cursor:pointer;"
+                         data-bs-toggle="modal"
+                         data-bs-target="#imageModal">
+                    {% endif %}
+                </div>
+
+                <!-- Small Images -->
+                <div class="col-md-4">
+                    <div class="row g-2">
+                        {% for img in gallery|slice:":3" %}
+                        <div class="col-12">
+                            <img src="{{ img.image.url }}"
+                                 class="img-fluid rounded w-100 gallery-img"
+                                 style="height: 195px; object-fit: cover; cursor:pointer;"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#imageModal">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT: INFO CARD -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+
+                    <h4 class="fw-bold">{{ vendor.business_name }}</h4>
+                    <p class="text-muted mb-1">📍 {{ vendor.location }}</p>
+                    {% if vendor.age %}<p class="mb-1">Age: {{ vendor.age }}</p>{% endif %}
+                    {% if vendor.gender %}<p class="mb-1">Gender: {{ vendor.gender }}</p>{% endif %}
+
+                    <p class="mb-2">⭐⭐⭐⭐⭐ 5.0 (1 review)</p>
+
+                    <hr>
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span class="badge 
+                            {% if vendor.user.status|lower == 'approved' %}bg-success
+                            {% elif vendor.user.status|lower == 'pending' %}bg-secondary
+                            {% elif vendor.user.status|lower == 'rejected' %}bg-danger
+                            {% endif %}">
+                            {{ vendor.user.get_status_display }}
+                        </span>
+                    </p>
+                    {% if vendor.phone_number %}
+                        <a href="tel:{{ vendor.phone_number }}" 
+                        class="btn btn-outline-secondary w-100">
+                            📞 Call {{ vendor.phone_number }}
+                        </a>
+                    {% else %}
+                        <button class="btn btn-outline-secondary w-100" disabled>
+                            No Phone Available
+                        </button>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= TABS SECTION ================= -->
+    <div class="mt-5">
+
+       <ul class="nav nav-tabs" id="vendorTabs">
+    <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about">
+            About
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reviews">
+            Reviews
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#fullgallery">
+            Gallery
+        </button>
+    </li>
+</ul>
+
+        <div class="tab-content p-4 border border-top-0">
+
+            <!-- ABOUT TAB -->
+            <div class="tab-pane fade show active" id="about">
+                <p style="word-break: break-word; overflow-wrap: break-word; white-space: normal;">
+                    {{ vendor.bio }}
+                </p>
+                </div>
+            </div>
+            <!-- REVIEWS TAB -->
+            <div class="tab-pane fade" id="reviews">
+                <p class="text-muted">No reviews yet.</p>
+            </div>
+
+            <!-- FULL GALLERY TAB -->
+            <div class="tab-pane fade" id="fullgallery">
+                {% if gallery %}
+                <div class="row g-3">
+                    {% for img in gallery %}
+                    <div class="col-md-3 col-6">
+                        <img src="{{ img.image.url }}"
+                             class="img-fluid rounded w-100 gallery-img"
+                             style="height: 250px; object-fit: cover; cursor:pointer;"
+                             data-bs-toggle="modal"
+                             data-bs-target="#imageModal">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-muted">No gallery images available.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark border-0">
+      <div class="modal-body text-center p-0">
+        <img id="modalImage" src="" class="img-fluid w-100">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".gallery-img");
+    const modalImage = document.getElementById("modalImage");
+
+    images.forEach(img => {
+        img.addEventListener("click", function () {
+            modalImage.src = this.src;
+        });
+    });
+});
+</script>
+
+{% endblock %}

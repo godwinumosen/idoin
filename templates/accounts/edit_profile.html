@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+.settings-wrapper {
+    max-width: 1100px;
+    margin: 50px auto;
+}
+
+/* Sidebar */
+.settings-sidebar {
+    border-right: 1px solid #eee;
+}
+.settings-sidebar h6 {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.settings-sidebar a {
+    display: block;
+    padding: 8px 0;
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+}
+.settings-sidebar a:hover {
+    color: #04245c;
+}
+
+/* Progress */
+.profile-progress {
+    background: #f5f1fb;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+.progress-container {
+    height: 6px;
+    background: #e0d7f7;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    width: 45%;
+    background: #04245c;
+}
+
+/* Section box */
+.section-box {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+/* Inputs */
+.form-control, select, textarea {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    padding-left: 0;
+}
+.form-control:focus, select:focus, textarea:focus {
+    box-shadow: none;
+    border-color: #04245c;
+}
+
+/* Profile image */
+.profile-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Buttons */
+.save-btn {
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+}
+.save-btn:hover {
+    background: #004aad;
+}
+</style>
+
+
+<br><br><br>
+<main class="main">
+
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
+  <div class="container text-white text-center">
+   <h1 class="display-4 fw-bold text-white" style="font-size: 35px;">Edit Profile</h1>
+    <p class="lead mb-0" style="font-size: 16px;">
+      Update your personal information, contact details, and preferences to keep your account up to date. 
+    </p>
+  </div>
+</div>
+
+<div class="settings-wrapper">
+    <div class="row">
+
+        <!-- ================= SIDEBAR ================= -->
+        <div class="col-md-3 settings-sidebar">
+            <h6>Settings</h6>
+            <a href="{% url 'edit_profile' %}">User information</a>
+        </div>
+
+        <!-- ================= MAIN ================= -->
+        <div class="col-md-9">
+
+            <h4 class="mb-4">Edit my profile</h4>
+
+            <!-- Progress Section -->
+            <div class="profile-progress">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <strong>Complete your profile</strong><br>
+                        <small>To get to 100% complete all required fields</small>
+                    </div>
+                    <span>45%</span>
+                </div>
+
+                <div class="progress-container mt-3">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="section-box">
+
+                    <div class="row">
+
+                        <!-- LEFT COLUMN -->
+                        <div class="col-md-8">
+
+                            <!-- Account Info -->
+                            <h6 class="mb-4 text-muted">ACCOUNT INFORMATION</h6>
+
+                            <div class="mb-4">
+                                <label class="small text-muted">USERNAME</label>
+                                <input type="text"
+                                       class="form-control"
+                                       value="{{ request.user.username }}"
+                                       readonly>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="small text-muted">EMAIL</label>
+                                <input type="email"
+                                       class="form-control"
+                                       value="{{ request.user.email }}"
+                                       readonly>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="small text-muted">FIRST NAME</label>
+                                <input type="text"
+                                       name="first_name"
+                                       value="{{ request.user.first_name }}"
+                                       class="form-control">
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="small text-muted">LAST NAME</label>
+                                <input type="text"
+                                       name="last_name"
+                                       value="{{ request.user.last_name }}"
+                                       class="form-control">
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- Dynamic Business Fields -->
+                            <h6 class="mb-4 text-muted">BUSINESS INFORMATION</h6>
+
+                            {% for field in form %}
+                                {% if field.name != 'profile_image' %}
+                                    <div class="mb-4">
+                                        <label class="small text-muted">
+                                            {{ field.label|upper }}
+                                        </label>
+
+                                        {{ field }}
+
+                                        {% if field.help_text %}
+                                            <small class="text-muted d-block mt-1">
+                                                {{ field.help_text }}
+                                            </small>
+                                        {% endif %}
+
+                                        {% if field.errors %}
+                                            <div class="text-danger small mt-1">
+                                                {{ field.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                        </div>
+
+                        <!-- RIGHT COLUMN -->
+                        <div class="col-md-4 text-center">
+
+                            <h6 class="mb-4 text-muted">PROFILE PHOTO</h6>
+
+                            {% if form.instance.profile_image %}
+                                <img src="{{ form.instance.profile_image.url }}"
+                                     class="profile-photo mb-3">
+                            {% else %}
+                                <img src="{% static 'images/default-avatar.png' %}"
+                                     class="profile-photo mb-3">
+                            {% endif %}
+
+                            {{ form.profile_image }}
+
+                            {% if form.profile_image.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.profile_image.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="text-end mt-4">
+                    <button type="submit" class="save-btn">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-4">
+               <a href="javascript:history.back()" class="text-decoration-none">
+                    ← Back
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

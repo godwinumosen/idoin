@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<br><br><br>
+<main class="main">
+
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
+  <div class="container text-white text-center">
+    <h1 class="display-4 text-white fw-bold text-center" style="font-size: 35px;">Welcome, {{ user_info.username }}!</h1>
+    <p class="lead mb-0 text-white text-center" style="font-size: 16px;">
+      This is your central hub for all activities with the I Do In Greece. 
+      Access updates, <br>manage your profile, and stay connected with the latest resources and support.
+    </p>
+  </div>
+</div>
+
+<div class="container my-5">
+ 
+
+    <!-- ================= ACCOUNT INFO ================= -->
+<div class="card mb-5 shadow border-0">
+    <div class="card-header text-white fw-bold" style="background-color: #04245c;">
+        Account Information
+    </div>
+    <div class="card-body">
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            <div class="col"><strong>Email:</strong> {{ user_info.email }}</div>
+            <div class="col"><strong>Full Name:</strong> {{ user_info.first_name }} {{ user_info.last_name }}</div>
+            <div class="col"><strong>Date Joined:</strong> {{ user_info.date_joined|date:"F j, Y" }}</div>
+            {% if user_info.is_vendor %}
+            <div class="col">
+                <strong>Status:</strong>
+                <span class="badge 
+                    {% if user_info.status|lower == 'pending' %}bg-secondary
+                    {% elif user_info.status|lower == 'approved' %}bg-success
+                    {% elif user_info.status|lower == 'rejected' %}bg-danger
+                    {% endif %} px-3 py-2">
+                    {{ user_info.status|capfirst }}
+                </span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+    {% if profile %}
+    <!-- ================= VENDOR INFO ================= -->
+    <div class="card mb-5 shadow border-0">
+        <div class="card-header bg-success text-white fw-bold">Vendor Profile</div>
+        <div class="card-body text-center">
+            {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}"
+                     class="img-fluid rounded-circle mb-3 gallery-img"
+                     style="max-width:150px; height:150px; object-fit:cover; cursor:pointer;"
+                     data-bs-toggle="modal"
+                     data-bs-target="#imageModal">
+            {% endif %}
+            <h4 class="fw-bold mt-2">{{ profile.business_name }}</h4>
+            <p class="text-muted mb-1">{{ profile.bio }}</p>
+            <p><i class="bi bi-geo-alt-fill me-1"></i>{{ profile.location }}</p>
+            <div class="row row-cols-1 row-cols-md-2 g-2 justify-content-center mt-2">
+                {% if profile.age %}<div class="col"><strong>Age:</strong> {{ profile.age }}</div>{% endif %}
+                {% if profile.gender %}<div class="col"><strong>Gender:</strong> {{ profile.gender }}</div>{% endif %}
+                {% if profile.phone_number %}<div class="col"><strong>Phone:</strong> {{ profile.phone_number }}</div>{% endif %}
+                {% if profile.county_of_residence %}<div class="col"><strong>County:</strong> {{ profile.county_of_residence }}</div>{% endif %}
+            </div>
+            <a href="{% url 'edit_profile' %}" class="btn btn-warning mt-4 px-4">Edit Profile</a>
+        </div>
+    </div>
+
+    <!-- ================= GALLERY ================= -->
+    <div class="card mb-5 shadow border-0">
+        <div class="card-header text-white fw-bold"style="background-color: #04245c;">Gallery ({{ gallery|length }}/5)</div>
+        <div class="card-body">
+            {% if user_info.status|lower == "approved" %}
+                {% if gallery|length < 5 %}
+                    <form id="upload-form" enctype="multipart/form-data" class="mb-4">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="file" name="image" id="id_image" class="form-control" required>
+                            <button type="submit" class="btn btn-dark">Upload</button>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="alert alert-danger">Maximum 5 images reached.</div>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-warning">You must be approved to upload images.</div>
+            {% endif %}
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3" id="gallery-container">
+                {% for img in gallery %}
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm text-center">
+                        <img src="{{ img.image.url }}"
+                             class="card-img-top rounded gallery-img"
+                             style="height:200px; object-fit:cover; cursor:pointer;"
+                             data-bs-toggle="modal"
+                             data-bs-target="#imageModal">
+                        <div class="card-body p-2">
+                            <span class="badge 
+                                {% if img.status == 'pending' %}bg-secondary
+                                {% elif img.status == 'approved' %}bg-success
+                                {% elif img.status == 'rejected' %}bg-danger
+                                {% endif %} mb-2 px-3 py-1">
+                                {{ img.get_status_display }}
+                            </span>
+                            <br>
+                            <a href="{% url 'delete_image' img.id %}" class="btn btn-sm btn-danger mt-1">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p class="text-muted text-center">No images uploaded yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark border-0">
+      <div class="modal-body text-center p-0">
+        <img id="modalImage" src="" class="img-fluid w-100">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    /* Image Preview */
+    const images = document.querySelectorAll(".gallery-img");
+    const modalImage = document.getElementById("modalImage");
+
+    images.forEach(img => {
+        img.addEventListener("click", function () {
+            modalImage.src = this.src;
+        });
+    });
+
+    /* Upload AJAX */
+    const form = document.getElementById("upload-form");
+    if (!form) return;
+
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+        const input = document.getElementById("id_image");
+        const file = input.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+        fetch("{% url 'upload_image' %}", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) location.reload();
+            else alert(data.error || "Upload failed");
+        })
+        .catch(err => alert("Upload failed: " + err));
+    });
+
+});
+</script>
+
+{% endblock %}
+
+
+
