@@ -18,7 +18,7 @@ from django.core.mail import send_mail
 
 # ----------------- EMAIL HELPER -----------------
 def send_email_to_user_and_admin(subject, message, user_email, fail_silently=False):
-    admin_email = "godwinsenwin@gmail.com"  # admin email
+    admin_email = "idoingreece@gmail.com"  # admin email
     send_mail(
         subject=subject,
         message=message,
@@ -153,7 +153,7 @@ def upload_gallery_image(request):
                     "I Do In Greece Team"
                 ),
                 from_email="no-reply@yourdomain.com",
-                recipient_list=["godwinsenwin@gmail.com"],  # admin email
+                recipient_list=["idoingreece@gmail.com"],  # admin email
                 fail_silently=False,
             )
             return JsonResponse({"success": True})
