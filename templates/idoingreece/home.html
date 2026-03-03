@@ -335,41 +335,70 @@
 
 
 
-    <!-- first Section -->
-     {% for first_category in home_first_category %}
-    <section id="services" class="services section">
-            <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Real Weddings</h2>
-        <p>Discover love stories brought to life against the breathtaking backdrops of Greece.</p>
-      </div><!-- End Section Title -->
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item">
-              <div class="service-image">
-                <img src="{{ first_category.About_Idoingreece_img.url }}" alt="Cardiology Services" class="img-fluid">
-                <div class="service-overlay">
-                  <i class="fas fa-heartbeat"></i>
-                </div>
-              </div>
-              <div class="service-content">
-                <h3>{{ first_category.First_Idoingreece_title }}</h3>
-                <p>{{ first_category.First_Idoingreece_description }}</p>
-                <div class="service-features">
-                <a href="service-details.html" class="service-btn">
-                  <span>Learn More</span>
-                  <i class="fas fa-arrow-right"></i>
-                </a>
-              </div>
+<!-- First Section -->
+<section id="services" class="services py-5">
+  <div class="container text-center mb-5" data-aos="fade-up">
+    <h2 class="fw-bold">Real Weddings</h2>
+    <p class="text-muted">
+      Discover love stories brought to life against the breathtaking backdrops of Greece.
+    </p>
+  </div>
+
+  <div class="container">
+    <div class="row g-4">
+
+      {% for first_category in home_first_category %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up">
+
+        <div class="card border-0 shadow-sm h-100">
+
+          <!-- Image -->
+          <div class="position-relative">
+
+            {% if first_category.First_Idoingreece_img %}
+              <img src="{{ first_category.First_Idoingreece_img.url }}"
+                   alt="{{ first_category.First_Idoingreece_title }}"
+                   class="card-img-top"
+                   style="height:250px; object-fit:cover;">
+            {% else %}
+              <img src="{% static 'images/vendor_placeholder.png' %}"
+                   class="card-img-top"
+                   style="height:250px; object-fit:cover;">
+            {% endif %}
+
+            <!-- Overlay -->
+            <div class="position-absolute top-0 start-0 w-100 h-100 
+                        d-flex align-items-center justify-content-center 
+                        bg-dark bg-opacity-50 opacity-0 hover-overlay">
+              <a href="#" class="btn btn-light btn-sm rounded-pill px-4">
+                View Story
+              </a>
             </div>
-          </div><!-- End Service Item -->
+
+          </div>
+
+          <!-- Content -->
+          <div class="card-body text-center">
+            <h5 class="fw-semibold">
+              {{ first_category.First_Idoingreece_title }}
+            </h5>
+            <p class="text-muted small">
+              {{ first_category.First_Idoingreece_description|truncatewords:20 }}
+            </p>
+          </div>
+
         </div>
+
       </div>
-    </section><!-- /Services Section -->
+      {% empty %}
+      <div class="col-12 text-center">
+        <p class="text-muted">No posts available in this category.</p>
+      </div>
+      {% endfor %}
+
     </div>
-    </section>
-    {% endfor %}
+  </div>
+</section>
 
 
 
