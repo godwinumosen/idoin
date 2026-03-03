@@ -45,7 +45,7 @@
 </div>
 
 
-    {% if profile %}
+{% if profile %}
 <!-- ================= VENDOR INFO ================= -->
 <div class="card mb-5 shadow border-0">
     <div class="card-header bg-success text-white fw-bold">Vendor Profile</div>
@@ -55,13 +55,14 @@
                  class="img-fluid rounded-circle mb-3 gallery-img"
                  style="max-width:150px; height:150px; object-fit:cover; cursor:pointer;"
                  data-bs-toggle="modal"
-                 data-bs-target="#imageModal">
+                 data-bs-target="#imageModal"
+                 loading="lazy">
         {% endif %}
         <h4 class="fw-bold mt-2">{{ profile.business_name }}</h4>
         <p class="text-muted mb-1">{{ profile.bio }}</p>
         <p><i class="bi bi-geo-alt-fill me-1"></i>{{ profile.location }}</p>
 
-        <!-- NEW: Vendor Category -->
+        <!-- Vendor Category -->
         {% if profile.category %}
             <p><strong>Category:</strong> {{ profile.category }}</p>
         {% endif %}
@@ -76,55 +77,56 @@
     </div>
 </div>
 
-    <!-- ================= GALLERY ================= -->
-    <div class="card mb-5 shadow border-0">
-        <div class="card-header text-white fw-bold"style="background-color: #04245c;">Gallery ({{ gallery|length }}/5)</div>
-        <div class="card-body">
-            {% if user_info.status|lower == "approved" %}
-                {% if gallery|length < 5 %}
-                    <form id="upload-form" enctype="multipart/form-data" class="mb-4">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input type="file" name="image" id="id_image" class="form-control" required>
-                            <button type="submit" class="btn btn-dark">Upload</button>
-                        </div>
-                    </form>
-                {% else %}
-                    <div class="alert alert-danger">Maximum 5 images reached.</div>
-                {% endif %}
+<!-- ================= GALLERY ================= -->
+<div class="card mb-5 shadow border-0">
+    <div class="card-header text-white fw-bold" style="background-color: #04245c;">Gallery ({{ gallery|length }}/5)</div>
+    <div class="card-body">
+        {% if user_info.status|lower == "approved" %}
+            {% if gallery|length < 5 %}
+                <form id="upload-form" enctype="multipart/form-data" class="mb-4">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="file" name="image" id="id_image" class="form-control" required>
+                        <button type="submit" class="btn btn-dark">Upload</button>
+                    </div>
+                </form>
             {% else %}
-                <div class="alert alert-warning">You must be approved to upload images.</div>
+                <div class="alert alert-danger">Maximum 5 images reached.</div>
             {% endif %}
+        {% else %}
+            <div class="alert alert-warning">You must be approved to upload images.</div>
+        {% endif %}
 
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3" id="gallery-container">
-                {% for img in gallery %}
-                <div class="col">
-                    <div class="card h-100 border-0 shadow-sm text-center">
-                        <img src="{{ img.image.url }}"
-                             class="card-img-top rounded gallery-img"
-                             style="height:200px; object-fit:cover; cursor:pointer;"
-                             data-bs-toggle="modal"
-                             data-bs-target="#imageModal">
-                        <div class="card-body p-2">
-                            <span class="badge 
-                                {% if img.status == 'pending' %}bg-secondary
-                                {% elif img.status == 'approved' %}bg-success
-                                {% elif img.status == 'rejected' %}bg-danger
-                                {% endif %} mb-2 px-3 py-1">
-                                {{ img.get_status_display }}
-                            </span>
-                            <br>
-                            <a href="{% url 'delete_image' img.id %}" class="btn btn-sm btn-danger mt-1">Delete</a>
-                        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3" id="gallery-container">
+            {% for img in gallery %}
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <img src="{{ img.image.url }}"
+                         class="card-img-top rounded gallery-img"
+                         style="height:200px; object-fit:cover; cursor:pointer;"
+                         data-bs-toggle="modal"
+                         data-bs-target="#imageModal"
+                         loading="lazy">
+                    <div class="card-body p-2">
+                        <span class="badge 
+                            {% if img.status == 'pending' %}bg-secondary
+                            {% elif img.status == 'approved' %}bg-success
+                            {% elif img.status == 'rejected' %}bg-danger
+                            {% endif %} mb-2 px-3 py-1">
+                            {{ img.get_status_display }}
+                        </span>
+                        <br>
+                        <a href="{% url 'delete_image' img.id %}" class="btn btn-sm btn-danger mt-1">Delete</a>
                     </div>
                 </div>
-                {% empty %}
-                    <p class="text-muted text-center">No images uploaded yet.</p>
-                {% endfor %}
             </div>
+            {% empty %}
+                <p class="text-muted text-center">No images uploaded yet.</p>
+            {% endfor %}
         </div>
     </div>
-    {% endif %}
+</div>
+{% endif %}
 </div>
 
 <!-- IMAGE MODAL -->
@@ -132,7 +134,7 @@
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content bg-dark border-0">
       <div class="modal-body text-center p-0">
-        <img id="modalImage" src="" class="img-fluid w-100">
+        <img id="modalImage" src="" class="img-fluid w-100" loading="lazy">
       </div>
     </div>
   </div>
@@ -181,6 +183,3 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 {% endblock %}
-
-
-

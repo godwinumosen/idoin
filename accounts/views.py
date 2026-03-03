@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, timezone
 
 from django.conf import settings
 import stripe
@@ -137,13 +137,23 @@ def upload_gallery_image(request):
 
             # Notify admin only
             send_mail(
-                subject="New Gallery Image Uploaded",
+                subject="Action Required: New Gallery Image Uploaded by Vendor",
                 message=(
-                    f"Vendor '{request.user.username}' uploaded a new gallery image.\n\n"
-                    f"Please log in to the admin dashboard to review and approve/reject it."
+                    f"Hello Admin,\n\n"
+                    f"A new gallery image has been uploaded by the vendor '{request.user.username}'.\n\n"
+                    f"Vendor Details:\n"
+                    "Please review the image in the admin dashboard and take the necessary action "
+                    "(approve or reject) to ensure it meets the platform standards.\n\n"
+                    "Quick Actions:\n"
+                    "1. Log in to the admin dashboard.\n"
+                    "2. Navigate to 'Gallery Reviews'.\n"
+                    "3. Approve or reject the newly uploaded image.\n\n"
+                    "Thank you for keeping the platform content professional and up-to-date.\n\n"
+                    "Best regards,\n"
+                    "I Do In Greece Team"
                 ),
                 from_email="no-reply@yourdomain.com",
-                recipient_list=["godwinsenwin@gmail.com"],  # your email
+                recipient_list=["godwinsenwin@gmail.com"],  # admin email
                 fail_silently=False,
             )
             return JsonResponse({"success": True})
@@ -259,7 +269,17 @@ def approve_vendor(request, user_id):
         vendor_user.save()
         send_email_to_user_and_admin(
             'Account Approved – I Do In Greece',
-            f"Dear {vendor_user.username},\n\nYour vendor account has been approved. You can now log in.",
+            f"""Dear {vendor_user.username},
+
+        Your vendor account has been approved.
+
+        You can now log in and upload a profile image in your edit profile page.
+
+        Visit your dashboard here: https://coming soon/dashboard
+
+        Best regards,
+        The I Do In Greece Team
+        """,
             user_email=vendor_user.email,
             fail_silently=False
         )
@@ -294,8 +314,19 @@ def approve_gallery(request, image_id):
     image.status = 'approved'
     image.save()
     send_email_to_user_and_admin(
-        'Image Approved – I Do In Greece',
-        f"Dear {image.vendor.user.username},\n\nYour gallery image has been reviewed and approved by the admin.",
+        subject="Gallery Image Approved – I Do In Greece",
+        message=(
+            f"Hello {image.vendor.user.username},\n\n"
+            "We are pleased to inform you that one of your recently uploaded gallery images "
+            "has been reviewed and approved by the I Do In Greece admin team.\n\n"
+            "Image Details:\n"
+            "Your approved images will now be visible to visitors on your profile, "
+            "showcasing your work to potential clients.\n\n"
+            "Keep uploading high-quality images to enhance your profile and attract more clients.\n\n"
+            "Thank you for being a valued vendor on I Do In Greece.\n\n"
+            "Best regards,\n"
+            "The I Do In Greece Team"
+        ),
         user_email=image.vendor.user.email,
         fail_silently=False
     )
@@ -309,7 +340,7 @@ def reject_gallery(request, image_id):
     image.save()
     send_email_to_user_and_admin(
         'Image Rejected – I Do In Greece',
-        f"Dear {image.vendor.user.username},\n\nYour gallery image has been reviewed by the admin and was rejected.",
+        f"Dear {image.vendor.user.username},\n\nYour gallery image has been reviewed by the admin and was rejected.\n Please kindly reupload a new image to your dashboard.",
         user_email=image.vendor.user.email,
         fail_silently=False
     )
