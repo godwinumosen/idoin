@@ -187,7 +187,7 @@ def vendor_directory(request):
 
     vendor_list = vendor_list.order_by('-id')
 
-    paginator = Paginator(vendor_list, 6)  # 6 per page
+    paginator = Paginator(vendor_list, 3)  # 6 per page
     page_number = request.GET.get('page')
     vendors = paginator.get_page(page_number)
 
