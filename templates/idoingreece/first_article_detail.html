@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<br><br><br>
+
+<main class="main">
+
+  <!-- Hero Section -->
+  <div class="py-5 text-white text-center" style="background-color:#004aad;">
+    <div class="container">
+      <h1 class="fw-bold text-white ">
+        {{ object.First_Idoingreece_title }}
+      </h1>
+      <p class="mb-0">
+        Published on {{ object.First_Idoingreece_publish_date|date:"F d, Y" }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Article Content -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <!-- Featured Image -->
+        {% if object.First_Idoingreece_img %}
+          <img src="{{ object.First_Idoingreece_img.url }}"
+               class="img-fluid rounded shadow-sm mb-4 w-100"
+               style="max-height:450px; object-fit:cover;">
+        {% endif %}
+
+        <!-- Article Body -->
+        <div class="mb-4">
+          <p class="text-muted">
+            By {{ object.First_Idoingreece_author }}
+          </p>
+
+          <hr>
+
+          <p class="fs-5">
+            {{ object.First_Idoingreece_description|linebreaks }}
+          </p>
+        </div>
+
+        <!-- Back Button -->
+        <div class="mt-4">
+          <a  href="javascript:history.back()" class="text-decoration-none"style="color:#004aad;">
+            Back
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}
