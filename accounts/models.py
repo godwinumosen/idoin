@@ -18,24 +18,54 @@ class User(AbstractUser):
 
 
 
+
+CATEGORY_CHOICES = (
+    ('Planner', 'Planner'),
+    ('Venue', 'Venue'),
+    ('Florist', 'Florist'),
+    ('Photographer', 'Photographer'),
+    ('Videographer', 'Videographer'),
+    ('DJ & Entertainment', 'DJ & Entertainment'),
+    ('Hair & Makeup', 'Hair & Makeup'),
+    ('Catering', 'Catering'),
+    ('Wedding Cake', 'Wedding Cake'),
+    ('Transport', 'Transport'),
+    ('Officiant', 'Officiant'),
+    ('Accommodation', 'Accommodation'),
+    ('Other', 'Other'),
+)
+
+category = models.CharField(
+    max_length=50,
+    choices=CATEGORY_CHOICES,
+    null=True,
+    blank=True
+)
+
 class VendorProfile(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
         related_name="vendorprofile"
     )
+
     business_name = models.CharField(max_length=255)
     bio = models.TextField()
     location = models.CharField(max_length=255)
 
-    # Existing fields...
+    category = models.CharField(   # 👈 MOVE IT HERE
+        max_length=50,
+        choices=CATEGORY_CHOICES,
+        null=True,
+        blank=True
+    )
+
     age = models.PositiveIntegerField(null=True, blank=True)
     gender = models.CharField(max_length=20, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     county_of_residence = models.CharField(max_length=100, null=True, blank=True)
     profile_image = models.ImageField(upload_to="vendor_profiles/", null=True, blank=True)
 
-    # New fields for payment
     subscription_type = models.CharField(
         max_length=10,
         choices=[('free', 'Free'), ('paid', 'Paid')],

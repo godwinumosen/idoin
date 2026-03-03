@@ -152,6 +152,7 @@ class VendorProfileForm(forms.ModelForm):
             "business_name",
             "bio",
             "location",
+            "category",  
             "age",
             "gender",
             "phone_number",
@@ -162,6 +163,7 @@ class VendorProfileForm(forms.ModelForm):
             "business_name": "Wedding Name",
             "bio": "Wedding Description",
             "location": "Wedding Location",
+            "category": "Category",
             "age": "Age",
             "gender": "Gender",
             "phone_number": "Phone Number",
@@ -181,6 +183,11 @@ class VendorProfileForm(forms.ModelForm):
             "location": forms.TextInput(attrs={
                 "class": "form-control",
                 "placeholder": "Update location"
+            }),
+
+            "category": forms.Select(attrs={
+                "class": "form-control"
+            
             }),
             "age": forms.NumberInput(attrs={
                 "class": "form-control",
