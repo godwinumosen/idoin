@@ -372,14 +372,14 @@
 
             <!-- Content -->
             <div class="card-body text-center">
-              <h5 class="fw-semibold">
+              <h4 class="">
                 {{ first_category.First_Idoingreece_title }}
-              </h5>
+              </h4>
               <p class="text-muted small">
-                {{ first_category.First_Idoingreece_description|truncatewords:20 }}
+                {{ first_category.First_Idoingreece_description|truncatechars:60 }}
               </p>
 
-              <span class="btn-sm mt-2"style="color:#004aad;">
+              <span class="btn-sm mt-2 text-white"style="background-color: #004aad;">
                 Read More 
               </span>
             </div>
@@ -467,14 +467,13 @@
             {% endif %}
           </div>
 
-          <div class="department-content">
+          <div class="department-content text-center">
             <h3>{{ post.Second_Idoingreece_title }}</h3>
             <p>{{ post.Second_Idoingreece_description|truncatewords:20 }}</p>
-            <a href="#!" class="learn-more">
-              <span>Learn More</span>
-              <i class="fas fa-arrow-right"></i>
+            <a href="{% url 'second_article_detail' post.pk %}" class="text-white"style="background-color: #004aad;">
+                Learn More
             </a>
-          </div>
+        </div>
 
         </div>
       </div>

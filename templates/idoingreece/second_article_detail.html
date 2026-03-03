@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<br><br><br>
+<main class="main">
+
+  <!-- Page Header -->
+  <div class="page-title py-5 mb-5 text-white"style="background-color: #004aad;">
+    <div class="container text-center">
+      <h1 class="display-4 fw-bold text-white">{{ object.Second_Idoingreece_title }}</h1>
+      <p class="lead mb-0">
+        Published on {{ object.Second_Idoingreece_publish_date|date:"F j, Y" }}
+        by {{ object.Second_Idoingreece_author.username }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Article Content -->
+  <div class="container mb-5">
+
+    <!-- Video / Image -->
+    <div class="mb-4">
+    {% if object.Second_Idoingreece_video %}
+        <video class="img-fluid w-100 rounded" 
+                controls autoplay muted loop
+                style="max-height: 560px; object-fit: cover;">
+            <source src="{{ object.Second_Idoingreece_video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        {% else %}
+        <img src="{% static 'assets/img/health/placeholder.webp' %}" 
+            alt="{{ object.Second_Idoingreece_title }}" 
+            class="img-fluid w-100 rounded"
+            style="max-height: 400px; object-fit: cover;">
+        {% endif %}
+
+    </div>
+
+    <!-- Text Content -->
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+
+        <div class="article-body">
+          <p class="lead">{{ object.Second_Idoingreece_description }}</p>
+        </div>
+
+        <!-- Back Button -->
+        <div class="mt-4 text-center">
+          <a href="javascript:history.back()" class="text-decoration-none"style="color: #004aad;">
+            Back
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.urls import include, path
 from . import views 
-from .views import ArticleDetailView, HomeView,blog
+from .views import ArticleDetailView, HomeView, SecondArticleDetailView,blog
 
 
 urlpatterns = [
@@ -13,6 +13,7 @@ urlpatterns = [
     path('blog/category/<str:category>/', views.blog_by_category, name='blog_by_category'),
     path('contact/', views.contact, name='contact'),
     path('real-wedding/<int:pk>/', ArticleDetailView.as_view(), name='first_article_detail'),
+    path('article/<int:pk>/', SecondArticleDetailView.as_view(), name='second_article_detail'),
 
     path('', include('accounts.urls')),
 

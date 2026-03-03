@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.db.models import Q 
 from django.contrib.auth import get_user_model 
-from .models import ContactMessage, Feature2_IdoingreecePost, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost,BlogPost
+from .models import ContactMessage, Feature2_IdoingreecePost, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost,BlogPost, SecondIdoingreecePost
 import os 
 
 
@@ -29,16 +29,19 @@ class HomeView(ListView):
         context['home_about'] = AboutIdoingreecePost.objects.all()
         context['home_first_category'] = FirstIdoingreecePost.objects.all()
         context['feature2s'] = Feature2_IdoingreecePost.objects.all()
+        context['second_category'] = SecondIdoingreecePost.objects.all()  # for videos
         return context
-
+    
 
 #The first ArticleDetailView page for news and events
 class ArticleDetailView(DetailView):
     model = FirstIdoingreecePost
     template_name = 'idoingreece/first_article_detail.html'
 
-
-
+class SecondArticleDetailView(DetailView):
+    model = SecondIdoingreecePost
+    template_name = 'idoingreece/second_article_detail.html'
+    
 
 def about (request):
     return render (request, 'idoingreece/about.html')
