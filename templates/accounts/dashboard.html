@@ -46,29 +46,35 @@
 
 
     {% if profile %}
-    <!-- ================= VENDOR INFO ================= -->
-    <div class="card mb-5 shadow border-0">
-        <div class="card-header bg-success text-white fw-bold">Vendor Profile</div>
-        <div class="card-body text-center">
-            {% if profile.profile_image %}
-                <img src="{{ profile.profile_image.url }}"
-                     class="img-fluid rounded-circle mb-3 gallery-img"
-                     style="max-width:150px; height:150px; object-fit:cover; cursor:pointer;"
-                     data-bs-toggle="modal"
-                     data-bs-target="#imageModal">
-            {% endif %}
-            <h4 class="fw-bold mt-2">{{ profile.business_name }}</h4>
-            <p class="text-muted mb-1">{{ profile.bio }}</p>
-            <p><i class="bi bi-geo-alt-fill me-1"></i>{{ profile.location }}</p>
-            <div class="row row-cols-1 row-cols-md-2 g-2 justify-content-center mt-2">
-                {% if profile.age %}<div class="col"><strong>Age:</strong> {{ profile.age }}</div>{% endif %}
-                {% if profile.gender %}<div class="col"><strong>Gender:</strong> {{ profile.gender }}</div>{% endif %}
-                {% if profile.phone_number %}<div class="col"><strong>Phone:</strong> {{ profile.phone_number }}</div>{% endif %}
-                {% if profile.county_of_residence %}<div class="col"><strong>County:</strong> {{ profile.county_of_residence }}</div>{% endif %}
-            </div>
-            <a href="{% url 'edit_profile' %}" class="btn btn-warning mt-4 px-4">Edit Profile</a>
+<!-- ================= VENDOR INFO ================= -->
+<div class="card mb-5 shadow border-0">
+    <div class="card-header bg-success text-white fw-bold">Vendor Profile</div>
+    <div class="card-body text-center">
+        {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}"
+                 class="img-fluid rounded-circle mb-3 gallery-img"
+                 style="max-width:150px; height:150px; object-fit:cover; cursor:pointer;"
+                 data-bs-toggle="modal"
+                 data-bs-target="#imageModal">
+        {% endif %}
+        <h4 class="fw-bold mt-2">{{ profile.business_name }}</h4>
+        <p class="text-muted mb-1">{{ profile.bio }}</p>
+        <p><i class="bi bi-geo-alt-fill me-1"></i>{{ profile.location }}</p>
+
+        <!-- NEW: Vendor Category -->
+        {% if profile.category %}
+            <p><strong>Category:</strong> {{ profile.category }}</p>
+        {% endif %}
+
+        <div class="row row-cols-1 row-cols-md-2 g-2 justify-content-center mt-2">
+            {% if profile.age %}<div class="col"><strong>Age:</strong> {{ profile.age }}</div>{% endif %}
+            {% if profile.gender %}<div class="col"><strong>Gender:</strong> {{ profile.gender }}</div>{% endif %}
+            {% if profile.phone_number %}<div class="col"><strong>Phone:</strong> {{ profile.phone_number }}</div>{% endif %}
+            {% if profile.county_of_residence %}<div class="col"><strong>County:</strong> {{ profile.county_of_residence }}</div>{% endif %}
         </div>
+        <a href="{% url 'edit_profile' %}" class="btn btn-warning mt-4 px-4">Edit Profile</a>
     </div>
+</div>
 
     <!-- ================= GALLERY ================= -->
     <div class="card mb-5 shadow border-0">
