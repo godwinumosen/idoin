@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.db.models import Q 
 from django.contrib.auth import get_user_model 
-from .models import ContactMessage, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost,BlogPost
+from .models import ContactMessage, Feature2_IdoingreecePost, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost,BlogPost
 import os 
 
 
@@ -28,6 +28,7 @@ class HomeView(ListView):
         context = super().get_context_data(**kwargs)
         context['home_about'] = AboutIdoingreecePost.objects.all()
         context['home_first_category'] = FirstIdoingreecePost.objects.all()
+        context['feature2s'] = Feature2_IdoingreecePost.objects.all()
         return context
 
 

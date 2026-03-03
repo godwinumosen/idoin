@@ -400,59 +400,53 @@
 </section>
 
 
+<!-- Featured Services Section -->
+<section id="featured-services" class="featured-services section">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Featured Vendors Strip</h2>
+    <p>Every professional in our directory has been personally reviewed. Browse by category and find your perfect match.</p>
+  </div><!-- End Section Title -->
 
-    <!-- Featured Services Section -->
-    <section id="featured-services" class="featured-services section">
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Featured Vendors Strip</h2>
-        <p>Meet Some of Greece's Finest</p>
-      </div><!-- End Section Title -->
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row g-0">
-
-          <div class="col-lg-8" data-aos="fade-right" data-aos-delay="200">
-            <div class="featured-service-main">
-              <div class="service-image-wrapper">
-                <img src="{%static 'assets/img/health/consultation-4.webp'%}" alt="Premier Healthcare Services" class="img-fluid"
-                  loading="lazy">
-                <div class="service-overlay">
-                  <div class="service-badge">
-                    <i class="bi bi-heart-pulse"></i>
-                    <span>Emergency Care</span>
-                  </div>
-                </div>
-              </div>
-              <div class="service-details">
-                <h2>Comprehensive Healthcare Excellence</h2>
-                <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ante ipsum primis in faucibus
-                  orci luctus et ultrices posuere cubilia curae donec velit neque.</p>
-                <a href="{% url 'vendor_directory' %}" class="main-cta">Vendors Directory</a>
+    <div class="row g-0 justify-content-center">
+      {% for feature_vendor in feature2s %}
+      
+      <div class="col-lg-10 col-12" data-aos="fade-right" data-aos-delay="200">
+        <div class="featured-service-main">
+          <div class="service-image-wrapper">
+            
+            {% if feature_vendor.Feature2_Idoingreece_img %}
+              <img src="{{ feature_vendor.Feature2_Idoingreece_img.url }}" 
+                   alt="{{ feature_vendor.Feature2_Idoingreece_title }}" 
+                   class="img-fluid"
+                   loading="lazy">
+            {% endif %}
+            
+            <div class="service-overlay">
+              <div class="service-badge">
+                <span>{{ feature_vendor.Feature2_Idoingreece_status }}</span>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="300">
-            <div class="services-sidebar">
-
-              <div class="service-item" data-aos="fade-up" data-aos-delay="400">
-                <div class="service-icon-wrapper">
-                  <i class="bi bi-capsule"></i>
-                </div>
-                <div class="service-info">
-                  <h4>Dermatology Clinic</h4>
-                  <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                  <a href="#!" class="service-link">Learn More</a>
-                </div>
-              </div>
-            </div>
+          <div class="service-details">
+            <h2>{{ feature_vendor.Feature2_Idoingreece_title }}</h2>
+            <p>{{ feature_vendor.Feature2_Idoingreece_description }}</p>
+            <a href="{% url 'vendor_directory' %}" class="main-cta">
+              Vendors Directory
+            </a>
           </div>
         </div>
       </div>
-    </section>
 
+      {% endfor %}  <!-- ✅ FIXED HERE -->
+
+    </div>
+    
+  </div>
+</section>
 
 
 

@@ -158,26 +158,7 @@ class SecondIdoingreecePost(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
-    
-class NotifyNewsIdoingreecePost(models.Model):   
-    NotifyNews_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
-    NotifyNews_Idoingreece_description = models.TextField()
-    NotifyNews_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    NotifyNews_Idoingreece_img = models.ImageField(upload_to='NotifyNews_images/')
-    NotifyNews_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
-    NotifyNews_Idoingreece_author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
 
-    class Meta:
-        ordering = ['-NotifyNews_Idoingreece_publish_date']
-
-    def __str__(self):
-        return f"{self.NotifyNews_Idoingreece_title} | {self.NotifyNews_Idoingreece_author}"
-
-    def get_absolute_url(self):
-        return reverse('home')
     
 
 #------------------------------------------------------------------------------------------

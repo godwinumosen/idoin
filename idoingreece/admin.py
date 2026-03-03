@@ -6,7 +6,6 @@ from .models import (
     AboutIdoingreecePost,
     FirstIdoingreecePost,
     ExcellenceIdoingreecePost,
-    NotifyNewsIdoingreecePost,
     ContactMessage,
 )
 
@@ -63,11 +62,5 @@ class SecondIdoingreecePostModelAdmin(admin.ModelAdmin):
 
 admin.site.register(SecondIdoingreecePost, SecondIdoingreecePostModelAdmin)
 
-
-class NotifyNewsIdoingreecePostModelAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'NotifyNews_Idoingreece_slug': ('NotifyNews_Idoingreece_title',)}
-    list_display = ['NotifyNews_Idoingreece_title', 'NotifyNews_Idoingreece_description', 'NotifyNews_Idoingreece_author']
-
-admin.site.register(NotifyNewsIdoingreecePost, NotifyNewsIdoingreecePostModelAdmin)
 
 
