@@ -20,10 +20,21 @@ class UserAdmin(BaseUserAdmin):
             user.status = 'approved'
             user.save()
             send_mail(
-                'Account Approved',
-                'Your account has been approved. You can now log in.',
-                'no-reply@yourdomain.com',
-                [user.email],
+                subject='🎉 Your Account Has Been Approved!',
+                message=(
+                    "Hello {},\n\n"
+                    "Great news! Your account has been approved and you can now log in.\n\n"
+                    "After logging in, please take a moment to complete your vendor profile:\n"
+                    "- Upload a profile picture\n"
+                    "- Add your business details\n"
+                    "- Update your information to help customers find you easily\n\n"
+                    "Make sure your profile accurately represents your services so you can stand out!\n\n"
+                    "We’re excited to have you on board.\n\n"
+                    "Best regards,\n"
+                    "The I Do In Greece Team"
+                ).format(user.first_name),
+                from_email='no-reply@yourdomain.com',
+                recipient_list=[user.email],
                 fail_silently=False,
             )
         self.message_user(request, "Selected users have been approved.")

@@ -68,7 +68,7 @@ def signup_view(request):
                 fail_silently=False
             )
 
-            messages.success(request, "Your account has been created and is pending admin approval.")
+            messages.success(request, "Your account has been created, waiting for admin approval.")
             return redirect('login')
     else:
         form = VendorSignupForm()
