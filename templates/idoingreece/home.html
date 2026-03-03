@@ -423,12 +423,6 @@
                    class="img-fluid"
                    loading="lazy">
             {% endif %}
-            
-            <div class="service-overlay">
-              <div class="service-badge">
-                <span>{{ feature_vendor.Feature2_Idoingreece_status }}</span>
-              </div>
-            </div>
           </div>
 
           <div class="service-details">
@@ -442,38 +436,53 @@
       </div>
 
       {% endfor %}  <!-- ✅ FIXED HERE -->
-
     </div>
-    
   </div>
 </section>
 
 
 
-    <!-- Departments Section -->
-    <section id="departments" class="departments section">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row g-5">
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="department-card">
-              <div class="department-image">
-                <img src="{%static 'assets/img/health/cardiology-3.webp'%}" alt="Cardiology Department" class="img-fluid">
-              </div>
-              <div class="department-content">
-                <h3>Cardiology</h3>
-                <p>Comprehensive heart care with advanced diagnostic tools and expert cardiologists dedicated to your
-                  cardiovascular health.</p>
-                <a href="#!" class="learn-more">
-                  <span>Learn More</span>
-                  <i class="fas fa-arrow-right"></i>
-                </a>
-              </div>
-            </div>
-          </div><!-- End Department Card -->
-        </div>
+<!-- Departments Section -->
+<section id="departments" class="departments section">
+    <div class="container section-title" data-aos="fade-up">
+    <h2>Listing Tiers </h2>
+    <p>Every professional in our directory has been personally reviewed. Browse by category and find your perfect match.</p>
+  </div><!-- End Section Title -->
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row g-5">
 
+      {% for post in second_category %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="department-card">
+
+          <!-- Video -->
+          <div class="department-image">
+            {% if post.Second_Idoingreece_video %}
+            <video class="img-fluid w-100" controls autoplay muted loop>
+              <source src="{{ post.Second_Idoingreece_video.url }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            {% else %}
+            <img src="{% static 'assets/img/health/placeholder.webp' %}" alt="Department" class="img-fluid w-100">
+            {% endif %}
+          </div>
+
+          <div class="department-content">
+            <h3>{{ post.Second_Idoingreece_title }}</h3>
+            <p>{{ post.Second_Idoingreece_description|truncatewords:20 }}</p>
+            <a href="#!" class="learn-more">
+              <span>Learn More</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+
+        </div>
       </div>
-    </section><!-- /Departments Section -->
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
 
   </main>
 

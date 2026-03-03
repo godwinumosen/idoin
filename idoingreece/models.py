@@ -113,9 +113,29 @@ class Feature2_IdoingreecePost(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
+
+
+class SecondIdoingreecePost(models.Model):
+    Second_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
+    Second_Idoingreece_description = models.TextField()
+    Second_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
+    Second_Idoingreece_video = models.FileField(upload_to='Second_idoingreece_video/', blank=True, null=True)
+    Second_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
+    Second_Idoingreece_author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        ordering = ['-Second_Idoingreece_publish_date']
+
+    def __str__(self):
+        return f"{self.Second_Idoingreece_title} | {self.Second_Idoingreece_author}"
+
+    def get_absolute_url(self):
+        return reverse('home')
+
     
-
-
 class ExcellenceIdoingreecePost(models.Model): 
     Excellence_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     Excellence_Idoingreece_description = models.TextField()
@@ -135,30 +155,6 @@ class ExcellenceIdoingreecePost(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
-    
-
-
-
-class SecondIdoingreecePost(models.Model):
-    Second_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
-    Second_Idoingreece_description = models.TextField()
-    Second_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    Second_Idoingreece_img = models.ImageField(upload_to='Second_idoingreece_images/')
-    Second_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
-    Second_Idoingreece_author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-
-    class Meta:
-        ordering = ['-Second_Idoingreece_publish_date']
-
-    def __str__(self):
-        return f"{self.Second_Idoingreece_title} | {self.Second_Idoingreece_author}"
-
-    def get_absolute_url(self):
-        return reverse('home')
-
     
 
 #------------------------------------------------------------------------------------------
