@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import VendorProfileForm, VendorSignupForm
 from django.contrib.auth.decorators import user_passes_test
-from .models import VendorProfile, VendorImage
+from .models import VendorProfile, VendorImage,CATEGORY_CHOICES
 from django.core.mail import send_mail
 
 
@@ -151,23 +151,43 @@ def upload_gallery_image(request):
     return JsonResponse({"error": "No image uploaded"}, status=400)
 
 
+
 # ----------------- VENDOR DIRECTORY -----------------
 from django.db.models import Count, Q
 def vendor_directory(request):
+    search_query = request.GET.get('search', '')
+    category_filter = request.GET.get('category', '')
+
     vendor_list = VendorProfile.objects.annotate(
         approved_images=Count('gallery', filter=Q(gallery__status='approved'))
     ).filter(
         user__status='approved',
         approved_images__gt=0,
         user__is_superuser=False
-    ).order_by('-id')
+    )
 
-    paginator = Paginator(vendor_list, 3)
+    if search_query:
+        vendor_list = vendor_list.filter(
+            Q(business_name__icontains=search_query) |
+            Q(location__icontains=search_query)
+        )
+
+    if category_filter:
+        vendor_list = vendor_list.filter(category=category_filter)
+
+    vendor_list = vendor_list.order_by('-id')
+
+    paginator = Paginator(vendor_list, 6)  # 6 per page
     page_number = request.GET.get('page')
     vendors = paginator.get_page(page_number)
 
-    return render(request, "accounts/vendor_directory.html", {"vendors": vendors})
-
+    context = {
+        "vendors": vendors,
+        "search_query": search_query,
+        "category_filter": category_filter,
+        "categories": CATEGORY_CHOICES,  # <-- pass choices here
+    }
+    return render(request, "accounts/vendor_directory.html", context)
 def vendor_profile_detail(request, user_id):
     vendor = get_object_or_404(VendorProfile, user__id=user_id)
     gallery = vendor.gallery.filter(status='approved')
