@@ -39,7 +39,7 @@
     </div>
 
     <div class="col-md-2">
-      <button type="submit" class="btn btn-primary w-100">
+      <button type="submit" class="btn btn-primary w-100" style="background-color: #004aad;">
         Filter
       </button>
     </div>
@@ -105,7 +105,7 @@
                     </a>
                 </li>
             {% else %}
-                <li class="page-item disabled">
+                <li class="page-item disabled text-white" style="color: #004aad;">
                     <span class="page-link">Previous</span>
                 </li>
             {% endif %}
@@ -114,7 +114,7 @@
             {% for num in vendors.paginator.page_range %}
                 {% if vendors.number == num %}
                     <li class="page-item active">
-                        <span class="page-link">{{ num }}</span>
+                        <span class="page-link" style="background-color: #004aad;">{{ num }}</span>
                     </li>
                 {% else %}
                     <li class="page-item">
@@ -129,8 +129,8 @@
             <!-- Next -->
             {% if vendors.has_next %}
                 <li class="page-item">
-                    <a class="page-link"
-                       href="?page={{ vendors.next_page_number }}&search={{ search_query }}&category={{ category_filter }}">
+                    <a class="page-link text-white"
+                       href="?page={{ vendors.next_page_number }}&search={{ search_query }}&category={{ category_filter }}" style="background-color: #004aad;">
                         Next
                     </a>
                 </li>
