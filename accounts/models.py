@@ -50,9 +50,8 @@ class VendorProfile(models.Model):
     )
 
     business_name = models.CharField(max_length=255)
-    bio = models.TextField()
+    bio = models.CharField(max_length=250)
     location = models.CharField(max_length=255)
-
     category = models.CharField(   # 👈 MOVE IT HERE
         max_length=50,
         choices=CATEGORY_CHOICES,
@@ -60,10 +59,7 @@ class VendorProfile(models.Model):
         blank=True
     )
 
-    age = models.PositiveIntegerField(null=True, blank=True)
-    gender = models.CharField(max_length=20, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
-    county_of_residence = models.CharField(max_length=100, null=True, blank=True)
     profile_image = models.ImageField(upload_to="vendor_profiles/", null=True, blank=True)
 
     subscription_type = models.CharField(

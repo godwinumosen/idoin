@@ -27,14 +27,14 @@ class VendorSignupForm(UserCreationForm):
         max_length=255,
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Enter your wedding name"
+            "placeholder": "Enter your business name"
         })
     )
 
     bio = forms.CharField(
         widget=forms.Textarea(attrs={
             "class": "form-control",
-            "placeholder": "Tell customers about your wedding...",
+            "placeholder": "Tell customers about your business...",
             "rows": 4
         })
     )
@@ -43,26 +43,10 @@ class VendorSignupForm(UserCreationForm):
         max_length=255,
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Enter your wedding location"
+            "placeholder": "Enter your primary location"
         })
     )
 
-    # ✅ NEW FIELDS
-    age = forms.IntegerField(
-        required=False,
-        widget=forms.NumberInput(attrs={
-            "class": "form-control",
-            "placeholder": "Enter your age"
-        })
-    )
-
-    gender = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "Enter your gender"
-        })
-    )
 
     phone_number = forms.CharField(
         required=False,
@@ -117,9 +101,9 @@ class VendorSignupForm(UserCreationForm):
 
         self.fields["first_name"].label = "First Name"
         self.fields["last_name"].label = "Last Name"
-        self.fields["business_name"].label = "Wedding Name"
-        self.fields["bio"].label = "Wedding Description"
-        self.fields["location"].label = "Wedding Location"
+        self.fields["business_name"].label = "Business Name"
+        self.fields["bio"].label = "Business Description"
+        self.fields["location"].label = "Primary Location"
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -153,32 +137,26 @@ class VendorProfileForm(forms.ModelForm):
             "bio",
             "location",
             "category",  
-            "age",
-            "gender",
             "phone_number",
-            "county_of_residence",
             "profile_image"
         ]
         labels = {
-            "business_name": "Wedding Name",
-            "bio": "Wedding Description",
-            "location": "Wedding Location",
+            "business_name": "Business Name",
+            "bio": "Business Description",
+            "location": "Business Location",
             "category": "Category",
-            "age": "Age",
-            "gender": "Gender",
             "phone_number": "Phone Number",
-            "county_of_residence": "County of Residence",
             "profile_image": "Profile Image"
         }
         widgets = {
             "business_name": forms.TextInput(attrs={
                 "class": "form-control",
-                "placeholder": "Update wedding name"
+                "placeholder": "Update Business name"
             }),
             "bio": forms.Textarea(attrs={
                 "class": "form-control",
                 "rows": 4,
-                "placeholder": "Update wedding description"
+                "placeholder": "Update Business description"
             }),
             "location": forms.TextInput(attrs={
                 "class": "form-control",
@@ -189,22 +167,12 @@ class VendorProfileForm(forms.ModelForm):
                 "class": "form-control"
             
             }),
-            "age": forms.NumberInput(attrs={
-                "class": "form-control",
-                "placeholder": "Update age"
-            }),
-            "gender": forms.TextInput(attrs={
-                "class": "form-control",
-                "placeholder": "Update gender"
-            }),
+  
             "phone_number": forms.TextInput(attrs={
                 "class": "form-control",
                 "placeholder": "Update phone number"
             }),
-            "county_of_residence": forms.TextInput(attrs={
-                "class": "form-control",
-                "placeholder": "Update county of residence"
-            }),
+  
             "profile_image": forms.FileInput(attrs={
                 "class": "form-control"
             }),

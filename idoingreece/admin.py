@@ -7,7 +7,9 @@ from .models import (
     FirstIdoingreecePost,
     ExcellenceIdoingreecePost,
     ContactMessage,
+    WeddingStory,
 )
+
 
 # Main post
 class IdoingreecePostModelAdmin(admin.ModelAdmin):
@@ -55,12 +57,16 @@ admin.site.register(Feature2_IdoingreecePost, Feature2_IdoingreecePostModelAdmin
 
 
 
-
 class SecondIdoingreecePostModelAdmin(admin.ModelAdmin):
     prepopulated_fields = {'Second_Idoingreece_slug': ('Second_Idoingreece_title',)}
     list_display = ['Second_Idoingreece_title', 'Second_Idoingreece_description', 'Second_Idoingreece_author']
 
 admin.site.register(SecondIdoingreecePost, SecondIdoingreecePostModelAdmin)
+
+
+class WeddingStoryModelAdmin(admin.ModelAdmin):
+    list_display = ['couple_name', 'email', 'story']
+admin.site.register(WeddingStory, WeddingStoryModelAdmin)
 
 
 

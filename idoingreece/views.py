@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.db.models import Q 
 from django.contrib.auth import get_user_model 
-from .models import ContactMessage, Feature2_IdoingreecePost, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost,BlogPost, SecondIdoingreecePost
+from .models import ContactMessage, Feature2_IdoingreecePost, IdoingreecePost,AboutIdoingreecePost,FirstIdoingreecePost,BlogPost, SecondIdoingreecePost,WeddingStory
 import os 
 
 
@@ -96,3 +96,25 @@ def blog_by_category(request, category):
         'recent_posts': recent_posts,
         'selected_category': category,
     })
+
+
+
+def wedding_story(request):
+    if request.method == "POST":
+        couple_name = request.POST.get("couple_name")
+        email = request.POST.get("email")
+        wedding_location = request.POST.get("location")
+        wedding_date = request.POST.get("date")
+        story = request.POST.get("story")
+
+        WeddingStory.objects.create(
+            couple_name=couple_name,
+            email=email,
+            wedding_location=wedding_location,
+            wedding_date=wedding_date,
+            story=story
+        )
+
+        return redirect("wedding_story")
+
+    return render(request, "idoingreece/wedding_story.html")
