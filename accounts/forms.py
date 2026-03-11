@@ -56,14 +56,6 @@ class VendorSignupForm(UserCreationForm):
         })
     )
 
-    county_of_residence = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "Enter your county of residence"
-        })
-    )
-
     class Meta:
         model = User
         fields = [

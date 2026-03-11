@@ -7,7 +7,7 @@ from .models import (
     FirstIdoingreecePost,
     ExcellenceIdoingreecePost,
     ContactMessage,
-    WeddingStory,
+   
 )
 
 
@@ -62,11 +62,6 @@ class SecondIdoingreecePostModelAdmin(admin.ModelAdmin):
     list_display = ['Second_Idoingreece_title', 'Second_Idoingreece_description', 'Second_Idoingreece_author']
 
 admin.site.register(SecondIdoingreecePost, SecondIdoingreecePostModelAdmin)
-
-
-class WeddingStoryModelAdmin(admin.ModelAdmin):
-    list_display = ['couple_name', 'email', 'story']
-admin.site.register(WeddingStory, WeddingStoryModelAdmin)
 
 
 

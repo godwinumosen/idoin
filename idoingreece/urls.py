@@ -14,7 +14,6 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('real-wedding/<int:pk>/', ArticleDetailView.as_view(), name='first_article_detail'),
     path('article/<int:pk>/', SecondArticleDetailView.as_view(), name='second_article_detail'),
-    path("wedding_story/", views.wedding_story, name="wedding_story"),
 
     path('', include('accounts.urls')),
 
