@@ -164,9 +164,11 @@ def upload_gallery_image(request):
 
 # ----------------- VENDOR DIRECTORY -----------------
 from django.db.models import Count, Q
+
 def vendor_directory(request):
     search_query = request.GET.get('search', '')
     category_filter = request.GET.get('category', '')
+    location_filter = request.GET.get('location', '')
 
     vendor_list = VendorProfile.objects.annotate(
         approved_images=Count('gallery', filter=Q(gallery__status='approved'))
@@ -185,19 +187,31 @@ def vendor_directory(request):
     if category_filter:
         vendor_list = vendor_list.filter(category=category_filter)
 
+    if location_filter:
+        vendor_list = vendor_list.filter(location__iexact=location_filter)
+
     vendor_list = vendor_list.order_by('-id')
 
-    paginator = Paginator(vendor_list, 3)  # 6 per page
+    # Pagination
+    paginator = Paginator(vendor_list, 6)  # 6 per page
     page_number = request.GET.get('page')
     vendors = paginator.get_page(page_number)
+
+    # Build unique list of locations
+    locations = sorted({v.location for v in VendorProfile.objects.filter(user__status='approved')})
 
     context = {
         "vendors": vendors,
         "search_query": search_query,
         "category_filter": category_filter,
-        "categories": CATEGORY_CHOICES,  # <-- pass choices here
+        "location_filter": location_filter,
+        "categories": CATEGORY_CHOICES,
+        "locations": locations,
     }
     return render(request, "accounts/vendor_directory.html", context)
+
+
+
 def vendor_profile_detail(request, user_id):
     vendor = get_object_or_404(VendorProfile, user__id=user_id)
     gallery = vendor.gallery.filter(status='approved')

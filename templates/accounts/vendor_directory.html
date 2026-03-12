@@ -16,20 +16,26 @@
 <!-- Filter Form -->
 <div class="container my-4">
   <form method="GET" class="row g-3">
-
-    <!-- Search -->
-    <div class="col-md-5">
-      <input type="text"
-             name="search"
-             value="{{ search_query|default:'' }}"
-             class="form-control"
-             placeholder="Search by business name or location">
+    <!-- Location -->
+    <div class="col-md-4">
+        <select name="location" class="form-control">
+            <option value="" {% if not location_filter %}selected{% endif %}>
+                All Locations
+            </option>
+            {% for loc in locations %}
+            <option value="{{ loc }}" {% if location_filter == loc %}selected{% endif %}>
+                {{ loc }}
+            </option>
+            {% endfor %}
+        </select>
     </div>
 
     <!-- Category -->
-    <div class="col-md-5">
+    <div class="col-md-3">
       <select name="category" class="form-control">
-        <option value="">All Categories</option>
+        <option value="" {% if not category_filter %}selected{% endif %}>
+            All Categories
+        </option>
         {% for key, value in categories %}
           <option value="{{ key }}" {% if category_filter == key %}selected{% endif %}>
             {{ value }}
@@ -38,7 +44,7 @@
       </select>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-1">
       <button type="submit" class="btn btn-primary w-100" style="background-color: #004aad;">
         Filter
       </button>
@@ -46,6 +52,7 @@
 
   </form>
 </div>
+
 
 <!-- Vendors -->
 <div class="container my-5">
