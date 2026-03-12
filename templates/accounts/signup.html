@@ -113,9 +113,9 @@
                         <!-- ✅ Terms & Conditions checkbox -->
                         <div class="mb-3 form-check">
                             {{ form.terms }}
-                            <label class="form-check-label" for="{{ form.terms.id_for_label }}">
+                            <label class="form-check-label for="{{ form.terms.id_for_label }}">
                                 I have read and agree to the 
-                                <a href="/terms/" target="_blank">Terms and Conditions</a>
+                                <a href="{% url 'terms_conditions' %}" target="_blank"style="color: #004aad;">Terms and Conditions</a>
                             </label>
                             {% if form.terms.errors %}
                                 <div class="text-danger small mt-1">
