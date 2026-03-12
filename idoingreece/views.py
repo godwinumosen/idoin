@@ -99,3 +99,5 @@ def blog_by_category(request, category):
 
 
 
+def terms_conditions (request):
+    return render (request, 'idoingreece/terms_conditions.html')

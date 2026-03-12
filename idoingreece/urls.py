@@ -8,6 +8,7 @@ urlpatterns = [
     path('', HomeView.as_view(), name="home"),
     path('home/', HomeView.as_view(), name='home'),
     path('about/', views.about, name='about'),
+    path('terms_conditions/', views.terms_conditions, name='terms_conditions'),
     path('blog/', views.blog, name='blog'),
     path('blog/<int:pk>/', views.blog_detail, name='blog_detail'),
     path('blog/category/<str:category>/', views.blog_by_category, name='blog_by_category'),

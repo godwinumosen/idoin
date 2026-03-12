@@ -4,7 +4,6 @@ from .models import User, VendorProfile
 
 
 class VendorSignupForm(UserCreationForm):
-    # ✅ Add first_name and last_name
     first_name = forms.CharField(
         max_length=30,
         required=True,
@@ -23,18 +22,24 @@ class VendorSignupForm(UserCreationForm):
         })
     )
 
+    # ✅ Terms & Conditions checkbox
+    terms = forms.BooleanField(
+        required=True,
+        label='I have read and agree to the Terms and Conditions',
+        widget=forms.CheckboxInput(attrs={"class": "form-check-input"})
+    )
 
     class Meta:
         model = User
         fields = [
-            "first_name",   # added
-            "last_name",    # added
+            "first_name",
+            "last_name",
             "username",
             "email",
             "password1",
             "password2",
+            "terms",  # added
         ]
-
         widgets = {
             "username": forms.TextInput(attrs={
                 "class": "form-control",
@@ -48,17 +53,14 @@ class VendorSignupForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         self.fields["password1"].widget.attrs.update({
             "class": "form-control",
             "placeholder": "Create password"
         })
-
         self.fields["password2"].widget.attrs.update({
             "class": "form-control",
             "placeholder": "Confirm password"
         })
-
         self.fields["first_name"].label = "First Name"
         self.fields["last_name"].label = "Last Name"
     
