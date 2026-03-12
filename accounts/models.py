@@ -50,7 +50,7 @@ class VendorProfile(models.Model):
     )
 
     business_name = models.CharField(max_length=255)
-    bio = models.CharField(max_length=250)
+    bio = models.CharField(max_length=1000)
     location = models.CharField(max_length=255)
 
     category = models.CharField(
