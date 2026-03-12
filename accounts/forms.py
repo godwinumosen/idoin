@@ -23,38 +23,6 @@ class VendorSignupForm(UserCreationForm):
         })
     )
 
-    business_name = forms.CharField(
-        max_length=255,
-        widget=forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "Enter your business name"
-        })
-    )
-
-    bio = forms.CharField(
-        widget=forms.Textarea(attrs={
-            "class": "form-control",
-            "placeholder": "Tell customers about your business...",
-            "rows": 4
-        })
-    )
-
-    location = forms.CharField(
-        max_length=255,
-        widget=forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "Enter your primary location"
-        })
-    )
-
-
-    phone_number = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "Enter your phone number"
-        })
-    )
 
     class Meta:
         model = User
@@ -93,9 +61,7 @@ class VendorSignupForm(UserCreationForm):
 
         self.fields["first_name"].label = "First Name"
         self.fields["last_name"].label = "Last Name"
-        self.fields["business_name"].label = "Business Name"
-        self.fields["bio"].label = "Business Description"
-        self.fields["location"].label = "Primary Location"
+    
 
     def save(self, commit=True):
         user = super().save(commit=False)
