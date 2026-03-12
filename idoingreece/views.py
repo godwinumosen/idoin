@@ -98,6 +98,8 @@ def blog_by_category(request, category):
     })
 
 
-
 def terms_conditions (request):
     return render (request, 'idoingreece/terms_conditions.html')
+
+def private_policy (request):
+    return render (request, 'idoingreece/private_policy.html')
