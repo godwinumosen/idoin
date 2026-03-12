@@ -283,23 +283,18 @@ def approve_vendor(request, user_id):
         vendor_user.save()
 
         send_email_to_user_and_admin(
-            subject='Account Approved – I Do In Greece',
-            message=f"""Dear {vendor_user.username},
-
-            We are pleased to inform you that your vendor account with I Do In Greece has been officially approved.
-            You can now log in to your account and start showcasing your services.
-
-            Kindly log in and upload a profile image in your edit profile page.
-
-            To log in, please visit: https://idoingreece.com/login
-
-            We are excited to have you as part of our trusted vendor network and look forward to helping you connect with potential clients.
-
-            If you have any questions or need assistance, please do not hesitate to contact our support team.
-
-            Warm regards,
-            The I Do In Greece Team
-            """,
+            subject="Account Approved – I Do In Greece",
+            message=(
+                f"Dear {vendor_user.username},\n\n"
+                "We are pleased to inform you that your vendor account with I Do In Greece has been officially approved. "
+                "You can now log in to your account and start showcasing your services.\n\n"
+                "Kindly log in and upload a profile image in your edit profile page.\n\n"
+                "To log in, please visit: https://idoingreece.com/login\n\n"
+                "We are excited to have you as part of our trusted vendor network and look forward to helping you connect with potential clients.\n\n"
+                "If you have any questions or need assistance, please do not hesitate to contact our support team.\n\n"
+                "Warm regards,\n"
+                "The I Do In Greece Team"
+            ),
             user_email=vendor_user.email,
             fail_silently=False
         )
