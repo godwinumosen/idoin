@@ -52,7 +52,8 @@ class VendorProfile(models.Model):
     business_name = models.CharField(max_length=255)
     bio = models.CharField(max_length=250)
     location = models.CharField(max_length=255)
-    category = models.CharField(   # 👈 MOVE IT HERE
+
+    category = models.CharField(
         max_length=50,
         choices=CATEGORY_CHOICES,
         null=True,
@@ -62,16 +63,21 @@ class VendorProfile(models.Model):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     profile_image = models.ImageField(upload_to="vendor_profiles/", null=True, blank=True)
 
+    # ✅ Social links
+    instagram = models.URLField(blank=True, null=True)
+    facebook = models.URLField(blank=True, null=True)
+    tiktok = models.URLField(blank=True, null=True)
+
     subscription_type = models.CharField(
         max_length=10,
         choices=[('free', 'Free'), ('paid', 'Paid')],
         default='free'
     )
+
     subscription_expiry = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.business_name
-    
 
     
 

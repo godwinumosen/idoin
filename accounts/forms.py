@@ -94,9 +94,12 @@ class VendorProfileForm(forms.ModelForm):
             "business_name",
             "bio",
             "location",
-            "category",  
+            "category",
             "phone_number",
-            "profile_image"
+            "profile_image",
+            "instagram",
+            "facebook",
+            "tiktok",
         ]
         labels = {
             "business_name": "Business Name",
@@ -133,5 +136,17 @@ class VendorProfileForm(forms.ModelForm):
   
             "profile_image": forms.FileInput(attrs={
                 "class": "form-control"
+            }),
+            "instagram": forms.URLInput(attrs={
+                "class": "form-control",
+                "placeholder": "Instagram profile link"
+            }),
+            "facebook": forms.URLInput(attrs={
+                "class": "form-control",
+                "placeholder": "Facebook page link"
+            }),
+            "tiktok": forms.URLInput(attrs={
+                "class": "form-control",
+                "placeholder": "TikTok profile link"
             }),
         }
