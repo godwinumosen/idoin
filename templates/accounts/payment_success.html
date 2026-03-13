@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<br><br><br>
+
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
+  <div class="container text-white text-center">
+    <h1 class="display-4 text-white fw-bold text-center" style="font-size: 35px;">Payment Successful</h1>
+  </div>
+</div>
+
+
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:70vh;">
+
+    <div class="col-md-6">
+
+        <div class="card shadow-lg border-0 rounded-4 text-center">
+
+            <div class="card-body p-5">
+
+                <div class="mb-4">
+                    <div class="display-6 text-success">✅</div>
+                </div>
+
+
+                <p class="lead text-muted">
+                    Your vendor subscription has been activated successfully.
+                </p>
+
+                <p class="text-muted">
+                    You can now upload images and manage your profile on  
+                    <strong>I Do In Greece</strong>.
+                </p>
+
+                <div class="d-grid mt-4">
+                    <a href="{% url 'dashboard' %}" class="btn btn-success btn-lg">
+                        Go to Dashboard
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="card-footer bg-light text-muted small">
+                Thank you for subscribing 
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

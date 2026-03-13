@@ -386,6 +386,7 @@ def reject_gallery(request, image_id):
     messages.warning(request, "Gallery image rejected.")
     return redirect('admin_dashboard')
 
+
 @login_required
 def delete_image(request, image_id):
     try:
@@ -438,13 +439,16 @@ def stripe_checkout(request, user_id):
 
 
 
-
 def payment_success(request):
-    messages.success(
-        request,
-        "Payment received successfully! Your I Do In Greece account will be activated shortly."
-    )
-    return redirect('dashboard')
+
+    profile = VendorProfile.objects.get(user=request.user)
+
+    profile.subscription_type = "paid"
+    profile.subscription_expiry = date.today() + timedelta(days=365)
+    profile.save()
+
+    return render(request, "accounts/payment_success.html")
+
 
 
 
