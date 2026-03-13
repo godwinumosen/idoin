@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'idoingreece',
     'accounts',
     'widget_tweaks',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -132,8 +134,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -167,3 +169,12 @@ LOGOUT_REDIRECT_URL = 'login'
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dv7na1nsn',
+    'API_KEY': '644652723762183',
+    'API_SECRET': 'bXfSlKFiPI7Et7nIsdI-LqXC9L4',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
