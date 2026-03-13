@@ -1,3 +1,5 @@
+
+from . import views
 from django.urls import path
 from .views import (
     admin_dashboard, approve_gallery, approve_vendor, dashboard_directory,
@@ -30,4 +32,8 @@ urlpatterns = [
     path("delete-image/<int:image_id>/", delete_image, name="delete_image"),
     path("vendors/", vendor_directory, name="vendor_directory"),
     path("vendors/<int:user_id>/", vendor_profile_detail, name="vendor_profile_detail"),
+    path("stripe/webhook/", views.stripe_webhook, name="stripe_webhook"),
+    path("stripe/checkout/<int:user_id>/", views.stripe_checkout, name="stripe_checkout"),
+    path("payment-success/", views.payment_success, name="payment_success"),
+    path("payment-cancel/", views.payment_cancel, name="payment_cancel"),
 ]

@@ -1,5 +1,5 @@
 from datetime import date, timedelta, timezone
-
+from django.urls import reverse
 from django.conf import settings
 import stripe
 from django.contrib.auth import get_user_model
@@ -16,21 +16,22 @@ from .models import VendorProfile, VendorImage,CATEGORY_CHOICES
 from django.core.mail import send_mail
 
 
+
 # ----------------- EMAIL HELPER -----------------
 def send_email_to_user_and_admin(subject, message, user_email, fail_silently=False):
-    admin_email = "idoingreece@gmail.com"  # admin email
+    admin_email = "godwinsenwin@gmail.com"
     send_mail(
         subject=subject,
         message=message,
         from_email='no-reply@yourdomain.com',
-        recipient_list=[user_email, admin_email],  # send to both
+        recipient_list=[user_email, admin_email],
         fail_silently=fail_silently,
     )
 
 
-
 # ----------------- SIGNUP -----------------
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 def signup_view(request):
     if request.method == "POST":
         form = VendorSignupForm(request.POST)
@@ -40,17 +41,22 @@ def signup_view(request):
             user.save()
             form.save_m2m()
 
-            # Count free vendors
-            free_count = VendorProfile.objects.filter(subscription_type='free').count()
+            # First 50 vendors get free 1 year
+            vendor_count = VendorProfile.objects.count()
 
-            if free_count < 50:
+            
+            #if vendor_count < 50:
+            if vendor_count < 1:
                 VendorProfile.objects.create(
                     user=user,
-                    subscription_type='free',
+                    subscription_type="free",
                     subscription_expiry=date.today() + timedelta(days=365)
                 )
             else:
-                VendorProfile.objects.create(user=user, subscription_type='paid')
+                VendorProfile.objects.create(
+                    user=user,
+                    subscription_type="paid"
+                )
 
             # Send email to user + admin
             send_email_to_user_and_admin(
@@ -74,6 +80,9 @@ def signup_view(request):
         form = VendorSignupForm()
 
     return render(request, "accounts/signup.html", {"form": form})
+
+
+
 
 
 
@@ -121,15 +130,27 @@ def edit_profile(request):
 
 # ----------------- UPLOAD GALLERY IMAGE -----------------
 
+from datetime import date
+
 @login_required
 def upload_gallery_image(request):
     profile, created = VendorProfile.objects.get_or_create(user=request.user)
+
+    # Check subscription for paid vendors
+
+    if profile.subscription_type == "paid":
+        if not profile.subscription_expiry or profile.subscription_expiry < date.today():
+             return JsonResponse({
+                "error": "Please subscribe to upload images.",
+                "payment_url": reverse("stripe_checkout", args=[request.user.id])
+        }, status=403)
 
     if request.user.status != "approved":
         return JsonResponse({"error": "Account not approved"}, status=403)
 
     if profile.gallery.count() >= 5:
         return JsonResponse({"error": "Gallery full"}, status=400)
+
     if request.method == "POST":
         image = request.FILES.get("image")
         if image:
@@ -153,11 +174,11 @@ def upload_gallery_image(request):
                     "I Do In Greece Team"
                 ),
                 from_email="no-reply@yourdomain.com",
-                recipient_list=["idoingreece@gmail.com"],  # admin email
+                recipient_list=["godwinsenwin@gmail.com"],
                 fail_silently=False,
             )
             return JsonResponse({"success": True})
-        
+
     return JsonResponse({"error": "No image uploaded"}, status=400)
 
 
@@ -289,7 +310,7 @@ def approve_vendor(request, user_id):
                 "We are pleased to inform you that your vendor account with I Do In Greece has been officially approved. "
                 "You can now log in to your account and start showcasing your services.\n\n"
                 "Kindly log in and upload a profile image in your edit profile page.\n\n"
-                "To log in, please visit: https://idoingreece.com/login\n\n"
+                "To log in, please visit: https://godwinsenwin.com/login\n\n"
                 "We are excited to have you as part of our trusted vendor network and look forward to helping you connect with potential clients.\n\n"
                 "If you have any questions or need assistance, please do not hesitate to contact our support team.\n\n"
                 "Warm regards,\n"
@@ -382,42 +403,100 @@ def delete_image(request, image_id):
 @login_required
 def stripe_checkout(request, user_id):
     user = get_object_or_404(User, id=user_id)
+
     if request.method == "POST":
+        years = int(request.POST.get("years", 1))
+        amount = years * 20000  # £200 per year
+
         session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
+            payment_method_types=['card','sepa_debit'],
+             phone_number_collection={
+                "enabled": False
+            },
+
             line_items=[{
                 'price_data': {
-                    'currency': 'gbp',
-                    'product_data': {'name': 'Vendor Subscription'},
-                    'unit_amount': 20000,
+                    'currency': 'eur',
+                    'product_data': {'name': f'Vendor Subscription ({years} year)'},
+                    'unit_amount': amount,
                 },
                 'quantity': 1,
             }],
             mode='payment',
-            success_url=request.build_absolute_uri('/payment-success/') + f"?user_id={user.id}",
+
+            metadata={
+                "user_id": user.id,
+                "years": years
+            },
+            success_url=request.build_absolute_uri('/payment-success/'),
             cancel_url=request.build_absolute_uri('/payment-cancel/'),
         )
+
         return redirect(session.url)
+
     return render(request, 'accounts/stripe_checkout.html', {'user': user})
 
+
+
+
 def payment_success(request):
-    user_id = request.GET.get('user_id')
-    user = get_object_or_404(User, id=user_id)
-    profile = user.vendorprofile
-
-    profile.subscription_type = 'paid'
-    profile.subscription_expiry = None
-    profile.save()
-
-    user.status = 'approved'
-    user.save()
-
-    send_email_to_user_and_admin(
-        'Payment Received – Account Approved',
-        f"Hi {user.username}, your payment was successful! You can now upload profile & gallery.",
-        user_email=user.email,
-        fail_silently=False
+    messages.success(
+        request,
+        "Payment received successfully! Your I Do In Greece account will be activated shortly."
     )
-
-    messages.success(request, "Payment successful! Your account is approved.")
     return redirect('dashboard')
+
+
+
+def payment_cancel(request):
+    messages.error(request, "Payment cancelled.")
+    return redirect("dashboard")
+
+
+
+
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+
+@csrf_exempt
+def stripe_webhook(request):
+
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError:
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError:
+        return HttpResponse(status=400)
+
+    # Payment completed
+    if event['type'] == 'checkout.session.completed':
+
+        session = event['data']['object']
+
+        user_id = session["metadata"]["user_id"]
+        years = int(session["metadata"]["years"])
+
+        user = User.objects.get(id=user_id)
+        profile = user.vendorprofile
+
+        profile.subscription_type = "paid"
+        profile.subscription_expiry = date.today() + timedelta(days=365 * years)
+        profile.save()
+
+        user.status = "approved"
+        user.save()
+
+        send_email_to_user_and_admin(
+            "Payment Successful",
+            f"Hi {user.username}, your {years} year subscription is now active.",
+            user.email
+        )
+
+    return HttpResponse(status=200)

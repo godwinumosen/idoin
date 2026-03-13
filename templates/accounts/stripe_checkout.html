@@ -1,4 +1,65 @@
-<form method="POST">
-    {% csrf_token %}
-    <button class="btn btn-primary">Pay $20 to Activate Vendor Account</button>
-</form>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+
+
+<br><br><br>
+
+<div class="page-title py-5 mb-5" style="background-color: #004aad;">
+  <div class="container text-white text-center">
+    <h1 class="display-4 text-white fw-bold text-center" style="font-size: 35px;">Subscription Plan</h1>
+  </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header text-white text-center rounded-top-4"style="background-color: #004aad;">
+                    <h4 class="mb-0 text-white">Choose your subscription duration to enable image uploads.</h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                Select Subscription Years
+                            </label>
+
+                            <select name="years" class="form-select form-select-lg">
+                                <option value="1">1 Year (€200)</option>
+                                <option value="2">2 Years (€400)</option>
+                                <option value="3">3 Years (€600)</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                💳 Make Payment
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="card-footer text-center text-muted small">
+                    Secure payment powered by Stripe
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div><br><br>
+
+{% endblock %}

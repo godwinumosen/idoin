@@ -35,6 +35,8 @@ CATEGORY_CHOICES = (
     ('Other', 'Other'),
 )
 
+
+
 category = models.CharField(
     max_length=50,
     choices=CATEGORY_CHOICES,
