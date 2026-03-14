@@ -134,8 +134,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-#MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -174,10 +174,17 @@ STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
 
 MEDIA_URL = '/media/'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dv7na1nsn',
-    'API_KEY': '644652723762183',
-    'API_SECRET': 'bXfSlKFiPI7Et7nIsdI-LqXC9L4',
-}
+CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME")
+CLOUDINARY_API_KEY =os.getenv("CLOUDINARY_API_KEY")
+CLOUDINARY_API_SECRET =os.getenv("CLOUDINARY_API_SECRET")
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+import cloudinary
+
+cloudinary.config(
+    cloud_name="dv7na1nsn",
+    api_key="644652723762183",
+    api_secret="bXfSlKFiPI7Et7nIsdI-LqXC9L4",
+)
+
