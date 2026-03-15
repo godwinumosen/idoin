@@ -23,7 +23,11 @@ SECRET_KEY = 'django-insecure-p_qh0*6fqxnlfz^tsd6(8tybtg-a4$5$^r+!1(coai6+=aii(z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ["*"]
+
+
+DEBUG = True
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -70,6 +74,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'idoin.wsgi.application'
 
+
+
 # Database
 DATABASES = {
     'default': {
@@ -77,6 +83,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -91,6 +100,12 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+
+
+# Optional: comment out local MEDIA settings so Django stops using /media/
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Static files
 STATIC_URL = 'static/'
@@ -136,17 +151,24 @@ STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
 
-# Default primary key type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 
 import cloudinary
+import cloudinary_storage
+from dotenv import load_dotenv
+import os
 
-# Load CLOUDINARY_URL from .env automatically
-cloudinary.config()
+load_dotenv()  # Make sure this comes first
 
-# Tell Django to store all uploaded media on Cloudinary
+# Cloudinary config
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+)
+
+# Use Cloudinary for media storage
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
-# Optional: comment out local MEDIA settings so Django stops using /media/
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

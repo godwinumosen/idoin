@@ -45,7 +45,7 @@ def signup_view(request):
             vendor_count = VendorProfile.objects.count()
 
             
-            #if vendor_count < 50:
+            #if vendor_count < 50:  
             if vendor_count < 1:
                 VendorProfile.objects.create(
                     user=user,
