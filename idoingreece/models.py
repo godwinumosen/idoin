@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.utils import timezone
 
@@ -10,7 +10,8 @@ class IdoingreecePost(models.Model):
     Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     Idoingreece_description = models.TextField()
     Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    Idoingreece_img = models.ImageField(upload_to='idoingreece_images/')
+    #Idoingreece_img = models.ImageField(upload_to='idoingreece_images/')
+    Idoingreece_img = CloudinaryField('idoingreece_images/')
     Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
     Idoingreece_author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -32,7 +33,8 @@ class AboutIdoingreecePost(models.Model):
     About_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     About_Idoingreece_description = models.TextField()
     About_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    About_Idoingreece_img = models.ImageField(upload_to='About_images/')
+    #About_Idoingreece_img = models.ImageField(upload_to='About_images/')
+    About_Idoingreece_img = CloudinaryField('About_images/')
     About_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
     About_Idoingreece_author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -53,7 +55,8 @@ class FirstIdoingreecePost(models.Model):
     First_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     First_Idoingreece_description = models.TextField()
     First_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    First_Idoingreece_img = models.ImageField(upload_to=' First_images/')
+    #First_Idoingreece_img = models.ImageField(upload_to='First_images/')
+    First_Idoingreece_img = CloudinaryField('First_images/')
     First_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
     First_Idoingreece_author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -81,7 +84,8 @@ class BlogPost(models.Model):
 
     title = models.CharField(max_length=200)
     content = models.TextField()
-    image = models.ImageField(upload_to='blog_images/')
+    #image = models.ImageField(upload_to='blog_images/')
+    image = CloudinaryField('blog_images/')
     publish_date = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, blank=True)
     author = models.CharField(max_length=100)
@@ -101,7 +105,8 @@ class Feature2_IdoingreecePost(models.Model):
     Feature2_Idoingreece_status = models.CharField(max_length=255, blank=True, null=True)
     Feature2_Idoingreece_description = models.TextField()
     Feature2_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    Feature2_Idoingreece_img = models.ImageField(upload_to='Feature2_images/')
+    #Feature2_Idoingreece_img = models.ImageField(upload_to='Feature2_images/')
+    Feature2_Idoingreece_img = CloudinaryField('Feature2_images/')
     Feature2_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
     Feature2_Idoingreece_author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
@@ -119,7 +124,8 @@ class SecondIdoingreecePost(models.Model):
     Second_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     Second_Idoingreece_description = models.TextField()
     Second_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    Second_Idoingreece_video = models.FileField(upload_to='Second_idoingreece_video/', blank=True, null=True)
+    #Second_Idoingreece_video = models.FileField(upload_to='Second_idoingreece_video/', blank=True, null=True)
+    Second_Idoingreece_video = CloudinaryField('Second_idoingreece_video/', blank=True, null=True)
     Second_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
     Second_Idoingreece_author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -140,7 +146,8 @@ class ExcellenceIdoingreecePost(models.Model):
     Excellence_Idoingreece_title = models.CharField(max_length=255, blank=True, null=True)
     Excellence_Idoingreece_description = models.TextField()
     Excellence_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
-    Excellence_Idoingreece_img = models.ImageField(upload_to='Excellence_images/')
+    #Excellence_Idoingreece_img = models.ImageField(upload_to='Excellence_images/')
+    Excellence_Idoingreece_img = CloudinaryField('Excellence_images/')
     Excellence_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
     Excellence_Idoingreece_author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -208,7 +215,8 @@ class Vendor(models.Model):
 
 class VendorImage(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name="images")
-    image = models.ImageField(upload_to="vendors/")
+    #image = models.ImageField(upload_to="vendors/")
+    image = CloudinaryField("vendors/")
 
 
 class VendorEnquiry(models.Model):
@@ -224,7 +232,8 @@ class VendorEnquiry(models.Model):
 
 class AdZone(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="ads/")
+    #image = models.ImageField(upload_to="ads/")
+    image = CloudinaryField("ads/")
     link = models.URLField()
     is_active = models.BooleanField(default=True)
 

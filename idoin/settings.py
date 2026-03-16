@@ -7,8 +7,6 @@ import os
 from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
-import cloudinary
-import cloudinary_storage
 
 # Load environment variables from .env
 load_dotenv()
@@ -104,8 +102,9 @@ USE_TZ = True
 
 
 # Optional: comment out local MEDIA settings so Django stops using /media/
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Static files
 STATIC_URL = 'static/'
@@ -113,13 +112,6 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Cloudinary Media Storage
-cloudinary.config(
-    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME", "dv7na1nsn"),
-    api_key=os.getenv("CLOUDINARY_API_KEY", "644652723762183"),
-    api_secret=os.getenv("CLOUDINARY_API_SECRET", "bXfSlKFiPI7Et7nIsdI-LqXC9L4"),
-)
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -151,7 +143,18 @@ STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
 
 
-# Use Cloudinary for media storage
+
+from dotenv import load_dotenv
+import os
+load_dotenv()
+import cloudinary
+
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+)
+
+# All media uploads go to Cloudinary
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-

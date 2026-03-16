@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 
@@ -63,7 +64,8 @@ class VendorProfile(models.Model):
     )
 
     phone_number = models.CharField(max_length=20, null=True, blank=True)
-    profile_image = models.ImageField(upload_to="vendor_profiles/", null=True, blank=True)
+    #profile_image = models.ImageField(upload_to="vendor_profiles/", null=True, blank=True)
+    profile_image = CloudinaryField("vendor_profiles/", null=True, blank=True)
 
     # ✅ Social links
     instagram = models.URLField(blank=True, null=True)
@@ -96,7 +98,8 @@ class VendorImage(models.Model):
         on_delete=models.CASCADE,
         related_name="gallery"
     )
-    image = models.ImageField(upload_to="vendor_gallery/")
+    #image = models.ImageField(upload_to="vendor_gallery/")
+    image = CloudinaryField("vendor_gallery/")
     status = models.CharField(
         max_length=10,
         choices=STATUS_CHOICES,
