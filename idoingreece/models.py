@@ -11,7 +11,7 @@ class IdoingreecePost(models.Model):
     Idoingreece_description = models.TextField()
     Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
     #Idoingreece_img = models.ImageField(upload_to='idoingreece_images/')
-    Idoingreece_img = CloudinaryField('idoingreece_images/')
+    Idoingreece_img = CloudinaryField(folder='idoingreece_images/', null=True, blank=True)
     Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
     Idoingreece_author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
