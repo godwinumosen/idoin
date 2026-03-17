@@ -27,7 +27,7 @@
           <h1 class="card-title fw-bold">{{ post.title }}</h1>
           <p class="text-muted mb-3">By {{ post.author }} | {{ post.publish_date|date:"M d, Y" }}</p>
           <div class="card-text">
-            {{ post.content|linebreaks }}
+            {{ post.content }}
           </div>
         </div>
       </div>

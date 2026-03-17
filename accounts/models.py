@@ -8,7 +8,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 
 
-def compress_image(image, max_size=(1024, 1024) , quality=70):
+def compress_image(image, max_size=(1024, 1024), quality=70):
     try:
         img = Image.open(image)
 
