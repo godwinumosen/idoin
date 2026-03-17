@@ -130,12 +130,12 @@ def edit_profile(request):
 
 # ----------------- UPLOAD GALLERY IMAGE -----------------
 
+
 from datetime import date
 
 @login_required
 def upload_gallery_image(request):
     profile, created = VendorProfile.objects.get_or_create(user=request.user)
-
     # Check subscription for paid vendors
 
     if profile.subscription_type == "paid":
@@ -281,7 +281,7 @@ def dashboard_directory(request):
 def admin_required(view_func):
     return user_passes_test(lambda u: u.is_superuser)(view_func)
 
-@admin_required
+'''@admin_required
 def admin_dashboard(request):
     pending_vendors = VendorProfile.objects.filter(user__status='pending', user__is_superuser=False)
     all_vendors = VendorProfile.objects.filter(user__is_superuser=False)
@@ -291,8 +291,31 @@ def admin_dashboard(request):
         'pending_vendors': pending_vendors,
         'all_vendors': all_vendors,
         'pending_gallery': pending_gallery,
-    })
+    })'''
 
+
+@admin_required
+def admin_dashboard(request):
+    pending_vendors = VendorProfile.objects.filter(user__status='pending', user__is_superuser=False)
+    all_vendors = VendorProfile.objects.filter(user__is_superuser=False)
+    pending_gallery = VendorImage.objects.filter(status='pending')
+
+    # NEW: Counts for dashboard cards
+    total_users = User.objects.filter(is_superuser=False).count()
+    approved_vendors = User.objects.filter(status='approved', is_superuser=False).count()
+    pending_vendors_count = User.objects.filter(status='pending', is_superuser=False).count()
+    rejected_vendors = User.objects.filter(status='rejected', is_superuser=False).count()
+
+    return render(request, 'accounts/admin_dashboard.html', {
+        'pending_vendors': pending_vendors,
+        'all_vendors': all_vendors,
+        'pending_gallery': pending_gallery,
+        # Pass counts
+        'total_users': total_users,
+        'approved_vendors': approved_vendors,
+        'pending_vendors_count': pending_vendors_count,
+        'rejected_vendors': rejected_vendors,
+    })
 
 
 # ----------------- VENDOR / GALLERY ACTIONS -----------------

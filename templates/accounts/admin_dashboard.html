@@ -13,6 +13,54 @@
   </div>
 </div>
 
+
+<!-- Dashboard Counts Cards -->
+<div class="container my-4">
+  <div class="row text-center g-3">
+    <!-- Total Users -->
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-white"style="background-color: #004aad;">
+          <h5 class="card-title">Total Users</h5>
+          <h2 class="card-text text-white display-4">{{ total_users }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Approved Vendors -->
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0">
+        <div class="card-body bg-success text-white">
+          <h5 class="card-title">Approved Vendors</h5>
+          <h2 class="card-text text-white display-4">{{ approved_vendors }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Vendors -->
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0">
+        <div class="card-body bg-warning text-dark">
+          <h5 class="card-title text-white">Pending Vendors</h5>
+          <h2 class="card-text text-white display-4">{{ pending_vendors_count }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rejected Vendors -->
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0">
+        <div class="card-body bg-danger text-white">
+          <h5 class="card-title">Rejected Vendors</h5>
+          <h2 class="card-text text-white display-4">{{ rejected_vendors }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
@@ -227,5 +275,8 @@
     </main>
   </div>
 </div>
+
+
+
 
 {% endblock %}
