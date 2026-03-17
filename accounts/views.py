@@ -19,7 +19,7 @@ from django.core.mail import send_mail
 
 # ----------------- EMAIL HELPER -----------------
 def send_email_to_user_and_admin(subject, message, user_email, fail_silently=False):
-    admin_email = "godwinsenwin@gmail.com"
+    admin_email = "idoingreece@gmail.com"
     send_mail(
         subject=subject,
         message=message,
@@ -174,7 +174,7 @@ def upload_gallery_image(request):
                     "I Do In Greece Team"
                 ),
                 from_email="no-reply@yourdomain.com",
-                recipient_list=["godwinsenwin@gmail.com"],
+                recipient_list=["idoingreece@gmail.com"],
                 fail_silently=False,
             )
             return JsonResponse({"success": True})
@@ -333,7 +333,7 @@ def approve_vendor(request, user_id):
                 "We are pleased to inform you that your vendor account with I Do In Greece has been officially approved. "
                 "You can now log in to your account and start showcasing your services.\n\n"
                 "Kindly log in and upload a profile image in your edit profile page.\n\n"
-                "To log in, please visit: https://godwinsenwin.com/login\n\n"
+                "To log in, please visit: https://idoingreece.com/login\n\n"
                 "We are excited to have you as part of our trusted vendor network and look forward to helping you connect with potential clients.\n\n"
                 "If you have any questions or need assistance, please do not hesitate to contact our support team.\n\n"
                 "Warm regards,\n"
