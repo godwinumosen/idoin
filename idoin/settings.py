@@ -68,6 +68,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'idoin.wsgi.application'
 
+
 # Database
 '''DATABASES = {
     "default": dj_database_url.config(

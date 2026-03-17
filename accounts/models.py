@@ -65,7 +65,7 @@ class VendorProfile(models.Model):
 
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     #profile_image = models.ImageField(upload_to="vendor_profiles/", null=True, blank=True)
-    profile_image = CloudinaryField("vendor_profiles/", null=True, blank=True)
+    profile_image = CloudinaryField(folder="vendor_profiles/", null=True, blank=True)
 
     # ✅ Social links
     instagram = models.URLField(blank=True, null=True)
@@ -99,7 +99,7 @@ class VendorImage(models.Model):
         related_name="gallery"
     )
     #image = models.ImageField(upload_to="vendor_gallery/")
-    image = CloudinaryField("vendor_gallery/")
+    image = CloudinaryField(folder="vendor_gallery/", null=True, blank=True)
     status = models.CharField(
         max_length=10,
         choices=STATUS_CHOICES,
