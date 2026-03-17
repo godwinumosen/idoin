@@ -1,7 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from cloudinary.models import CloudinaryField
-
+from io import BytesIO
+from PIL import Image
+from django.core.files.base import ContentFile
 
 
 class User(AbstractUser):

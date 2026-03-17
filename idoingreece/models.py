@@ -3,6 +3,9 @@ from django.urls import reverse
 from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.utils import timezone
+from io import BytesIO
+from PIL import Image
+from django.core.files.base import ContentFile
 
 
 #Done
