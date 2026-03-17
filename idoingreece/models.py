@@ -6,6 +6,34 @@ from django.utils import timezone
 from io import BytesIO
 from PIL import Image
 from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import sys
+
+
+def compress_image(image, max_size=(1024, 1024), quality=70):
+    try:
+        img = Image.open(image)
+
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+
+        img.thumbnail(max_size)
+
+        buffer = BytesIO()
+        img.save(buffer, format='JPEG', quality=quality)
+        buffer.seek(0)
+
+        return InMemoryUploadedFile(
+            buffer,
+            'ImageField',
+            image.name.split('.')[0] + ".jpg",
+            'image/jpeg',
+            sys.getsizeof(buffer),
+            None
+        )
+    except Exception:
+        return image
+    
 
 
 #Done
@@ -26,6 +54,11 @@ class IdoingreecePost(models.Model):
 
     def __str__(self):
         return f"{self.Idoingreece_title} | {self.Idoingreece_author}"
+    
+    def save(self, *args, **kwargs):
+        if self.Idoingreece_img:
+         self.Idoingreece_img = compress_image(self.Idoingreece_img)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -49,6 +82,11 @@ class AboutIdoingreecePost(models.Model):
 
     def __str__(self):
         return f"{self.About_Idoingreece_title} | {self.About_Idoingreece_author}"
+    
+    def save(self, *args, **kwargs):
+        if self.About_Idoingreece_img:
+            self.About_Idoingreece_img = compress_image(self.About_Idoingreece_img)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -71,6 +109,11 @@ class FirstIdoingreecePost(models.Model):
 
     def __str__(self):
         return f"{self.First_Idoingreece_title} | {self.First_Idoingreece_author}"
+    
+    def save(self, *args, **kwargs):
+        if self.First_Idoingreece_img:
+            self.First_Idoingreece_img = compress_image(self.First_Idoingreece_img)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -98,6 +141,11 @@ class BlogPost(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog_detail', args=[str(self.id)])
+    
+    def save(self, *args, **kwargs):
+        if self.image:
+            self.image = compress_image(self.image)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -118,6 +166,11 @@ class Feature2_IdoingreecePost(models.Model):
 
     def __str__(self):
         return f"{self.Feature2_Idoingreece_title} | {self.Feature2_Idoingreece_author}"
+    
+    def save(self, *args, **kwargs):
+        if self.Feature2_Idoingreece_img:
+            self.Feature2_Idoingreece_img = compress_image(self.Feature2_Idoingreece_img)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('home')
@@ -128,7 +181,7 @@ class SecondIdoingreecePost(models.Model):
     Second_Idoingreece_description = models.TextField()
     Second_Idoingreece_slug = models.SlugField(max_length=255, blank=True, null=True)
     #Second_Idoingreece_video = models.FileField(upload_to='Second_idoingreece_video/', blank=True, null=True)
-    Second_Idoingreece_video = CloudinaryField(folder='Second_idoingreece_video/', blank=True, null=True)
+    Second_Idoingreece_video = CloudinaryField(folder='Second_idoingreece_video/', resource_type='video')
     Second_Idoingreece_publish_date = models.DateTimeField(auto_now_add=True)
     Second_Idoingreece_author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -162,6 +215,12 @@ class ExcellenceIdoingreecePost(models.Model):
 
     def __str__(self):
         return f"{self.Excellence_Idoingreece_title} | {self.Excellence_Idoingreece_author}"
+    
+
+    def save(self, *args, **kwargs):
+        if self.Excellence_Idoingreece_img:
+            self.Excellence_Idoingreece_img = compress_image(self.Excellence_Idoingreece_img)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('home')

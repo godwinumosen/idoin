@@ -4,7 +4,35 @@ from cloudinary.models import CloudinaryField
 from io import BytesIO
 from PIL import Image
 from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import sys
 
+
+def compress_image(image, max_size=(1024, 1024) , quality=70):
+    try:
+        img = Image.open(image)
+
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+
+        img.thumbnail(max_size)
+
+        buffer = BytesIO()
+        img.save(buffer, format='JPEG', quality=quality)
+        buffer.seek(0)
+
+        return InMemoryUploadedFile(
+            buffer,
+            'ImageField',
+            image.name.split('.')[0] + ".jpg",
+            'image/jpeg',
+            sys.getsizeof(buffer),
+            None
+        )
+    except Exception:
+        return image
+    
+    
 
 class User(AbstractUser):
     is_vendor = models.BooleanField(default=False)
@@ -82,6 +110,11 @@ class VendorProfile(models.Model):
 
     subscription_expiry = models.DateField(null=True, blank=True)
 
+    def save(self, *args, **kwargs):
+        if self.profile_image:
+            self.profile_image = compress_image(self.profile_image)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.business_name
 
@@ -108,6 +141,11 @@ class VendorImage(models.Model):
         default='pending'
     )
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            self.image = compress_image(self.image)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.vendor.business_name} - {self.status}"
