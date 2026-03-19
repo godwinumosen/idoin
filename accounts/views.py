@@ -46,7 +46,7 @@ def signup_view(request):
 
             
             #if vendor_count < 50:  
-            if vendor_count < 1:
+            if vendor_count < 0:
                 VendorProfile.objects.create(
                     user=user,
                     subscription_type="free",
@@ -424,13 +424,13 @@ def delete_image(request, image_id):
 
 
 # ----------------- STRIPE PAYMENT -----------------
-@login_required
+'''@login_required
 def stripe_checkout(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
     if request.method == "POST":
         years = int(request.POST.get("years", 1))
-        amount = years * 20000  # £200 per year
+        amount = years * 20000  #€200 per year
 
         session = stripe.checkout.Session.create(
             payment_method_types=['card','sepa_debit'],
@@ -458,7 +458,63 @@ def stripe_checkout(request, user_id):
 
         return redirect(session.url)
 
+    return render(request, 'accounts/stripe_checkout.html', {'user': user})'''
+
+
+
+
+@login_required
+def stripe_checkout(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    if request.method == "POST":
+        years = max(1, int(request.POST.get("years", 1)))
+
+        amount = years * 20000  # €200 per year (in cents)
+
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card', 'sepa_debit'],
+
+            phone_number_collection={"enabled": False},
+
+            customer_email=user.email,
+
+
+            payment_method_options={
+                'sepa_debit': {
+                    'mandate_options': {
+                        'reference_prefix': f'USER{user.id}'
+                    }
+                }
+            },
+
+            line_items=[{
+                'price_data': {
+                    'currency': 'eur',
+                    'product_data': {
+                        'name': f'Vendor Subscription ({years} year{"s" if years > 1 else ""})'
+                    },
+                    'unit_amount': amount,
+                },
+                'quantity': 1,
+            }],
+
+            mode='payment',
+
+            metadata={
+                "user_id": user.id,
+                "years": years
+            },
+
+            success_url=request.build_absolute_uri('/payment-success/'),
+            cancel_url=request.build_absolute_uri('/payment-cancel/'),
+        )
+
+        return redirect(session.url)
+
     return render(request, 'accounts/stripe_checkout.html', {'user': user})
+
+
 
 
 

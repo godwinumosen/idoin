@@ -76,6 +76,11 @@ h6 {
   font-family: 'Times New Roman', Times, serif;
 }
 
+
+.call-to-action {
+    padding: 120px 0 1px;
+}
+
 /* PHP Email Form Messages
 ------------------------------*/
 .php-email-form .error-message {

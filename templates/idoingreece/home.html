@@ -67,7 +67,7 @@
               Become a Founding Partner
             </a>
           </div>
-
+          
         </div>
       </div>
 
@@ -309,70 +309,58 @@
 
 
 
-<!-- First Section -->
-<section id="services" class="services py-5">
-  <div class="container text-center mb-5" data-aos="fade-up">
-    <h2 class="fw-bold">Real Weddings</h2>
-    <p class="text-muted">
-      Discover love stories brought to life against the breathtaking backdrops of Greece.
-    </p>
-  </div>
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-  <div class="container">
-    <div class="row g-4">
+    {% for first_category in home_first_category %}
+    <div class="col d-flex">
 
-      {% for first_category in home_first_category %}
-      <div class="col-lg-4 col-md-6">
+      <div class="card border-0 shadow-sm w-100">
 
-        <div class="card border-0 shadow-sm h-100">
+        <!-- IMAGE LINK -->
+        <a href="{% url 'first_article_detail' first_category.pk %}" class="text-decoration-none text-dark">
 
-          <!-- Make entire image clickable -->
-          <a href="{% url 'first_article_detail' first_category.pk %}" class="text-decoration-none text-dark">
+          <div class="position-relative">
+            {% if first_category.First_Idoingreece_img %}
+              <img src="{{ first_category.First_Idoingreece_img.url }}"
+                   alt="{{ first_category.First_Idoingreece_title }}"
+                   class="card-img-top"
+                   style="height:250px; object-fit:cover;">
+            {% else %}
+              <img src="{% static 'images/vendor_placeholder.png' %}"
+                   class="card-img-top"
+                   style="height:250px; object-fit:cover;">
+            {% endif %}
+          </div>
 
-            <!-- Image -->
-            <div class="position-relative">
+          <div class="card-body text-center">
+            <h5 class="fw-bold">
+              {{ first_category.First_Idoingreece_title }}
+            </h5>
 
-              {% if first_category.First_Idoingreece_img %}
-                <img src="{{ first_category.First_Idoingreece_img.url }}"
-                     alt="{{ first_category.First_Idoingreece_title }}"
-                     class="card-img-top"
-                     style="height:250px; object-fit:cover;">
-              {% else %}
-                <img src="{% static 'images/vendor_placeholder.png' %}"
-                     class="card-img-top"
-                     style="height:250px; object-fit:cover;">
-              {% endif %}
+            <p class="text-muted small">
+              {{ first_category.First_Idoingreece_description|truncatechars:60 }}
+            </p>
+          </div>
 
-            </div>
+        </a>
 
-            <!-- Content -->
-            <div class="card-body text-center">
-              <h4 class="">
-                {{ first_category.First_Idoingreece_title }}
-              </h4>
-              <p class="text-muted small">
-                {{ first_category.First_Idoingreece_description|truncatechars:60 }}
-              </p>
-
-              <span class="btn-sm mt-2 text-white"style="background-color: #004aad;">
-                Read More 
-              </span>
-            </div>
-
+        <!-- BUTTON -->
+        <div class="text-center pb-3 mt-auto">
+          <a href="{% url 'first_article_detail' first_category.pk %}"
+             class="btn text-white px-4 py-2"
+             style="background-color:#004aad;">
+            Read More
           </a>
-
         </div>
 
       </div>
-      {% empty %}
-      <div class="col-12 text-center">
-        <p class="text-muted">No posts available in this category.</p>
-      </div>
-      {% endfor %}
 
     </div>
+    {% endfor %}
+
   </div>
-</section>
+</div>
 
 
 <!-- Featured Services Section -->
@@ -402,9 +390,11 @@
           <div class="service-details">
             <h2>{{ feature_vendor.Feature2_Idoingreece_title }}</h2>
             <p>{{ feature_vendor.Feature2_Idoingreece_description }}</p>
-            <a href="https://tally.so/embed/VLlAjN?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"target="_blank" class="main-cta">
-              Tell Us Your Story
-            </a>
+            <a href="https://tally.so/embed/VLlAjN?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"target="_blank"
+             class="btn text-white px-4 py-2"
+             style="background-color:#004aad;">
+            View Vendor
+          </a>
           </div>
         </div>
       </div>
@@ -416,44 +406,79 @@
 
 
 
-<!-- Departments Section -->
-<section id="departments" class="departments section">
-    <div class="container section-title" data-aos="fade-up">
-    <h2>Vendor Spotlight </h2>
+<section id="call-to-action" class="call-to-action section light-background">
+
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Vendor Spotlight</h2>
     <p>Every professional in our directory has been personally reviewed. Browse by category and find your perfect match.</p>
-  </div><!-- End Section Title -->
+  </div>
+
   <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row g-5">
 
-      {% for post in second_category %}
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="department-card">
+    {% for post in second_category %}
 
-          <!-- Video -->
-          <div class="department-image">
-            {% if post.Second_Idoingreece_video %}
-            <video class="img-fluid w-100" controls autoplay muted loop>
-              <source src="{{ post.Second_Idoingreece_video.url }}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            {% else %}
-            <img src="{% static 'assets/img/health/placeholder.webp' %}" alt="Department" class="img-fluid w-100">
-            {% endif %}
-          </div>
+    <!-- 🔥 MAIN SPOTLIGHT (FIRST ITEM ONLY) -->
+    {% if forloop.first %}
+    <div class="mb-5 p-4 p-lg-5 bg-white rounded-4 shadow">
 
-          <div class="department-content text-center">
-            <h3>{{ post.Second_Idoingreece_title }}</h3>
-            <p>{{ post.Second_Idoingreece_description|truncatewords:20 }}</p>
-            <a href="{% url 'second_article_detail' post.pk %}" class="text-white"style="background-color: #004aad;">
-                Learn More
-            </a>
+      <div class="row align-items-center">
+
+        <!-- IMAGE -->
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          {% if post.Second_Idoingreece_video %}
+          <video class="w-100 rounded-4" controls autoplay muted loop>
+            <source src="{{ post.Second_Idoingreece_video.url }}" type="video/mp4">
+          </video>
+          {% else %}
+          <img src="{% static 'assets/img/health/placeholder.webp' %}" class="w-100 rounded-4">
+          {% endif %}
         </div>
+
+        <!-- TEXT -->
+        <div class="col-lg-6">
+          <h2 class="fw-bold mb-3">{{ post.Second_Idoingreece_title }}</h2>
+          <p class="text-muted mb-4">
+            {{ post.Second_Idoingreece_description|truncatewords:40 }}
+          </p>
+
+          <a href="{% url 'second_article_detail' post.pk %}" 
+             class="btn text-white px-4 py-2"
+             style="background-color:#004aad;">
+            View Vendor
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 👇 OTHER VENDORS (SMALLER CARDS) -->
+    <div class="row g-3">
+    {% else %}
+
+      <div class="col-md-4">
+        <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+
+          <h6 class="fw-bold">{{ post.Second_Idoingreece_title }}</h6>
+
+          <p class="text-muted small">
+            {{ post.Second_Idoingreece_description|truncatewords:12 }}
+          </p>
+
+          <a href="{% url 'second_article_detail' post.pk %}" class="small text-primary">
+            View →
+          </a>
 
         </div>
       </div>
-      {% endfor %}
 
+    {% endif %}
+
+    {% if forloop.last %}
     </div>
+    {% endif %}
+
+    {% endfor %}
+
   </div>
 </section>
 
