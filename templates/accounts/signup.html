@@ -88,34 +88,36 @@
                         {% csrf_token %}
 
                         {% for field in form %}
-                            <div class="mb-3">
-                                <label class="form-label">{{ field.label }}</label>
+                            {% if field.name != 'terms' %}
+                                <div class="mb-3">
+                                    <label class="form-label">{{ field.label }}</label>
 
-                                {% if field.name == 'password1' or field.name == 'password2' %}
-                                    <div class="input-group">
+                                    {% if field.name == 'password1' or field.name == 'password2' %}
+                                        <div class="input-group">
+                                            {{ field }}
+                                            <button type="button" class="btn btn-outline-secondary togglePassword">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                        </div>
+                                    {% else %}
                                         {{ field }}
-                                        <button type="button" class="btn btn-outline-secondary togglePassword">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                {% else %}
-                                    {{ field }}
-                                {% endif %}
+                                    {% endif %}
 
-                                {% if field.errors %}
-                                    <div class="text-danger small mt-1">
-                                        {{ field.errors }}
-                                    </div>
-                                {% endif %}
-                            </div>
+                                    {% if field.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
                         {% endfor %}
 
-                        <!-- ✅ Terms & Conditions checkbox -->
+                        <!-- ✅ Terms & Conditions checkbox (manual render only) -->
                         <div class="mb-3 form-check">
                             {{ form.terms }}
-                            <label class="form-check-label for="{{ form.terms.id_for_label }}">
+                            <label class="form-check-label" for="{{ form.terms.id_for_label }}">
                                 I have read and agree to the 
-                                <a href="{% url 'terms_conditions' %}" target="_blank"style="color: #004aad;">Terms and Conditions</a>
+                                <a href="{% url 'terms_conditions' %}" target="_blank" style="color: #004aad;">Terms and Conditions</a>
                             </label>
                             {% if form.terms.errors %}
                                 <div class="text-danger small mt-1">
